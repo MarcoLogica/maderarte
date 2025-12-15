@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel LOGICA Montessori</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<nav class="navbar">
+    <div class="logo">
+        <a href="{% url 'home' %}">LOGICA Montessori</a>
+    </div>
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'panel' %}">Panel</a></li>
+        <li><a href="{% url 'crear_producto' %}">Crear producto</a></li>
+        <li><a href="{% url 'lista_productos' %}">Gestionar productos</a></li>
+        <li><a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a></li>
+        <li><a href="#">Contacto</a></li>
+    </ul>
+</nav>
+
+<style>
+
+    body {
+    background-color: #e6f2e6;
+}
+
+.navbar {
+    background-color: #a3c9a8;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Quicksand', sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links li a {
+    color: #8E44AD;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #fce4ec;
+}
+
+.panel-opciones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    background-color: #e6f2e6;
+}
+
+.opcion {
+    background-color: #fce4ec;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.opcion h2 {
+    color: #5d7052;
+    margin-bottom: 0.5rem;
+}
+
+.opcion p {
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.opcion a {
+    text-decoration: none;
+    background-color: #a3c9a8;
+    color: white;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.opcion a:hover {
+    background-color: #8bbf91;
+}
+
+    h1 {
+      color: #2E8B57; /* Verde suave */
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    p {
+      color: #555555; /* Gris oscuro */
+      font-size: 18px;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+</style>
+<body>
+    <header class="banner">
+        <h1>Panel de edición del sitio</h1>
+        <p>Administra tus productos, crea nuevos y escala tu tienda Montessori</p>
+    </header>
+
+    <section class="panel-opciones">
+        <div class="opcion">
+            <h2>🛍️ Crear nuevo producto</h2>
+            <p>Agrega muebles Montessori con imagen, descripción y categoría</p>
+            <a href="{% url 'crear_producto' %}">Ir a formulario</a>
+        </div>
+
+        <div class="opcion">
+            <h2>📦 Ver productos existentes</h2>
+            <p>Revisa los productos cargados y accede a sus detalles</p>
+            <a href="{% url 'lista_productos' %}">Ir al catálogo</a>
+        </div>
+
+        <div class="opcion">
+            <h2>🎓 Escalar a módulo educativo</h2>
+            <p>Próximamente: actividades, rutinas y fichas Montessori</p>
+            <a href="#">En desarrollo</a>
+        </div>
+    </section>
+
+
+</body>
+</html>

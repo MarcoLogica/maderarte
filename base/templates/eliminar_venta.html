@@ -1,0 +1,80 @@
+{% block content %}
+<style>
+.formulario-ventas {
+    background-color: #fff7e6;
+    padding: 1.5rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Quicksand', sans-serif;
+    max-width: 600px;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.formulario-ventas h2 {
+    text-align: center;
+    color: #c62828;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.formulario-ventas p {
+    text-align: center;
+    font-size: 1rem;
+    color: #444;
+}
+
+.botones-horizontal {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.boton-registro {
+    background-color: #f8c8c8;
+    color: #7a2e2e;
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.boton-registro:hover {
+    background-color: #e6a8a8;
+}
+
+.boton-registro.eliminar {
+    background-color: #ffcdd2;
+    color: #c62828;
+}
+
+.boton-registro.eliminar:hover {
+    background-color: #ef9a9a;
+}
+</style>
+
+<div class="formulario-ventas">
+    <h2>Eliminar venta</h2>
+    <p>
+        ¿Estás seguro que deseas eliminar la venta de <strong>{{ venta.producto.nombre }}</strong>
+        realizada el <strong>{{ venta.fecha_venta }}</strong>?
+    </p>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="botones-horizontal">
+            <button type="submit" class="boton-registro eliminar">🗑️ Eliminar</button>
+            <a href="{% url 'administracion_ventas' %}" class="boton-registro" style="background-color:#d0e8f2; color:#2c3e50;">↩️ Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,129 @@
+{% block content %}
+<style>
+body {
+    background-color: #d0d9e8;
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.formulario-ventas {
+    background-color: #fff7e6;
+    padding: 1.5rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-width: 1200px;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.formulario-ventas h2 {
+    text-align: center;
+    color: #2E8B57;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.fila-formulario {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.fila-formulario > div {
+    flex: 1 1 200px;
+}
+
+.formulario-ventas input,
+.formulario-ventas select,
+.formulario-ventas textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-family: 'Quicksand', sans-serif;
+    background-color: #ffffff;
+}
+
+.botones-horizontal {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.boton-registro {
+    background-color: #f8c8c8;
+    color: #7a2e2e;
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.boton-registro:hover {
+    background-color: #e6a8a8;
+}
+
+.boton-cancelar {
+    background-color: #d0e8f2;
+    color: #2c3e50;
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.boton-cancelar:hover {
+    background-color: #b0d4e0;
+}
+</style>
+
+<div class="formulario-ventas">
+    <h2>Editar venta</h2>
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="fila-formulario">
+            <div>{{ form.producto.label_tag }}{{ form.producto }}</div>
+            <div>{{ form.canal.label_tag }}{{ form.canal }}</div>
+            <div>{{ form.origen.label_tag }}{{ form.origen }}</div>
+        </div>
+
+        <div class="fila-formulario">
+            <div>{{ form.precio_venta.label_tag }}{{ form.precio_venta }}</div>
+            <div>{{ form.costo_producto.label_tag }}{{ form.costo_producto }}</div>
+            <div>{{ form.costo_despacho.label_tag }}{{ form.costo_despacho }}</div>
+        </div>
+
+        <div class="fila-formulario">
+            <div>{{ form.comision_venta.label_tag }}{{ form.comision_venta }}</div>
+            <div>{{ form.fecha_venta.label_tag }}{{ form.fecha_venta }}</div>
+        </div>
+
+        <div class="fila-formulario">
+            <div style="flex: 1 1 100%;">{{ form.notas.label_tag }}{{ form.notas }}</div>
+        </div>
+
+        <div class="botones-horizontal">
+            <button type="submit" class="boton-registro">💾 Guardar cambios</button>
+            <a href="{% url 'administracion_ventas' %}" class="boton-cancelar">↩️ Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

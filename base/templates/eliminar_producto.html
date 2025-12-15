@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Eliminar {{ producto.nombre }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<style>
+
+    body {
+    background-color: #f4f1f7; /* o el que elijas */
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+    .formulario {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #fff0f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Quicksand', sans-serif;
+    text-align: center;
+}
+
+.formulario img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.formulario h1 {
+    font-size: 2rem;
+    color: #7a2e2e;
+    margin-bottom: 0.5rem;
+}
+
+.formulario p {
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 1.5rem;
+}
+
+form button {
+    background-color: #d17c5c;
+    color: white;
+    padding: 0.8rem 1.4rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #b85f45;
+}
+
+.formulario a {
+    display: inline-block;
+    margin-top: 1rem;
+    text-decoration: none;
+    color: #5d7052;
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+</style>
+<body>
+    <header class="banner">
+
+    </header>
+
+    <section class="formulario">
+        <h1>¿Eliminar producto?</h1>
+        <p>Estás a punto de eliminar <strong>{{ producto.nombre }}</strong></p>
+        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" style="max-width: 200px; border-radius: 8px;">
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" style="background-color: #d17c5c; color: white; padding: 0.8rem 1.2rem; border-radius: 8px;">Confirmar eliminación</button>
+        </form>
+        <br>
+        <a href="{% url 'lista_productos' %}">← Cancelar y volver</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 LOGICA Montessori</p>
+    </footer>
+</body>
+</html>

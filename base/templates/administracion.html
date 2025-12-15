@@ -1,0 +1,335 @@
+{% block content %}
+
+
+<nav class="navbar">
+    <div class="logo">
+        <a href="{% url 'home' %}">LOGICA Montessori</a>
+    </div>
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'panel' %}">Panel</a></li>
+        <li><a href="{% url 'crear_producto' %}">Crear producto</a></li>
+        <li><a href="{% url 'lista_productos' %}">Gestionar productos</a></li>
+        <li><a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a></li>
+        <li><a href="#">Contacto</a></li>
+    </ul>
+</nav>
+
+<style>
+body {
+    background-color: #d0d9e8;
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* NAVBAR */
+.navbar {
+    background-color: #a3c9a8;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links li a {
+    color: #8E44AD;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #fce4ec;
+}
+
+/* BANNER */
+.admin-banner {
+    text-align: center;
+    background-color: #f4f1f7;
+    padding: 2rem;
+}
+
+.admin-banner h1 {
+    color: #2E8B57;
+    font-family: 'Segoe UI', sans-serif;
+    margin-bottom: 0.5rem;
+}
+
+.admin-banner p {
+    color: #555555;
+    font-size: 18px;
+    font-family: 'Segoe UI', sans-serif;
+    margin-top: 0;
+}
+
+/* CONTENEDOR VERDE CLARO */
+.bloque-ventas {
+    background-color: #dbeadf;
+    padding: 2rem;
+}
+
+.contenedor-ventas {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 2rem;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* FORMULARIOS */
+
+
+.formulario-ventas {
+    background-color: #fff7e6;
+    padding: 1.5rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Quicksand', sans-serif;
+    max-width: 1200px;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.formulario-ventas h2 {
+    text-align: center;
+    color: #2E8B57;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Fila horizontal */
+.fila-formulario {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.fila-formulario > div {
+    flex: 1 1 200px;
+}
+
+/* Campos */
+.formulario-ventas input,
+.formulario-ventas select,
+.formulario-ventas textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-family: 'Quicksand', sans-serif;
+    background-color: #ffffff;
+}
+
+/* Botón */
+.boton-registro {
+    background-color: #f8c8c8;
+    color: #7a2e2e;
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    align-self: center;
+}
+
+.boton-registro:hover {
+    background-color: #e6a8a8;
+}
+
+/* TABLA DE VENTAS */
+.ventas-historial {
+    padding: 2rem;
+    background-color: #f4f1f7;
+}
+
+.ventas-historial table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Quicksand', sans-serif;
+}
+
+.ventas-historial thead {
+    background-color: #fce4ec;
+}
+
+.ventas-historial th,
+.ventas-historial td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    font-size: 1rem;
+    color: #444;
+}
+
+.ventas-historial th {
+    color: #5d7052;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+}
+
+.ventas-historial tr:hover {
+    background-color: #fff7e6;
+}
+</style>
+
+
+
+<div class="bloque-ventas">
+  <div class="contenedor-ventas">
+
+    <div class="formulario-ventas">
+    <h2>Registrar nueva venta</h2>
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="id_vendedor">Vendedor</label>
+            {{ form.vendedor }}
+        </div>
+
+        <div class="fila-formulario">
+            <div>{{ form.producto.label_tag }}{{ form.producto }}</div>
+            <div>{{ form.canal.label_tag }}{{ form.canal }}</div>
+            <div>{{ form.origen.label_tag }}{{ form.origen }}</div>
+        </div>
+
+        <div class="fila-formulario">
+            <div>{{ form.precio_venta.label_tag }}{{ form.precio_venta }}</div>
+            <div>{{ form.costo_producto.label_tag }}{{ form.costo_producto }}</div>
+            <div>{{ form.costo_despacho.label_tag }}{{ form.costo_despacho }}</div>
+        </div>
+
+        <div class="fila-formulario">
+            <div>{{ form.comision_venta.label_tag }}{{ form.comision_venta }}</div>
+            <div>{{ form.fecha_venta.label_tag }}{{ form.fecha_venta }}</div>
+        </div>
+
+        <div class="fila-formulario">
+            <div style="flex: 1 1 100%;">{{ form.notas.label_tag }}{{ form.notas }}</div>
+        </div>
+
+        <button type="submit" class="boton-registro">🧾 Registrar venta</button>
+    </form>
+</div>
+
+    <div class="formulario-ventas">
+        <h2>Filtrar ventas</h2>
+        <form method="GET">
+            <select name="canal">
+                <option value="">Todos los canales</option>
+                <option value="instagram" {% if canal == 'instagram' %}selected{% endif %}>Instagram</option>
+                <option value="facebook" {% if canal == 'facebook' %}selected{% endif %}>Facebook</option>
+                <option value="mercado_libre" {% if canal == 'mercado_libre' %}selected{% endif %}>Mercado Libre</option>
+                <option value="ecommerce_vipalu" {% if canal == 'ecommerce_vipalu' %}selected{% endif %}>E-commerce Vipalú</option>
+                <option value="otro" {% if canal == 'otro' %}selected{% endif %}>Otro</option>
+            </select>
+
+            <select name="producto">
+                <option value="">Todos los productos</option>
+                {% for producto in productos %}
+                <option value="{{ producto.id }}" {% if producto_id == producto.id|stringformat:"s" %}selected{% endif %}>
+                    {{ producto.nombre }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <select name="origen">
+                <option value="">Todos los orígenes</option>
+                <option value="fabricante" {% if origen == 'fabricante' %}selected{% endif %}>Fabricante</option>
+                <option value="propia" {% if origen == 'propia' %}selected{% endif %}>Fabricación Propia</option>
+            </select>
+
+            <button type="submit" class="boton-registro">🔍 Filtrar</button>
+        </form>
+    </div>
+
+  </div>
+</div>
+<hr>
+
+<h2>Historial de ventas</h2>
+<section class="ventas-historial">
+
+    <div style="margin-bottom:2rem; text-align:right;">
+    <a href="{% url 'panel_ventas' %}" style="background-color:#7e57c2; color:white; padding:0.6rem 1.2rem; border-radius:8px; text-decoration:none; font-weight:bold; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+        📊 Ir al Panel de Ventas
+    </a>
+    </div>
+
+    <div style="max-height:600px; overflow-y:auto; border:1px solid #ccc; border-radius:8px; padding:1rem; background:#fff;">
+  <table style="width:100%; border-collapse:collapse;">
+
+
+ </div>
+
+    <thead>
+        <tr>
+            <th>Vendedor</th> <!-- ✅ NUEVO -->
+            <th>Producto</th>
+            <th>Canal</th>
+            <th>Origen</th>
+            <th>Fecha</th>
+            <th>Precio venta</th>
+            <th>Costo producto</th>
+            <th>Despacho</th>
+            <th>Comisión</th>
+            <th>Utilidad</th>
+            <th>Margen (%)</th>
+            <th>Acciones</th> <!-- Nueva columna -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for venta in ventas %}
+        <tr>
+            <td>{{ venta.vendedor }}</td> <!-- ✅ NUEVO -->
+            <td>{{ venta.producto.nombre }}</td>
+            <td>{{ venta.get_canal_display }}</td>
+            <td>{{ venta.get_origen_display }}</td>
+            <td>{{ venta.fecha_venta }}</td>
+            <td>${{ venta.precio_venta }}</td>
+            <td>${{ venta.costo_producto }}</td>
+            <td>${{ venta.costo_despacho }}</td>
+            <td>${{ venta.comision_venta }}</td>
+            <td>${{ venta.utilidad }}</td>
+            <td>{{ venta.margen }}%</td>
+            <td>
+                <a href="{% url 'editar_venta' venta.id %}" class="boton-accion editar">✏️</a>
+                <a href="{% url 'eliminar_venta' venta.id %}" class="boton-accion eliminar">🗑️</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</section>
+{% endblock %}

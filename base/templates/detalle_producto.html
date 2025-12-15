@@ -1,0 +1,213 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ producto.nombre }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<nav class="navbar">
+    <div class="logo">
+        <a href="{% url 'home' %}">LOGICA Montessori</a>
+    </div>
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'panel' %}">Panel</a></li>
+        <li><a href="{% url 'crear_producto' %}">Crear producto</a></li>
+        <li><a href="{% url 'lista_productos' %}">Gestionar productos</a></li>
+        <li><a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a></li>
+        <li><a href="#">Contacto</a></li>
+    </ul>
+</nav>
+
+<style>
+    body {
+    background-color: #d0d9e8;
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #a3c9a8;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Quicksand', sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links li a {
+    color: #8E44AD;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #fce4ec;
+}
+
+    .lista-productos {
+    padding: 2rem;
+    background-color: #fff7e6;
+}
+
+
+    .detalle {
+        max-width: 900px;
+        margin: 3rem auto;
+        padding: 2rem;
+        background-color: #fff8f0;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+        align-items: flex-start;
+    }
+
+    .galeria {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .imagen-principal img {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        border-radius: 10px;
+        object-fit: cover;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .miniaturas {
+        display: flex;
+        gap: 0.6rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .miniaturas img {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .miniaturas img:hover {
+        transform: scale(1.05);
+    }
+
+    .detalle-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .detalle-info h1 {
+        font-size: 2rem;
+        color: #5d7052;
+        margin-bottom: 0.5rem;
+    }
+
+    .detalle-info p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #444;
+    }
+
+    .detalle-info .precio {
+        font-size: 1.5rem;
+        color: #d17c5c;
+        font-weight: bold;
+    }
+
+    .detalle-info .categoria {
+        font-size: 0.95rem;
+        color: #888;
+        font-style: italic;
+    }
+
+    .detalle-info a {
+        margin-top: 1rem;
+        text-decoration: none;
+        background-color: #a3c9a8;
+        color: white;
+        padding: 0.8rem 1.2rem;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .detalle-info a:hover {
+        background-color: #8bbf91;
+    }
+</style>
+
+<body>
+    <header class="banner"></header>
+
+    <section class="detalle">
+        <div class="galeria">
+            <div class="imagen-principal">
+                <img id="imagen-actual" src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+            </div>
+            <div class="miniaturas">
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" onclick="cambiarImagen(this)">
+                {% endif %}
+                {% for img in imagenes_adicionales %}
+    {% if img %}
+        <img src="{{ img.url }}" onclick="cambiarImagen(this)">
+    {% endif %}
+{% endfor %}
+            </div>
+        </div>
+
+        <div class="detalle-info">
+            <h1>{{ producto.nombre }}</h1>
+            <p class="precio">${{ producto.precio }}</p>
+            <p>{{ producto.descripcion }}</p>
+            <p class="categoria">Categoría: {{ producto.get_categoria_display }}</p>
+            <a href="{% url 'agregar_al_carrito' producto.id %}" class="btn-agregar">🛒 Agregar al carrito</a>
+            <a href="{% url 'home' %}">← Volver al catálogo</a>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 LOGICA Montessori</p>
+    </footer>
+
+    <script>
+        function cambiarImagen(elemento) {
+            document.getElementById('imagen-actual').src = elemento.src;
+        }
+    </script>
+</body>
+</html>

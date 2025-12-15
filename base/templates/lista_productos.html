@@ -1,0 +1,236 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de productos</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<nav class="navbar">
+    <div class="logo">
+        <a href="{% url 'home' %}">LOGICA Montessori</a>
+    </div>
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'panel' %}">Panel</a></li>
+        <li><a href="{% url 'crear_producto' %}">Crear producto</a></li>
+        <li><a href="{% url 'lista_productos' %}">Gestionar productos</a></li>
+        <li><a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a></li>
+        <li><a href="#">Contacto</a></li>
+    </ul>
+</nav>
+
+
+<style>
+
+    body {
+    background-color: #d0d9e8;
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #a3c9a8;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Quicksand', sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links li a {
+    color: #8E44AD;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #fce4ec;
+}
+
+    .lista-productos {
+    padding: 2rem;
+    background-color: #fff7e6;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background-color: #fce4ec;
+    color: #5d7052;
+}
+
+.miniatura {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+    .lista-productos {
+    padding: 2rem;
+    background-color: #f4f1f7;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Quicksand', sans-serif;
+}
+
+thead {
+    background-color: #fce4ec;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 1rem;
+    color: #444;
+}
+
+th {
+    color: #5d7052;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+}
+
+tr:hover {
+    background-color: #fff7e6;
+}
+
+.miniatura {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+td a {
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    margin-right: 0.3rem;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+td a[href*="ver"] {
+    background-color: #cfe8f3;
+    color: #2c4f63;
+}
+
+td a[href*="editar"] {
+    background-color: #a3c9a8;
+    color: #3d5c3d;
+}
+
+td a[href*="eliminar"] {
+    background-color: #f8c8c8;
+    color: #7a2e2e;
+}
+
+td a:hover {
+    opacity: 0.85;
+}
+
+
+    h1 {
+      color: #2E8B57; /* Verde suave */
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    p {
+      color: #555555; /* Gris oscuro */
+      font-size: 18px;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+
+  </style>
+</head>
+
+</style>
+<body>
+    <header class="banner">
+        <h1>Gestión de productos Montessori</h1>
+        <p>Editar, eliminar o revisar cada producto cargado</p>
+    </header>
+
+    <section class="lista-productos">
+        <table>
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Categoría</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td><img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="miniatura"></td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>${{ producto.precio }}</td>
+                    <td>{{ producto.get_categoria_display }}</td>
+                    <td>
+                        <a href="{% url 'detalle_producto' producto.id %}">Ver</a> |
+                        <a href="{% url 'editar_producto' producto.id %}">Editar</a> |
+                        <a href="{% url 'eliminar_producto' producto.id %}">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <a href="{% url 'panel' %}">← Volver al panel</a>
+    </footer>
+</body>
+</html>

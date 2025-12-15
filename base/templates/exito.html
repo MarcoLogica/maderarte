@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pago enviado con éxito</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<style>
+    .exito {
+    max-width: 700px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #e6f2e6;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.mensaje-exito p {
+    font-size: 1.2rem;
+    color: #5d7052;
+    margin-bottom: 1rem;
+}
+
+.mensaje-exito .btn-volver {
+    margin-top: 1.5rem;
+}
+
+</style>
+<body>
+    <header class="banner">
+        <h1>✅ ¡Pago recibido!</h1>
+        <p>Gracias por enviar tu comprobante. Pronto recibirás la confirmación de tu pedido.</p>
+    </header>
+
+    <section class="exito">
+        <div class="mensaje-exito">
+            <p>Tu comprobante ha sido enviado correctamente a LOGICA Montessori.</p>
+            <p>Si necesitas asistencia adicional, puedes contactarnos directamente.</p>
+            <a href="{% url 'home' %}" class="btn-volver">← Volver al catálogo</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 LOGICA Montessori</p>
+    </footer>
+</body>
+</html>

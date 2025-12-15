@@ -1,0 +1,221 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito de compras</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<nav class="navbar">
+    <div class="logo">
+        <a href="{% url 'home' %}">LOGICA Montessori</a>
+    </div>
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'panel' %}">Panel</a></li>
+        <li><a href="{% url 'crear_producto' %}">Crear producto</a></li>
+        <li><a href="{% url 'lista_productos' %}">Gestionar productos</a></li>
+        <li><a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a></li>
+        <li><a href="#">Contacto</a></li>
+    </ul>
+</nav>
+
+<style>
+
+    body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: #fdf6f0;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #a3c9a8;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Quicksand', sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links li a {
+    color: #8E44AD;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #fce4ec;
+}
+
+.lista-productos {
+    padding: 2rem;
+    background-color: #f4f1f7;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Quicksand', sans-serif;
+}
+
+thead {
+    background-color: #fce4ec;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 1rem;
+    color: #444;
+}
+
+th {
+    color: #5d7052;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+}
+
+tr:hover {
+    background-color: #fff7e6;
+}
+
+.miniatura {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+td a {
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    margin-right: 0.3rem;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+td a[href*="eliminar"] {
+    background-color: #f8c8c8;
+    color: #7a2e2e;
+}
+
+td a[href*="eliminar"]:hover {
+    background-color: #e6a8a8;
+}
+
+.total-carrito {
+    margin-top: 2rem;
+    text-align: right;
+}
+
+.total-carrito h3 {
+    font-size: 1.4rem;
+    color: #5d7052;
+}
+
+.btn-finalizar {
+    background-color: #a3c9a8;
+    color: white;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-finalizar:hover {
+    background-color: #8bbf91;
+}
+
+    .btn-volver {
+    display: inline-block;
+    margin-top: 2rem;
+    text-decoration: none;
+    background-color: #cfe8f3;
+    color: #2c4f63;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.btn-volver:hover {
+    background-color: #b5d8e6;
+}
+</style>
+<body>
+    <header class="banner">
+        <h1>🛒 Carrito Montessori</h1>
+        <p>Revisa los productos que has agregado</p>
+    </header>
+
+    <section class="lista-productos">
+        {% if productos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td><img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="miniatura"></td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.cantidad }}</td>
+                    <td>${{ producto.subtotal }}</td>
+                    <td>
+                        <a href="{% url 'eliminar_del_carrito' producto.id %}">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="total-carrito">
+            <h3>Total: ${{ total }}</h3>
+            <a href="{% url 'pago' %}" class="btn-finalizar">Finalizar compra</a>
+        </div>
+        {% else %}
+        <p>Tu carrito está vacío. ¡Agrega productos desde el catálogo!</p>
+        {% endif %}
+    </section>
+
+    <footer>
+        <a href="{% url 'home' %}" class="btn-volver">← Volver al catálogo</a>
+    </footer>
+</body>
+</html>

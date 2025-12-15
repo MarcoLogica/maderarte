@@ -1,0 +1,21 @@
+# Backend Web
+Django==4.2.4
+djangorestframework==3.14.0
+
+# IA y ciencia de datos
+scikit-learn==1.4.2
+pandas==2.2.2
+numpy==1.26.4
+joblib==1.4.2
+xgboost==2.0.3  # (opcional, si escalamos el modelo)
+lightgbm==4.3.0  # (alternativa a xgboost)
+
+# Visualización y auditoría
+matplotlib==3.8.4
+seaborn==0.13.2
+plotly==5.21.0
+chart-studio==1.1.0  # si prefieres integrar dashboards tipo Plotly
+
+# Otros útiles
+python-dotenv==1.0.1  # gestión de credenciales (API keys, configuración)
+requests==2.31.0  # conexión con APIs externas (simulador CCI, finanzas)

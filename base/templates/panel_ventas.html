@@ -1,0 +1,149 @@
+{% block content %}
+
+<body style="background-color:#f3e5f5; font-family:'Segoe UI', sans-serif;">
+<!-- 🟩 Encabezado VIPALÚ -->
+<div style="background:#e8f5e9; padding:2rem; text-align:center; border-radius:12px; margin-bottom:2rem;">
+    <h1 style="font-size:2.5rem; color:#2e7d32; margin:0;">🌿 PANEL DE VENTAS VIPALÚ</h1>
+    <p style="font-size:1.2rem; color:#4e944f;">Visualiza tus ventas con propósito y claridad</p>
+    <div style="text-align:left; margin-bottom:1rem;">
+    <a href="{% url 'administracion_ventas' %}" style="background-color:#7e57c2; color:white; padding:0.6rem 1.2rem; border-radius:8px; text-decoration:none; font-weight:bold; box-shadow:0 2px 5px rgba(0,0,0,0.1); display:inline-block;">
+        ⬅️ Volver a Administración
+    </a>
+</div>
+</div>
+
+<!-- 📦 KPIs en fila -->
+<div class="kpi-container" style="display:flex; justify-content:space-around; flex-wrap:wrap; gap:1rem; margin-bottom:3rem;">
+
+    <div class="kpi-card" style="background:#fff9c4; padding:1rem 2rem; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+        🧾 <strong>Total de ventas:</strong> {{ total_ventas }}
+    </div>
+    <div class="kpi-card" style="background:#fff9c4; padding:1rem 2rem; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+        💰 <strong>Ingresos totales:</strong> ${{ ingresos_totales }}
+    </div>
+    <div class="kpi-card" style="background:#fff9c4; padding:1rem 2rem; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+    📈 <strong>Utilidad total:</strong> ${{ utilidad_total }}
+    </div>
+    <div class="kpi-card" style="background:#fff9c4; padding:1rem 2rem; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+    📐 <strong>Margen promedio:</strong> {{ margen_promedio }}%
+    </div>
+    <div class="kpi-card" style="background:#fff9c4; padding:1rem 2rem; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+        📦 <strong>Producto más vendido:</strong> {{ producto_top }}
+    </div>
+    <div class="kpi-card" style="background:#fff9c4; padding:1rem 2rem; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+        🛍️ <strong>Canal más activo:</strong> {{ canal_top }}
+    </div>
+
+    <div class="kpi-card" style="background:#fff9c4; padding:1rem 2rem; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+    🛒 <strong>Margen Mercado Libre:</strong> {{ margen_ml }}%
+</div>
+
+<div class="kpi-card" style="background:#fff9c4; padding:1rem 2rem; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+    📘 <strong>Margen Facebook:</strong> {{ margen_fb }}%
+</div>
+
+
+</div>
+
+<!-- 📊 Gráficos en cuadrícula 2x2 -->
+<div class="chart-grid" style="display:grid; grid-template-columns: repeat(2, 1fr); row-gap:4rem; column-gap:2rem; justify-items:center;">
+    <div class="chart-box" style="width:700px; height:600px; padding:1rem; background:#ffffff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+        <h3 style="text-align:center; color:#2e7d32;">📈 Ventas por día</h3>
+        <canvas id="ventasPorDia" width="600" height="500"></canvas>
+    </div>
+    <div class="chart-box" style="width:700px; height:600px; padding:1rem; background:#ffffff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+    <h3 style="text-align:center; color:#2e7d32;">💰 Ingresos por mes</h3>
+    <canvas id="ingresosPorMes" width="700" height="600"></canvas>
+    </div>
+
+<div class="chart-box" style="width:700px; height:600px; padding:1rem; background:#ffffff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+    <h3 style="text-align:center; color:#2e7d32;">📈 Utilidad por mes</h3>
+    <canvas id="utilidadPorMes" width="700" height="600"></canvas>
+</div>
+
+    <div class="chart-box" style="width:700px; height:600px; padding:1rem; background:#ffffff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+        <h3 style="text-align:center; color:#2e7d32;">📦 Productos más vendidos</h3>
+        <canvas id="productosTop" width="600" height="500"></canvas>
+    </div>
+
+    <div class="chart-box" style="width:700px; height:600px; padding:1rem; background:#ffffff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+        <h3 style="text-align:center; color:#2e7d32;">🛍️ Distribución por canal</h3>
+        <canvas id="canalesDistribucion" width="600" height="500"></canvas>
+    </div>
+
+    <div class="chart-box" style="width:700px; height:600px; padding:1rem; background:#ffffff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+    <h3 style="text-align:center; color:#2e7d32;">🌎 Distribución por origen</h3>
+    <canvas id="origenDistribucion" width="600" height="500"></canvas>
+    </div>
+
+
+
+</div>
+
+<!-- 📊 Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ventasPorDia = {{ ventas_por_dia_json|safe }};
+    const productosTop = {{ productos_top_json|safe }};
+    const canalesDistribucion = {{ canales_json|safe }};
+
+    new Chart(document.getElementById('ventasPorDia'), {
+        type: 'line',
+        data: ventasPorDia,
+        options: {
+            responsive: false,
+            maintainAspectRatio: false
+        }
+    });
+
+    new Chart(document.getElementById('productosTop'), {
+        type: 'bar',
+        data: productosTop,
+        options: {
+            responsive: false,
+            maintainAspectRatio: false
+        }
+    });
+
+    new Chart(document.getElementById('canalesDistribucion'), {
+        type: 'doughnut',
+        data: canalesDistribucion,
+        options: {
+            responsive: false,
+            maintainAspectRatio: false
+        }
+    });
+
+    const origenDistribucion = {{ origenes_json|safe }};
+
+new Chart(document.getElementById('origenDistribucion'), {
+    type: 'doughnut',
+    data: origenDistribucion,
+    options: {
+        responsive: false,
+        maintainAspectRatio: false
+    }
+});
+
+    const ingresosPorMes = {{ ingresos_mes_json|safe }};
+const utilidadPorMes = {{ utilidad_mes_json|safe }};
+
+new Chart(document.getElementById('ingresosPorMes'), {
+    type: 'bar',
+    data: ingresosPorMes,
+    options: {
+        responsive: false,
+        maintainAspectRatio: false
+    }
+});
+
+new Chart(document.getElementById('utilidadPorMes'), {
+    type: 'bar',
+    data: utilidadPorMes,
+    options: {
+        responsive: false,
+        maintainAspectRatio: false
+    }
+});
+</script>
+{% endblock %}

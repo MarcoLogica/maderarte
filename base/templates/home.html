@@ -1,0 +1,250 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>LOGICA Montessori</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<nav class="navbar">
+    <div class="logo-nav">
+    <a href="{% url 'home' %}">
+        <img src="{% static 'img/logo.png' %}" alt="LOGICA Montessori">
+        
+    </a>
+</div>
+    <ul class="nav-links">
+        <li><a href="{% url 'panel' %}">Panel</a></li>
+        <li><a href="{% url 'crear_producto' %}">Crear producto</a></li>
+        <li><a href="{% url 'lista_productos' %}">Gestionar productos</a></li>
+        <li><a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a></li>
+        <li><a href="#">Contacto</a></li>
+        <li><a href="{% url 'administracion_ventas' %}">📊 Administración</a></li>
+    </ul>
+</nav>
+
+<style>
+
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: #fdf6f0;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #a3c9a8;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Quicksand', sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links li a {
+    color: #8E44AD;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #fce4ec;
+}
+
+.banner {
+    text-align: center;
+    background-color: #dbeadf;
+    padding: 2rem;
+    color: #8E44AD;
+}
+
+.grid-productos {
+    background-color: #EBDEF0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+
+.publicidad {
+    background-color: #fce4ec;
+    padding: 2rem;
+    text-align: center;
+    color: #8E44AD;
+}
+
+footer {
+    background-color: #c8e6c9;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #8E44AD;
+}
+
+    .productos-destacados {
+    padding: 2rem;
+    background-color: #fdf6f0;
+}
+
+.grid-productos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas fijas */
+    gap: 2rem;
+    justify-items: center;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 250px;
+    text-align: center;
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Recorta sin deformar */
+    border-radius: 6px;
+}
+
+    h1 {
+      color: #2E8B57; /* Verde suave */
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    p {
+      color: #555555; /* Gris oscuro */
+      font-size: 18px;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .btn-agregar {
+    background-color: #a3c9a8; /* Verde claro VIPALÚ */
+    color: #2e7d32;            /* Verde profundo para el texto */
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.btn-agregar:hover {
+    background-color: #8cbf91; /* Verde más intenso al pasar el mouse */
+}
+
+    .contenedor-banner {
+    width: 100%;
+    max-width: 1800px;
+    height: 300px;
+    margin: 2rem auto;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f1f7;
+}
+
+.contenedor-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+    .logo-nav {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+}
+
+.logo-nav img {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.logo-nav img:hover {
+    transform: scale(1.05);
+}
+
+</style>
+
+
+<body>
+
+<div class="contenedor-banner">
+            <img src="{% static 'img/banner_home.png' %}" alt="Banner LOGICA Montessori">
+     </div>
+
+    <header class="banner">
+
+        <h1>Bienvenido a VIPALÚ</h1>
+        <p>Diseño funcional, emocional y educativo para los más pequeños, basado en la filosofía Montessori</p>
+    </header>
+
+
+
+    <section class="productos-destacados">
+
+
+
+        <div class="grid-productos">
+            {% for producto in productos %}
+            <div class="card">
+                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+                <h3>{{ producto.nombre }}</h3>
+                <p>${{ producto.precio }}</p>
+                <a href="{% url 'detalle_producto' producto.id %}">Ver más</a>
+                <a href="{% url 'agregar_al_carrito' producto.id %}" class="btn-agregar">🛒 Agregar al carrito</a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="publicidad">
+        <h2>Promociones y novedades</h2>
+        <div class="banner-publicidad">
+
+            <p>¡Descubre nuestras nuevas estanterías lúdicas!</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 LOGICA Montessori - Diseño modular para crecer</p>
+    </footer>
+</body>
+</html>
