@@ -167,6 +167,553 @@
     .detalle-info a:hover {
         background-color: #8bbf91;
     }
+
+    .seccion-beneficios,
+.seccion-testimonios {
+    width: 100%;
+    max-width: 1500px; /* ← aquí controlamos el ancho más estrecho */
+    margin: 40px auto; /* ← centrado con margen vertical */
+    padding: 20px 30px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-sizing: border-box;
+}
+
+    .seccion-uso-real {
+    width: 100%;
+    max-width: 1500px;
+    margin: 40px auto;
+    padding: 20px 30px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-sizing: border-box;
+}
+
+.titulo-seccion {
+    font-size: 1.4rem;
+    color: #5d7052;
+    margin-bottom: 20px;
+}
+
+.img-uso {
+    width: 70%;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.video-uso {
+    width: 70%;
+    border-radius: 12px;
+}
+
+.grilla-2 {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.grilla-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+    .seccion-faq {
+    width: 100%;
+    max-width: 1500px;
+    margin: 40px auto;
+    padding: 20px 30px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-sizing: border-box;
+}
+
+.faq-item {
+    margin-bottom: 20px;
+}
+
+.faq-pregunta {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: #5d7052;
+    margin-bottom: 6px;
+}
+
+.faq-respuesta {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+    .seccion-relacionados {
+    width: 100%;
+    max-width: 1500px;
+    margin: 40px auto;
+    padding: 20px 30px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-sizing: border-box;
+}
+
+.relacionados-grilla {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-top: 20px;
+}
+
+.relacionado-item {
+    text-align: center;
+}
+
+.relacionado-img {
+    width: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.relacionado-nombre {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #5d7052;
+    margin-bottom: 8px;
+}
+
+.relacionado-btn {
+    display: inline-block;
+    padding: 8px 14px;
+    background: #5d7052;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+    .sticky-add-to-cart {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    border-top: 1px solid #ddd;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+    z-index: 999;
+    display: none; /* oculto en desktop */
+}
+
+.sticky-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.sticky-precio {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1e3a8a;
+}
+
+.sticky-stock {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.sticky-btn {
+    background: #5d7052;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Mostrar solo en mobile */
+@media (max-width: 768px) {
+    .sticky-add-to-cart {
+        display: flex;
+    }
+}
+
+    .videos-producto {
+    background: #F7F5F0;
+    padding: 20px;
+    border-radius: 18px;
+    border: 2px solid #E4D8C4;
+    margin-bottom: 30px;
+}
+
+.videos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.videos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; /* ✔ centra los reels */
+}
+
+
+.video-reel {
+    width: 100%;
+    max-width: 280px; /* ancho típico de un reel */
+    aspect-ratio: 9 / 16;
+    height: auto;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+    .videos-producto-container {
+
+
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center; /* centra títulos y textos */
+    background: #F7F3EB; /* beige cálido Montessori */
+    width: 1700px;
+    border: 2px solid #E4D8C4; /* borde suave */
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 35px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.videos-producto-titulo {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #1e3a8a; /* azul Montessori */
+    margin-bottom: 8px;
+}
+
+.videos-producto-subtitulo {
+    color: #5a4632;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.videos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.video-reel {
+    width: 100%;
+    max-width: 280px; /* tamaño reel perfecto */
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    background: black;
+}
+
+
+.video-proceso {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #5a4632;
+    margin-bottom: 8px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.video-proceso-numero {
+    display: inline-block;
+    background: #E4D8C4;
+    color: #1e3a8a;
+    font-weight: bold;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    line-height: 28px;
+    margin-right: 8px;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+
+.video-proceso-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.video-proceso-flecha {
+    font-size: 1.6rem;
+    color: #C2A98A; /* beige cálido */
+    margin: 6px 0 12px 0;
+    font-weight: 300;
+}
+
+.beneficios-producto {
+    width: 1470px;
+    padding: 40px 20px;
+    background: #F7F3EB;
+    border-radius: 16px;
+    margin: 30px auto; /* ← ESTO LO CENTRA */
+}
+
+
+.beneficios-titulo {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #8B5E3C;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+.beneficios-grid {
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.beneficio-item {
+    background: #FFFFFF;
+    border: 2px solid #E4D8C4;
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.beneficio-icono {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.beneficio-titulo {
+    font-size: 1.2rem;
+    color: #5A4632;
+    margin-bottom: 8px;
+}
+
+.beneficio-descripcion {
+    color: #6B5A4A;
+    font-size: 0.95rem;
+}
+
+   /* ================================
+   CONTENEDOR PRINCIPAL USO REAL
+   ================================ */
+.uso-real-producto {
+    max-width: 1500px;
+    margin: 40px auto;
+    padding: 40px 30px;
+    background: #E8DFF5; /* lavanda pastel Montessori */
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    border: 1px solid #d6c9e8; /* borde suave */
+}
+
+/* ================================
+   TÍTULO DE LA SECCIÓN
+   ================================ */
+.uso-real-titulo {
+    font-size: 1.8rem;
+    color: #6A4C93; /* morado profundo elegante */
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+/* ================================
+   GRID DE ELEMENTOS
+   ================================ */
+.uso-real-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+/* ================================
+   VIDEOS TIPO REELS
+   ================================ */
+.uso-real-video {
+    width: 100%;
+    max-height: 550px; /* tamaño tipo pantalla de celular */
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+}
+
+/* ================================
+   IMÁGENES TIPO REELS
+   ================================ */
+.uso-real-img {
+    width: 100%;
+    max-height: 550px;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+}
+
+   /* ================================
+   CONTENEDOR PRINCIPAL FAQ
+   ================================ */
+.faq-producto {
+    max-width: 1500px;
+    margin: 40px auto;
+    padding: 40px 30px;
+    background: #F7E6E8; /* palo rosa pastel suave */
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    border: 1px solid #e8d0d4; /* borde rosado suave */
+}
+
+/* ================================
+   TÍTULO DE LA SECCIÓN
+   ================================ */
+.faq-titulo {
+    font-size: 1.8rem;
+    color: #A45C6B; /* palo rosa profundo elegante */
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+/* ================================
+   LISTA DE PREGUNTAS
+   ================================ */
+.faq-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ================================
+   ITEM INDIVIDUAL
+   ================================ */
+.faq-item {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid #f0d9dd;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* ================================
+   PREGUNTA
+   ================================ */
+.faq-pregunta {
+    font-size: 1.2rem;
+    color: #A45C6B; /* palo rosa profundo */
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+/* ================================
+   RESPUESTA
+   ================================ */
+.faq-respuesta {
+    color: #6B4F57; /* tono rosado grisáceo suave */
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+
+   /* ================================
+   CONTENEDOR PRINCIPAL
+   ================================ */
+.relacionados-producto {
+    max-width: 1500px;
+    margin: 40px auto;
+    padding: 40px 30px;
+    background: #E8F5E9; /* verde pastel suave */
+    border-radius: 18px;
+    border: 1px solid #d3e8d6; /* borde verde suave */
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* ================================
+   TÍTULO DE LA SECCIÓN
+   ================================ */
+.relacionados-titulo {
+    font-size: 1.8rem;
+    color: #4A7C59; /* verde profundo elegante */
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+/* ================================
+   GRID DE PRODUCTOS
+   ================================ */
+.relacionados-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+/* ================================
+   ITEM INDIVIDUAL
+   ================================ */
+.relacionado-item {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #d3e8d6;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* ================================
+   IMAGEN DEL PRODUCTO
+   ================================ */
+.relacionado-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+/* ================================
+   TÍTULO DEL PRODUCTO
+   ================================ */
+.relacionado-titulo {
+    font-size: 1.2rem;
+    color: #4A7C59;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+/* ================================
+   BOTÓN "VER PRODUCTO"
+   ================================ */
+.relacionado-btn {
+    display: inline-block;
+    padding: 10px 18px;
+    background: #4A7C59; /* verde elegante */
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.relacionado-btn:hover {
+    background: #3a6246;
+}
+
+
+
+
+
 </style>
 
 <body>
@@ -191,14 +738,271 @@
 
         <div class="detalle-info">
             <h1>{{ producto.nombre }}</h1>
+
+            <p style="
+    font-size: 1.1rem;
+    color: #1e3a8a;
+    background: #EAF4ED;
+    padding: 8px 14px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-bottom: 10px;
+">
+    🌟 Más de <strong>187 familias</strong> ya disfrutan este librero Montessori
+</p>
+
+
             <p class="precio">${{ producto.precio }}</p>
+
+            {% with msg=producto.mensaje_stock %}
+    {% if msg.tipo == "ok" %}
+        <p style="background:#E3F7E0; color:#2E7D32; padding:10px; border-radius:8px;">
+            {{ msg.texto }}
+        </p>
+
+    {% elif msg.tipo == "bajo" %}
+        <p style="background:#FFF3E0; color:#EF6C00; padding:10px; border-radius:8px;">
+            {{ msg.texto }}
+        </p>
+
+    {% elif msg.tipo == "pedido" %}
+        <p style="background:#FFEBEE; color:#C62828; padding:10px; border-radius:8px;">
+            {{ msg.texto }}
+        </p>
+    {% endif %}
+{% endwith %}
+
+            {% if producto.stock_disponible == 1 %}
+    <p style="
+        background:#FFEBEE;
+        color:#C62828;
+        padding:10px 14px;
+        border-radius:8px;
+        font-weight:bold;
+        display:block;
+        margin-bottom:10px;
+    ">
+        ⚠️ ¡Última unidad disponible!
+        <br>🚚 Entrega estimada: <strong>1 a 2 días</strong>
+    </p>
+
+{% elif producto.stock_disponible <= 10 %}
+    <p style="
+        background:#FFF3E0;
+        color:#EF6C00;
+        padding:10px 14px;
+        border-radius:8px;
+        font-weight:bold;
+        display:block;
+        margin-bottom:10px;
+    ">
+        🔥 ¡Quedan pocas unidades!
+        <br>🚚 Entrega estimada: <strong>1 a 3 días</strong>
+    </p>
+
+{% else %}
+    <p style="
+        background:#E3F2FD;
+        color:#1565C0;
+        padding:10px 14px;
+        border-radius:8px;
+        font-weight:bold;
+        display:block;
+        margin-bottom:10px;
+    ">
+        ✔ Stock disponible para entrega rápida
+        <br>🚚 Entrega estimada: <strong>3 a 5 días</strong>
+    </p>
+{% endif %}
+
+
+
+
             <p>{{ producto.descripcion }}</p>
             <p class="categoria">Categoría: {{ producto.get_categoria_display }}</p>
+            <p style="
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1e3a8a;
+    background: #E3F2FD;
+    padding: 10px 14px;
+    border-radius: 8px;
+    display: inline-block;
+">
+    Stock disponible: {{ producto.stock_disponible }}
+</p>
+
+            <div style="
+    background:#F6EEDC;
+    border-left:6px solid #D4B48C;
+    padding:12px 16px;
+    border-radius:10px;
+    margin-bottom:15px;
+    color:#5a4632;
+">
+    🛡️ <strong>Garantía de satisfacción de 15 días</strong><br>
+    Si tu producto no cumple tus expectativas, tienes 15 días desde la entrega para solicitar cambio o devolución.
+</div>
+
+
+
             <a href="{% url 'agregar_al_carrito' producto.id %}" class="btn-agregar">🛒 Agregar al carrito</a>
             <a href="{% url 'home' %}">← Volver al catálogo</a>
 
         </div>
     </section>
+
+
+
+
+{% if producto.videos.all %}
+<div class="videos-producto-container">
+
+    <div class="videos-producto-titulo">
+        ¡Mira como fabricamos tu Librero infantil Vipalú!
+    </div>
+
+    <div class="videos-producto-subtitulo">
+        Con amor, sin tóxicos y seguros para tus bebés.
+        Te mostramos nuestro proceso artesanal, paso a paso.
+    </div>
+
+    <div class="videos-grid">
+    {% for v in producto.videos.all|slice:":4" %}
+        <div class="video-proceso-wrapper">
+
+            <div class="video-proceso">
+                <span class="video-proceso-numero">{{ forloop.counter }}</span>
+                {{ v.titulo }}
+            </div>
+
+            <div class="video-proceso-flecha">→</div>
+
+            <video class="video-reel" controls muted autoplay loop>
+                <source src="{{ v.video.url }}" type="video/mp4">
+            </video>
+
+        </div>
+    {% endfor %}
+</div>
+
+
+
+</div>
+{% endif %}
+
+
+
+
+{% if producto.beneficios.all %}
+<section class="beneficios-producto">
+
+    <!-- TÍTULO DEL BLOQUE -->
+    <h3 class="beneficios-titulo">Beneficios Montessori</h3>
+
+    <div class="beneficios-grid">
+        {% for b in producto.beneficios.all %}
+            <div class="beneficio-item">
+
+                <!-- ICONO (emoji o FontAwesome) -->
+                <div class="beneficio-icono">
+                    {% if "fa-" in b.icono %}
+                        <i class="{{ b.icono }}"></i>
+                    {% else %}
+                        {{ b.icono }}
+                    {% endif %}
+                </div>
+
+                <!-- TÍTULO DEL BENEFICIO -->
+                <h4 class="beneficio-titulo">{{ b.titulo }}</h4>
+
+                <!-- DESCRIPCIÓN -->
+                <p class="beneficio-descripcion">{{ b.descripcion }}</p>
+
+            </div>
+        {% endfor %}
+    </div>
+
+</section>
+{% endif %}
+
+
+
+
+
+   {% if producto.usos_reales.all %}
+<section class="uso-real-producto">
+    <h3 class="uso-real-titulo">Fotos y videos de uso real</h3>
+
+    <div class="uso-real-grid">
+        {% for u in producto.usos_reales.all %}
+            <div class="uso-real-item">
+
+                {% if u.imagen %}
+                    <img src="{{ u.imagen.url }}" class="uso-real-img">
+                {% endif %}
+
+                {% if u.video %}
+                    <video class="uso-real-video" controls>
+                        <source src="{{ u.video.url }}" type="video/mp4">
+                    </video>
+                {% endif %}
+
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+
+    {% if producto.preguntas_frecuentes.all %}
+<section class="faq-producto">
+    <h3 class="faq-titulo">Preguntas frecuentes</h3>
+
+    <div class="faq-lista">
+        {% for f in producto.preguntas_frecuentes.all %}
+            <div class="faq-item">
+                <h4 class="faq-pregunta">{{ f.pregunta }}</h4>
+                <p class="faq-respuesta">{{ f.respuesta }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+
+    {% if producto.productos_relacionados.all %}
+<section class="relacionados-producto">
+    <h3 class="relacionados-titulo">Productos relacionados</h3>
+
+    <div class="relacionados-grid">
+        {% for r in producto.productos_relacionados.all %}
+            <div class="relacionado-item">
+                <img src="{{ r.imagen.url }}" class="relacionado-img">
+
+                <h4 class="relacionado-titulo">{{ r.titulo }}</h4>
+
+                <a href="{% url 'detalle_producto' r.producto_destino.id %}" class="relacionado-btn">
+                    Ver producto
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+
+<div class="sticky-add-to-cart">
+    <div class="sticky-info">
+        <span class="sticky-precio">${{ producto.precio }}</span>
+        <span class="sticky-stock">Stock: {{ producto.stock_disponible }}</span>
+    </div>
+    <a href="#" class="sticky-btn">Agregar al carrito</a>
+</div>
+
+
+
+
 
     <footer>
         <p>&copy; 2025 LOGICA Montessori</p>

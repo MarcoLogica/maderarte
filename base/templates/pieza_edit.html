@@ -1,0 +1,13 @@
+<h2>Editar Pieza</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Nombre</label>
+    <input type="text" name="nombre" value="{{ pieza.nombre }}" required>
+
+    <label>Descripción</label>
+    <textarea name="descripcion">{{ pieza.descripcion }}</textarea>
+
+    <button type="submit">Actualizar</button>
+</form>

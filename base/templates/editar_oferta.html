@@ -1,0 +1,45 @@
+<style>
+
+    .media-preview {
+    width: 100%;
+    max-height: 260px;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+</style>
+
+
+
+<section class="form-fortaleza">
+    <h2>Editar Oferta</h2>
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label>Título</label>
+        <input type="text" name="titulo" value="{{ oferta.titulo }}" required>
+
+        <label>Descripción</label>
+        <textarea name="descripcion" required>{{ oferta.descripcion }}</textarea>
+
+        <label>Imagen actual</label>
+        {% if oferta.imagen %}
+            <img src="{{ oferta.imagen.url }}" class="media-preview">
+        {% endif %}
+        <input type="file" name="imagen" accept="image/*">
+
+        <label>Video actual</label>
+        {% if oferta.video %}
+            <video controls class="media-preview">
+                <source src="{{ oferta.video.url }}" type="video/mp4">
+            </video>
+        {% endif %}
+        <input type="file" name="video" accept="video/mp4">
+
+        <button type="submit" class="btn-guardar">Guardar cambios</button>
+    </form>
+</section>

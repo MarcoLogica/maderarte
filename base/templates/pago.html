@@ -180,6 +180,93 @@ tr:hover {
 .btn-volver:hover {
     background-color: #b5d8e6;
 }
+
+  .transferencia-formal {
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    padding: 25px;
+    margin-top: 30px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+<style>
+.transferencia-formal {
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    padding: 25px;
+    margin-top: 30px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.transferencia-formal h3 {
+    margin-bottom: 12px;
+    font-size: 1.4rem;
+    color: #1f2937;
+}
+
+.texto-confianza-formal {
+    font-size: 0.95rem;
+    color: #4b5563;
+    margin-bottom: 18px;
+}
+
+.datos-bancarios-formal .dato {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 1rem;
+}
+
+.btn-copiar {
+    background: #1e3a8a;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: 0.2s;
+}
+
+.btn-copiar:hover {
+    background: #162f6b;
+}
+
+.mensaje-seguridad-formal {
+    margin-top: 18px;
+    background: #f0f4ff;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: #1e3a8a;
+    border-left: 4px solid #1e3a8a;
+}
+
+/* Toast elegante */
+.toast-copiado {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #1e3a8a;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.toast-copiado.show {
+    opacity: 1;
+}
+</style>
+
+
+
 </style>
 
 <body>
@@ -217,6 +304,76 @@ tr:hover {
               <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="contenedor-pago">
+
+       <!-- BLOQUE DE DATOS BANCARIOS FORMAL VIPALÚ -->
+<div class="transferencia-formal">
+    <h3>💳 Datos para realizar la transferencia</h3>
+
+    <p class="texto-confianza-formal">
+        Realiza la transferencia a la cuenta indicada y adjunta el comprobante.
+        Recibirás la confirmación por correo una vez validado el pago.
+    </p>
+
+    <div class="datos-bancarios-formal">
+        <div class="dato">
+            <strong>Banco:</strong> Banco Estado
+            <button type="button" class="btn-copiar" onclick="copiarTexto('Banco Estado')">Copiar</button>
+        </div>
+
+        <div class="dato">
+            <strong>Tipo de cuenta:</strong> Cuenta Vista
+            <button type="button" class="btn-copiar" onclick="copiarTexto('Cuenta Vista')">Copiar</button>
+        </div>
+
+        <div class="dato">
+            <strong>Nombre:</strong> Vipalú
+            <button type="button" class="btn-copiar" onclick="copiarTexto('Vipalú')">Copiar</button>
+        </div>
+
+        <div class="dato">
+            <strong>RUT:</strong> 12.345.678-9
+            <button type="button" class="btn-copiar" onclick="copiarTexto('12.345.678-9')">Copiar</button>
+        </div>
+
+        <div class="dato">
+            <strong>N° de cuenta:</strong> 123456789
+            <button type="button" class="btn-copiar" onclick="copiarTexto('123456789')">Copiar</button>
+        </div>
+
+        <div class="dato">
+            <strong>Correo de confirmación:</strong> contacto@vipalu.cl
+            <button type="button" class="btn-copiar" onclick="copiarTexto('contacto@vipalu.cl')">Copiar</button>
+        </div>
+    </div>
+
+    <div class="mensaje-seguridad-formal">
+        🔒 <strong>Vipalú nunca solicitará claves, códigos ni información bancaria adicional.</strong>
+    </div>
+</div>
+
+<!-- Toast elegante -->
+<div id="toast-copiado" class="toast-copiado">Copiado al portapapeles</div>
+
+<!-- JS para copiar sin alertas -->
+<script>
+function copiarTexto(texto) {
+    navigator.clipboard.writeText(texto);
+
+    const toast = document.getElementById("toast-copiado");
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 1500);
+}
+</script>
+
+
+
+
+
+
+
         <!-- FORMULARIO DE CONTACTO -->
         <div class="formulario-contacto">
             <h3>📇 Datos de contacto</h3>
@@ -234,6 +391,8 @@ tr:hover {
             <input type="text" name="telefono" placeholder="Teléfono de contacto (opcional)">
 
         </div>
+
+
 
         <!-- FORMULARIO DE COMPROBANTE -->
         <div class="formulario-comprobante">

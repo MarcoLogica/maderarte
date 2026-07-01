@@ -137,3 +137,12 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'marco.sepulvedam85@gmail.com'  # tu cuenta Gmail
 EMAIL_HOST_PASSWORD = 'gbxiqilitnlgexxc'  # tu clave de aplicación
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+MIDDLEWARE += [
+    'base.middleware.PermisosMiddleware',
+
+
+]
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login/'

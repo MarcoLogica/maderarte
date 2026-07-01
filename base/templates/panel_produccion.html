@@ -1,0 +1,88 @@
+<!-- NAVBAR GLOBAL -->
+<style>
+    .navbar {
+        background: #2e7d32;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 8px;
+        margin-bottom: 25px;
+    }
+
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        margin-right: 18px;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    .navbar a:hover {
+        text-decoration: underline;
+    }
+
+    .navbar .left-links,
+    .navbar .right-links {
+        display: flex;
+        align-items: center;
+    }
+</style>
+
+<div class="navbar">
+    <div class="left-links">
+        <a href="{% url 'panel_ordenes' %}">Órdenes</a>
+        <a href="{% url 'panel_quiebres' %}">Quiebres</a>
+        <a href="{% url 'panel_produccion' %}">Producción</a>
+        <a href="{% url 'dashboard_stock' %}">Stock</a>
+        <a href="{% url 'panel' %}">Volver al panel de gestión</a>
+    </div>
+
+
+</div>
+
+
+<h2 style="margin-bottom:20px;">Panel de Producción</h2>
+
+{% if ordenes %}
+    {% for item in ordenes %}
+        <div style="border:1px solid #ccc; padding:15px; margin-bottom:20px;">
+            <h3>Orden #{{ item.orden.id }} - {{ item.orden.nombre }}</h3>
+            <p><strong>Fecha:</strong> {{ item.orden.fecha|date:"d/m/Y H:i" }}</p>
+
+            <h4>Piezas necesarias:</h4>
+            <table style="width:100%; border-collapse: collapse;">
+                <tr style="background:#f0f0f0;">
+                    <th style="padding:8px; border:1px solid #ccc;">Pieza</th>
+                    <th style="padding:8px; border:1px solid #ccc;">Necesarias</th>
+                    <th style="padding:8px; border:1px solid #ccc;">Stock actual</th>
+                    <th style="padding:8px; border:1px solid #ccc;">Faltan</th>
+                </tr>
+
+                {% for p in item.piezas %}
+                <tr>
+                    <td style="padding:8px; border:1px solid #ccc;">{{ p.pieza }}</td>
+                    <td style="padding:8px; border:1px solid #ccc;">{{ p.necesarias }}</td>
+                    <td style="padding:8px; border:1px solid #ccc;">{{ p.stock }}</td>
+                    <td style="padding:8px; border:1px solid #ccc; {% if p.faltan > 0 %}color:red; font-weight:bold;{% endif %}">
+                        {{ p.faltan }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <br>
+
+            {% if item.faltantes %}
+                <p style="color:red; font-weight:bold;">⚠ Hay piezas faltantes. No se puede fabricar.</p>
+            {% else %}
+                <a href="{% url 'marcar_fabricado' item.orden.id %}"
+                   style="background:#2e7d32; color:white; padding:8px 12px; text-decoration:none;">
+                    ✔ Marcar como fabricado
+                </a>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No hay órdenes en producción.</p>
+{% endif %}

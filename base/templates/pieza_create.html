@@ -1,0 +1,63 @@
+<nav style="
+    background:#1e3a8a;
+    padding:15px 20px;
+    border-radius:12px;
+    margin-bottom:25px;
+    display:flex;
+    gap:20px;
+    justify-content:center;
+">
+    <a href="{% url 'piezas_list' %}" style="
+        color:white;
+        font-weight:600;
+        text-decoration:none;
+        padding:8px 14px;
+        border-radius:8px;
+        background:#3b82f6;
+    ">Piezas</a>
+
+    <a href="{% url 'configuracion_list' %}" style="
+        color:white;
+        font-weight:600;
+        text-decoration:none;
+        padding:8px 14px;
+        border-radius:8px;
+        background:#3b82f6;
+    ">Recetas</a>
+
+    <a href="{% url 'control_stock' %}" style="
+        color:white;
+        font-weight:600;
+        text-decoration:none;
+        padding:8px 14px;
+        border-radius:8px;
+        background:#2563eb;
+    ">Control de Stock</a>
+
+    <a href="/admin/" style="
+        color:white;
+        font-weight:600;
+        text-decoration:none;
+        padding:8px 14px;
+        border-radius:8px;
+        background:#475569;
+    ">Administración</a>
+</nav>
+
+
+<h2>Crear Pieza</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Nombre</label>
+    <input type="text" name="nombre" required>
+
+    <label>Descripción</label>
+    <textarea name="descripcion"></textarea>
+
+    <label>Stock inicial</label>
+    <input type="number" name="stock" value="0">
+
+    <button type="submit">Guardar</button>
+</form>

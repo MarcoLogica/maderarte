@@ -1,0 +1,120 @@
+<!-- NAVBAR GLOBAL -->
+<style>
+    .navbar {
+        background: #2e7d32;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 8px;
+        margin-bottom: 25px;
+    }
+
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        margin-right: 18px;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    .navbar a:hover {
+        text-decoration: underline;
+    }
+
+    .navbar .left-links,
+    .navbar .right-links {
+        display: flex;
+        align-items: center;
+    }
+</style>
+
+<div class="navbar">
+    <div class="left-links">
+        <a href="{% url 'panel_ordenes' %}">Órdenes</a>
+        <a href="{% url 'panel_quiebres' %}">Quiebres</a>
+        <a href="{% url 'panel_produccion' %}">Producción</a>
+        <a href="{% url 'dashboard_stock' %}">Stock</a>
+         <a href="{% url 'panel' %}">Volver al panel de gestión</a>
+    </div>
+
+
+</div>
+
+
+<h2 style="margin-bottom: 20px;">Panel de Órdenes</h2>
+
+<!-- FILTRO POR ESTADO -->
+<form method="get" style="margin-bottom: 20px;">
+    <label for="estado">Filtrar por estado:</label>
+    <select name="estado" id="estado" onchange="this.form.submit()">
+        <option value="">Todas</option>
+        <option value="pendiente" {% if estado_filtro == "pendiente" %}selected{% endif %}>Pendiente</option>
+        <option value="produccion" {% if estado_filtro == "produccion" %}selected{% endif %}>En producción</option>
+        <option value="listo" {% if estado_filtro == "listo" %}selected{% endif %}>Listo para envío</option>
+        <option value="enviado" {% if estado_filtro == "enviado" %}selected{% endif %}>Enviado</option>
+        <option value="entregado" {% if estado_filtro == "entregado" %}selected{% endif %}>Entregado</option>
+    </select>
+</form>
+
+<!-- TABLA DE ÓRDENES -->
+<table style="width:100%; border-collapse: collapse;">
+    <tr style="background:#f0f0f0;">
+        <th style="padding:10px; border:1px solid #ccc;">ID</th>
+        <th style="padding:10px; border:1px solid #ccc;">Cliente</th>
+        <th style="padding:10px; border:1px solid #ccc;">Fecha</th>
+        <th style="padding:10px; border:1px solid #ccc;">Total</th>
+        <th style="padding:10px; border:1px solid #ccc;">Estado</th>
+        <th style="padding:10px; border:1px solid #ccc;">Piezas faltantes</th>
+        <th style="padding:10px; border:1px solid #ccc;">Acciones</th>
+    </tr>
+
+    {% for orden in ordenes %}
+    <tr>
+        <td style="padding:10px; border:1px solid #ccc;">#{{ orden.id }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ orden.nombre }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ orden.fecha|date:"d/m/Y H:i" }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">${{ orden.total }}</td>
+
+        <!-- ESTADO CON COLORES -->
+        <td style="padding:10px; border:1px solid #ccc;">
+            {% if orden.estado == "pendiente" %}
+                <span style="color:#c62828; font-weight:bold;">Pendiente</span>
+            {% elif orden.estado == "produccion" %}
+                <span style="color:#ef6c00; font-weight:bold;">En producción</span>
+            {% elif orden.estado == "listo" %}
+                <span style="color:#2e7d32; font-weight:bold;">Listo para envío</span>
+            {% elif orden.estado == "enviado" %}
+                <span style="color:#0277bd; font-weight:bold;">Enviado</span>
+            {% elif orden.estado == "entregado" %}
+                <span style="color:#6a1b9a; font-weight:bold;">Entregado</span>
+            {% endif %}
+        </td>
+
+        <!-- INDICADOR DE QUIEBRE -->
+        <td style="padding:10px; border:1px solid #ccc;">
+            {% if orden.tiene_quiebre %}
+                <span style="color:red; font-weight:bold;">Sí</span>
+            {% else %}
+                No
+            {% endif %}
+        </td>
+
+        <!-- BOTONES DE ACCIÓN -->
+        <td style="padding:10px; border:1px solid #ccc;">
+            {% if orden.estado == "pendiente" %}
+                <a href="{% url 'cambiar_estado_orden' orden.id 'produccion' %}">Mover a producción</a>
+
+            {% elif orden.estado == "produccion" %}
+                <a href="{% url 'cambiar_estado_orden' orden.id 'listo' %}">Marcar como listo</a>
+
+            {% elif orden.estado == "listo" %}
+                <a href="{% url 'cambiar_estado_orden' orden.id 'enviado' %}">Enviar</a>
+
+            {% elif orden.estado == "enviado" %}
+                <a href="{% url 'cambiar_estado_orden' orden.id 'entregado' %}">Entregar</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>

@@ -194,6 +194,11 @@ td a:hover {
 </head>
 
 </style>
+
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    <p>Usuario activo: <strong>{{ request.user.username }}</strong></p>
+    <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar sesión</a>
+</div>
 <body>
     <header class="banner">
         <h1>Gestión de productos Montessori</h1>

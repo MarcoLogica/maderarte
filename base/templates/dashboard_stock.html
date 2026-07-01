@@ -1,0 +1,262 @@
+<!-- NAVBAR GLOBAL -->
+<style>
+    .navbar {
+        background: #2e7d32;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 8px;
+        margin-bottom: 25px;
+    }
+
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        margin-right: 18px;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    .navbar a:hover {
+        text-decoration: underline;
+    }
+
+    .navbar .left-links,
+    .navbar .right-links {
+        display: flex;
+        align-items: center;
+    }
+</style>
+
+<div class="navbar">
+    <div class="left-links">
+        <a href="{% url 'panel_ordenes' %}">Órdenes</a>
+        <a href="{% url 'panel_quiebres' %}">Quiebres</a>
+        <a href="{% url 'panel_produccion' %}">Producción</a>
+        <a href="{% url 'dashboard_stock' %}">Stock</a>
+         <a href="{% url 'panel' %}">Volver al panel de gestión</a>
+    </div>
+
+
+</div>
+
+
+<h2 style="margin-bottom:20px;">Dashboard de Stock</h2>
+
+<style>
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .chart-card {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        text-align: center;
+    }
+
+    canvas {
+        max-width: 100%;
+        height: 260px !important;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 8px;
+        border: 1px solid #ccc;
+    }
+</style>
+
+<!-- ============================= -->
+<!--   PIEZAS EN QUIEBRE          -->
+<!-- ============================= -->
+<h3 style="color:red;">Piezas en Quiebre (stock < 0)</h3>
+{% if piezas_quiebre %}
+<table>
+    <tr style="background:#ffcccc;">
+        <th>Pieza</th>
+        <th>Stock</th>
+    </tr>
+    {% for p in piezas_quiebre %}
+    <tr>
+        <td>{{ p.nombre }}</td>
+        <td style="color:red; font-weight:bold;">{{ p.stock }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No hay piezas en quiebre.</p>
+{% endif %}
+
+<!-- ============================= -->
+<!--   PIEZAS CRÍTICAS            -->
+<!-- ============================= -->
+<h3 style="color:#c62828;">Piezas Críticas (stock < 5)</h3>
+{% if piezas_criticas %}
+<table>
+    <tr style="background:#ffe0e0;">
+        <th>Pieza</th>
+        <th>Stock</th>
+    </tr>
+    {% for p in piezas_criticas %}
+    <tr>
+        <td>{{ p.nombre }}</td>
+        <td style="color:#c62828; font-weight:bold;">{{ p.stock }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No hay piezas críticas.</p>
+{% endif %}
+
+<!-- ============================= -->
+<!--   PIEZAS CON STOCK BAJO      -->
+<!-- ============================= -->
+<h3 style="color:#ef6c00;">Piezas con Stock Bajo (5–15)</h3>
+{% if piezas_bajo %}
+<table>
+    <tr style="background:#fff3e0;">
+        <th>Pieza</th>
+        <th>Stock</th>
+    </tr>
+    {% for p in piezas_bajo %}
+    <tr>
+        <td>{{ p.nombre }}</td>
+        <td style="color:#ef6c00; font-weight:bold;">{{ p.stock }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No hay piezas con stock bajo.</p>
+{% endif %}
+
+<!-- ============================= -->
+<!--   PIEZAS OK                  -->
+<!-- ============================= -->
+<h3 style="color:#2e7d32;">Piezas con Stock Suficiente (>= 15)</h3>
+{% if piezas_ok %}
+<table>
+    <tr style="background:#e8f5e9;">
+        <th>Pieza</th>
+        <th>Stock</th>
+    </tr>
+    {% for p in piezas_ok %}
+    <tr>
+        <td>{{ p.nombre }}</td>
+        <td style="color:#2e7d32; font-weight:bold;">{{ p.stock }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No hay piezas con stock suficiente.</p>
+{% endif %}
+
+<hr style="margin:40px 0;">
+
+<!-- ============================= -->
+<!--   GRILLAS DE GRÁFICOS        -->
+<!-- ============================= -->
+<div class="dashboard-grid">
+
+    <!-- GRÁFICO 1 -->
+    <div class="chart-card">
+        <h3>Stock actual por pieza</h3>
+        <canvas id="stockChart"></canvas>
+    </div>
+
+    <!-- GRÁFICO 2 -->
+    <div class="chart-card">
+        <h3>Distribución del estado del stock</h3>
+        <canvas id="estadoChart"></canvas>
+    </div>
+
+    <!-- GRÁFICO 3 -->
+    <div class="chart-card">
+    <h3>Capacidad total de fabricación</h3>
+    <p style="font-size:48px; font-weight:bold; margin-top:20px;">
+        {{ total_capacidad }}
+    </p>
+    <p style="margin-top:10px; color:#666;">
+        Unidades que puedes fabricar hoy con el stock actual
+    </p>
+</div>
+
+
+</div>
+
+<!-- ============================= -->
+<!--   CHART.JS CDN               -->
+<!-- ============================= -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- ============================= -->
+<!--   SCRIPT: GRÁFICO BARRAS     -->
+<!-- ============================= -->
+<script>
+    const ctx1 = document.getElementById('stockChart');
+
+    new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: {{ nombres_piezas|safe }},
+            datasets: [{
+                label: 'Stock actual',
+                data: {{ stock_piezas|safe }},
+                backgroundColor: 'rgba(46, 125, 50, 0.6)',
+                borderColor: 'rgba(46, 125, 50, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+<!-- ============================= -->
+<!--   SCRIPT: GRÁFICO TORTA      -->
+<!-- ============================= -->
+<script>
+    const ctx2 = document.getElementById('estadoChart');
+
+    new Chart(ctx2, {
+        type: 'pie',
+        data: {
+            labels: ['En quiebre', 'Críticas', 'Bajo stock', 'OK'],
+            datasets: [{
+                data: [
+                    {{ piezas_quiebre|length }},
+                    {{ piezas_criticas|length }},
+                    {{ piezas_bajo|length }},
+                    {{ piezas_ok|length }}
+                ],
+                backgroundColor: [
+                    'rgba(198, 40, 40, 0.7)',
+                    'rgba(239, 83, 80, 0.7)',
+                    'rgba(255, 167, 38, 0.7)',
+                    'rgba(67, 160, 71, 0.7)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+</script>
+
+

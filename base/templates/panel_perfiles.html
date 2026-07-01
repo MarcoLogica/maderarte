@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Centro de Control de Perfiles</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f6fa;
+        }
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .toggle-label {
+            font-weight: 500;
+        }
+        .table thead {
+            background: #e9ecef;
+        }
+        .badge-perfil {
+            background: #6c5ce7;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container py-5">
+
+    <h1 class="mb-4 text-center fw-bold">Centro de Control de Perfiles y Accesos</h1>
+
+    <!-- ============================
+         SECCIÓN 1: CREAR PERFIL
+    ============================= -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h3 class="section-title">Crear nuevo perfil</h3>
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ perfil_form.nombre.label_tag }}
+                        {{ perfil_form.nombre }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ perfil_form.descripcion.label_tag }}
+                        {{ perfil_form.descripcion }}
+                    </div>
+                </div>
+
+                <hr>
+
+                <h5 class="fw-bold">Permisos del perfil</h5>
+
+                <div class="row mt-3">
+                    {% for field in perfil_form %}
+                        {% if field.name != "nombre" and field.name != "descripcion" %}
+                        <div class="col-md-4 mb-2">
+                            <div class="form-check form-switch">
+                                {{ field }}
+                                <label class="form-check-label toggle-label">{{ field.label }}</label>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <button type="submit" name="crear_perfil" class="btn btn-primary mt-3">
+                    Crear Perfil
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+    <div class="card-body">
+        <h3 class="section-title">Crear nuevo usuario</h3>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ crear_usuario_form.as_p }}
+            <button type="submit" name="crear_usuario" class="btn btn-warning mt-3">
+                Crear Usuario
+            </button>
+        </form>
+    </div>
+</div>
+
+    <!-- ============================
+         SECCIÓN 2: ASIGNAR PERFIL A USUARIO
+    ============================= -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h3 class="section-title">Asignar perfil a usuario</h3>
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ usuario_perfil_form.usuario.label_tag }}
+                        {{ usuario_perfil_form.usuario }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ usuario_perfil_form.perfil.label_tag }}
+                        {{ usuario_perfil_form.perfil }}
+                    </div>
+                </div>
+
+                <button type="submit" name="crear_usuario_perfil" class="btn btn-success mt-3">
+                    Asignar Perfil
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================
+         SECCIÓN 3: LISTA DE PERFILES
+    ============================= -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h3 class="section-title">Perfiles creados</h3>
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Perfil</th>
+                        <th>Descripción</th>
+                        <th>Permisos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in perfiles %}
+                    <tr>
+                        <td><span class="badge badge-perfil text-white">{{ p.nombre }}</span></td>
+                        <td>{{ p.descripcion }}</td>
+                        <td>
+                            <ul class="mb-0">
+                                {% if p.puede_ver_ventas %}<li>Ver ventas</li>{% endif %}
+                                {% if p.puede_crear_ventas %}<li>Crear ventas</li>{% endif %}
+                                {% if p.puede_editar_ventas %}<li>Editar ventas</li>{% endif %}
+                                {% if p.puede_eliminar_ventas %}<li>Eliminar ventas</li>{% endif %}
+                                {% if p.puede_ver_panel_ventas %}<li>Panel de ventas</li>{% endif %}
+                                {% if p.puede_ver_productos %}<li>Ver productos</li>{% endif %}
+                                {% if p.puede_crear_productos %}<li>Crear productos</li>{% endif %}
+                                {% if p.puede_editar_productos %}<li>Editar productos</li>{% endif %}
+                                {% if p.puede_eliminar_productos %}<li>Eliminar productos</li>{% endif %}
+                                {% if p.puede_importar_excel %}<li>Importar Excel</li>{% endif %}
+                                {% if p.puede_ejecutar_ia %}<li>Ejecutar IA</li>{% endif %}
+                                {% if p.puede_ver_carrito %}<li>Ver carrito</li>{% endif %}
+                                {% if p.puede_procesar_pagos %}<li>Procesar pagos</li>{% endif %}
+                            </ul>
+                        </td>
+                        <td>
+                        <a href="{% url 'editar_perfil' p.id %}" class="btn btn-sm btn-warning">Editar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <!-- ============================
+         SECCIÓN 4: USUARIOS CON PERFIL
+    ============================= -->
+    <div class="card">
+        <div class="card-body">
+            <h3 class="section-title">Usuarios con perfil asignado</h3>
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Perfil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for up in usuarios_perfil %}
+                    <tr>
+                        <td>{{ up.usuario.username }}</td>
+                        <td>{{ up.perfil.nombre }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+</body>
+</html>

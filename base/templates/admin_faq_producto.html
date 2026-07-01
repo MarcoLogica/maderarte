@@ -1,0 +1,27 @@
+<h2>Preguntas frecuentes de {{ producto.nombre }}</h2>
+
+<form method="POST" style="margin-bottom:20px;">
+    {% csrf_token %}
+
+    <label>Pregunta:</label>
+    <input type="text" name="pregunta" class="form-control">
+
+    <label>Respuesta:</label>
+    <textarea name="respuesta" class="form-control"></textarea>
+
+    <button class="btn btn-primary" style="margin-top:10px;">Agregar</button>
+</form>
+
+<hr>
+
+<h3>Preguntas actuales</h3>
+
+{% for f in faqs %}
+    <div style="margin-bottom:20px; border:1px solid #ddd; padding:10px; border-radius:8px;">
+        <strong>{{ f.pregunta }}</strong>
+        <p>{{ f.respuesta }}</p>
+
+        <a href="{% url 'editar_faq_producto' f.id %}" class="btn btn-warning btn-sm">Editar</a>
+        <a href="{% url 'eliminar_faq_producto' f.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+    </div>
+{% endfor %}

@@ -1,0 +1,43 @@
+<h2>Uso real de {{ producto.nombre }}</h2>
+
+<form method="POST" enctype="multipart/form-data" style="margin-bottom:20px;">
+    {% csrf_token %}
+
+    <label>Imagen:</label>
+    <input type="file" name="imagen" class="form-control">
+
+    <label>Video:</label>
+    <input type="file" name="video" class="form-control">
+
+    <button class="btn btn-primary" style="margin-top:10px;">Agregar</button>
+</form>
+
+<hr>
+
+<h3>Elementos actuales</h3>
+
+{% for u in usos %}
+    <div style="margin-bottom:20px; border:1px solid #ddd; padding:10px; border-radius:8px;">
+
+        {% if u.imagen %}
+            <img src="{{ u.imagen.url }}" style="width:200px; border-radius:8px;">
+        {% endif %}
+
+        {% if u.video %}
+            <video width="200" controls style="border-radius:8px;">
+                <source src="{{ u.video.url }}" type="video/mp4">
+            </video>
+        {% endif %}
+
+        <br>
+
+        <a href="{% url 'editar_uso_real_producto' u.id %}" class="btn btn-warning btn-sm" style="margin-right:10px;">
+    Editar
+</a>
+
+<a href="{% url 'eliminar_uso_real_producto' u.id %}" class="btn btn-danger btn-sm">
+    Eliminar
+</a>
+
+    </div>
+{% endfor %}

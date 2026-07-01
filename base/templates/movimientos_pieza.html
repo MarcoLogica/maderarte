@@ -1,0 +1,17 @@
+<h2>Movimientos de Stock — {{ pieza.nombre }}</h2>
+
+<table border="1" cellpadding="10" cellspacing="0" style="width:100%; margin-top:20px;">
+    <tr>
+        <th>Fecha</th>
+        <th>Cantidad</th>
+        <th>Motivo</th>
+    </tr>
+
+    {% for m in movimientos %}
+    <tr>
+        <td>{{ m.fecha }}</td>
+        <td>{{ m.cantidad }}</td>
+        <td>{{ m.motivo }}</td>
+    </tr>
+    {% endfor %}
+</table>

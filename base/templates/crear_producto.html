@@ -150,6 +150,11 @@ footer a:hover {
 }
 
 </style>
+
+<div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+    <p>Usuario activo: <strong>{{ request.user.username }}</strong></p>
+    <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar sesión</a>
+</div>
 <body>
 
 

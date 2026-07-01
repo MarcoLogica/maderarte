@@ -1,0 +1,49 @@
+<h2>Administrar videos de: {{ producto.nombre }}</h2>
+
+<form method="POST" enctype="multipart/form-data" style="margin-bottom:20px;">
+    {% csrf_token %}
+    <label>Título del video:</label>
+    <input type="text" name="titulo" class="form-control">
+
+    <label>Archivo de video:</label>
+    <input type="file" name="video" accept="video/mp4" class="form-control" required>
+
+    <button type="submit" class="btn btn-primary" style="margin-top:10px;">
+        Subir video
+    </button>
+</form>
+
+<hr>
+
+<h3>Videos actuales</h3>
+
+{% for v in videos %}
+<div style="
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:15px;
+    border:1px solid #ddd;
+">
+    <p><strong>{{ v.titulo }}</strong></p>
+
+    <video controls width="250">
+        <source src="{{ v.video.url }}" type="video/mp4">
+    </video>
+
+    <br><br>
+
+    <a href="{% url 'editar_video_producto' v.id %}" class="btn btn-warning" style="margin-right:10px;">
+    Editar
+</a>
+
+<a href="{% url 'eliminar_video_producto' v.id %}" class="btn btn-danger">
+    Eliminar
+</a>
+
+
+
+</div>
+{% empty %}
+<p>No hay videos aún.</p>
+{% endfor %}

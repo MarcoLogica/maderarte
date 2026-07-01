@@ -1,0 +1,23 @@
+<section class="panel-testimonios">
+    <h2>Gestionar Testimonios</h2>
+
+    <a href="{% url 'crear_testimonio' %}" class="btn-crear">➕ Nuevo testimonio</a>
+
+    <div class="testimonios-grid-admin">
+        {% for t in testimonios %}
+        <div class="testimonio-card-admin">
+
+            <h3>{{ t.titulo }}</h3>
+            <p>{{ t.comentario }}</p>
+
+            {% if t.imagen %}
+                <img src="{{ t.imagen.url }}" class="media-testimonio-admin">
+            {% endif %}
+
+            <a href="{% url 'editar_testimonio' t.id %}" class="btn-editar">✏️ Editar</a>
+            <a href="{% url 'eliminar_testimonio' t.id %}" class="btn-eliminar">🗑️ Eliminar</a>
+
+        </div>
+        {% endfor %}
+    </div>
+</section>

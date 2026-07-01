@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # modelo con cada empresa del IPSA
 class Accion(models.Model):
@@ -74,8 +75,52 @@ class Producto(models.Model):
     ])
     fecha_creacion = models.DateTimeField(auto_now_add=True)
 
+    def stock_disponible(self):
+        configuraciones = ConfiguracionProducto.objects.filter(producto=self)
+
+        if not configuraciones.exists():
+            return 0  # Sin receta no se puede fabricar
+
+        cantidades = []
+
+        for config in configuraciones:
+            stock_pieza = config.pieza.stock
+            necesarias = config.cantidad_necesaria
+
+            # Si una pieza no tiene stock → no se puede fabricar ni 1 unidad
+            if stock_pieza <= 0:
+                return 0
+
+            # Calcular cuántas unidades se pueden fabricar con esta pieza
+            unidades = stock_pieza // necesarias
+            cantidades.append(unidades)
+
+        # El stock disponible es el mínimo entre todas las piezas
+        return min(cantidades) if cantidades else 0
+
     def __str__(self):
         return self.nombre
+
+    def mensaje_stock(self):
+        stock = self.stock_disponible()
+
+        if stock >= 3:
+            return {
+                "tipo": "ok",
+                "texto": "✔ Stock disponible para entrega rápida"
+            }
+
+        elif 1 <= stock <= 2:
+            return {
+                "tipo": "bajo",
+                "texto": "🔥 Stock bajo, alta demanda"
+            }
+
+        else:
+            return {
+                "tipo": "pedido",
+                "texto": "⚠️ Sin stock inmediato, fabricación bajo pedido (entrega 7–10 días)"
+            }
 
 
 class Venta(models.Model):
@@ -101,16 +146,14 @@ class Venta(models.Model):
     costo_despacho = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     comision_venta = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     notas = models.TextField(blank=True, null=True)
-    VENDEDORES = [
-        ('Marco', 'Marco'),
-        ('Catalina', 'Catalina'),
-    ]
 
-    vendedor = models.CharField(
-        max_length=100,
-        choices=VENDEDORES,
+
+    vendedor = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
         null=True,
-        blank=True
+        blank=True,
+        related_name='ventas_realizadas'
     )
 
     @property
@@ -135,3 +178,256 @@ class DatosContacto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+
+################# perfilamiento de usuarios
+
+from django.db import models
+from django.contrib.auth.models import User
+
+class Perfil(models.Model):
+    nombre = models.CharField(max_length=100, unique=True)
+    descripcion = models.TextField(blank=True, null=True)
+
+    # Permisos
+    puede_ver_ventas = models.BooleanField(default=False)
+    puede_crear_ventas = models.BooleanField(default=False)
+    puede_editar_ventas = models.BooleanField(default=False)
+    puede_eliminar_ventas = models.BooleanField(default=False)
+    puede_ver_panel_ventas = models.BooleanField(default=False)
+
+    puede_ver_productos = models.BooleanField(default=False)
+    puede_crear_productos = models.BooleanField(default=False)
+    puede_editar_productos = models.BooleanField(default=False)
+    puede_eliminar_productos = models.BooleanField(default=False)
+
+    puede_importar_excel = models.BooleanField(default=False)
+    puede_ejecutar_ia = models.BooleanField(default=False)
+
+    puede_ver_carrito = models.BooleanField(default=False)
+    puede_procesar_pagos = models.BooleanField(default=False)
+    acceso_panel = models.BooleanField(default=False)
+
+
+
+    def __str__(self):
+        return self.nombre
+
+
+class UsuarioPerfil(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    perfil = models.ForeignKey(Perfil, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return f"{self.usuario.username} → {self.perfil.nombre}"
+
+
+from django.db import models
+
+class Fortaleza(models.Model):
+    titulo = models.CharField(max_length=100)
+    descripcion = models.TextField()
+
+    # Nuevos campos
+    imagen = models.ImageField(upload_to='fortalezas_imagenes/', blank=True, null=True)
+    video = models.FileField(upload_to='fortalezas_videos/', blank=True, null=True)
+
+    def __str__(self):
+        return self.titulo
+
+
+
+class Oferta(models.Model):
+    titulo = models.CharField(max_length=150)
+    descripcion = models.TextField()
+    imagen = models.ImageField(upload_to='ofertas_imagenes/', blank=True, null=True)
+    video = models.FileField(upload_to='ofertas_videos/', blank=True, null=True)
+
+    def __str__(self):
+        return self.titulo
+
+
+class Testimonio(models.Model):
+    titulo = models.CharField(max_length=150)
+    comentario = models.TextField(blank=True)
+    imagen = models.ImageField(upload_to='testimonios/')   # captura del agradecimiento
+    imagen2 = models.ImageField(upload_to='testimonios/', blank=True, null=True)  # foto del niño
+
+    def __str__(self):
+        return self.titulo
+
+
+# administrador de stock
+
+class Pieza(models.Model):
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField(blank=True)
+    stock = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.nombre} ({self.stock} uds)"
+
+
+class ConfiguracionProducto(models.Model):
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    pieza = models.ForeignKey(Pieza, on_delete=models.CASCADE)
+    cantidad_necesaria = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.producto.nombre} - {self.pieza.nombre} x {self.cantidad_necesaria}"
+
+
+class MovimientoStockPieza(models.Model):
+    pieza = models.ForeignKey(Pieza, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+    cantidad = models.IntegerField()  # positivo = entrada, negativo = salida
+    motivo = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):
+        return f"{self.pieza.nombre} ({self.cantidad}) - {self.fecha}"
+
+
+# modelos para crear ordenes y rebajar stock
+
+class Orden(models.Model):
+    ESTADOS = [
+        ("pendiente", "Pendiente"),
+        ("produccion", "En producción"),
+        ("listo", "Listo para envío"),
+        ("enviado", "Enviado"),
+        ("entregado", "Entregado"),
+    ]
+
+    nombre = models.CharField(max_length=200)
+    direccion = models.TextField()
+    correo_electronico = models.EmailField()
+    telefono = models.CharField(max_length=20, blank=True)
+    comprobante = models.FileField(upload_to='comprobantes/')
+    fecha = models.DateTimeField(auto_now_add=True)
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+
+    estado = models.CharField(max_length=20, choices=ESTADOS, default="pendiente")
+    codigo_seguimiento = models.CharField(max_length=50, unique=True, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.codigo_seguimiento:
+            import uuid
+            self.codigo_seguimiento = f"MA-{uuid.uuid4().hex[:10].upper()}"
+        super().save(*args, **kwargs)
+
+    @property
+    def tiene_quiebre(self):
+        return QuiebreStock.objects.filter(orden=self, resuelto=False).exists()
+
+    def __str__(self):
+        return f"Orden #{self.id} - {self.nombre}"
+
+
+class OrdenItem(models.Model):
+    orden = models.ForeignKey(Orden, on_delete=models.CASCADE, related_name='items')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.IntegerField()
+    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def subtotal(self):
+        return self.cantidad * self.precio_unitario
+
+    def __str__(self):
+        return f"{self.producto.nombre} x {self.cantidad} (${self.precio_unitario})"
+
+
+class QuiebreStock(models.Model):
+    pieza = models.ForeignKey(Pieza, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    orden = models.ForeignKey(Orden, on_delete=models.CASCADE)
+    cantidad_faltante = models.IntegerField()
+    fecha = models.DateTimeField(auto_now_add=True)
+    resuelto = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Quiebre {self.pieza.nombre} - Orden {self.orden.id}"
+
+
+# sección como se fabrican los productos (administración de los videos)
+
+class ProductoVideo(models.Model):
+    producto = models.ForeignKey(
+        Producto,
+        on_delete=models.CASCADE,
+        related_name='videos'
+    )
+    titulo = models.CharField(max_length=200, blank=True)
+    video = models.FileField(upload_to='videos_productos/', null=True, blank=True)
+
+    orden = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.producto.nombre} - {self.titulo or 'Video'}"
+
+
+#seccion beneficios
+
+class BeneficioProducto(models.Model):
+    producto = models.ForeignKey(
+        Producto,
+        on_delete=models.CASCADE,
+        related_name="beneficios"
+    )
+    titulo = models.CharField(max_length=200)
+    descripcion = models.TextField(blank=True)
+    icono = models.CharField(max_length=100, blank=True)  # opcional
+    orden = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.producto.nombre} - {self.titulo}"
+
+# uso real
+
+class UsoRealProducto(models.Model):
+    producto = models.ForeignKey(
+        Producto,
+        on_delete=models.CASCADE,
+        related_name="usos_reales"
+    )
+    imagen = models.ImageField(upload_to="usos_reales/", null=True, blank=True)
+    video = models.FileField(upload_to="usos_reales/", null=True, blank=True)
+    orden = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"Uso real de {self.producto.nombre}"
+
+#preguntas frecuentes
+
+class PreguntaFrecuenteProducto(models.Model):
+    producto = models.ForeignKey(
+        Producto,
+        on_delete=models.CASCADE,
+        related_name="preguntas_frecuentes"
+    )
+    pregunta = models.CharField(max_length=255)
+    respuesta = models.TextField()
+    orden = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"FAQ de {self.producto.nombre}: {self.pregunta}"
+
+
+#productos relacionados
+
+class ProductoRelacionado(models.Model):
+    producto = models.ForeignKey(
+        Producto,
+        on_delete=models.CASCADE,
+        related_name="productos_relacionados"
+    )
+    imagen = models.ImageField(upload_to="productos_relacionados/")
+    titulo = models.CharField(max_length=255)
+    producto_destino = models.ForeignKey(
+        Producto,
+        on_delete=models.CASCADE,
+        related_name="relacionado_destino"
+    )
+    orden = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.titulo} relacionado con {self.producto.nombre}"

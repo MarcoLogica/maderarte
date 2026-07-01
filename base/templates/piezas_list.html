@@ -1,0 +1,76 @@
+<nav style="
+    background:#1e3a8a;
+    padding:15px 20px;
+    border-radius:12px;
+    margin-bottom:25px;
+    display:flex;
+    gap:20px;
+    justify-content:center;
+">
+    <a href="{% url 'piezas_list' %}" style="
+        color:white;
+        font-weight:600;
+        text-decoration:none;
+        padding:8px 14px;
+        border-radius:8px;
+        background:#3b82f6;
+    ">Piezas</a>
+
+    <a href="{% url 'configuracion_list' %}" style="
+        color:white;
+        font-weight:600;
+        text-decoration:none;
+        padding:8px 14px;
+        border-radius:8px;
+        background:#3b82f6;
+    ">Recetas</a>
+
+    <a href="{% url 'control_stock' %}" style="
+        color:white;
+        font-weight:600;
+        text-decoration:none;
+        padding:8px 14px;
+        border-radius:8px;
+        background:#2563eb;
+    ">Control de Stock</a>
+
+    <a href="{% url 'panel' %}" style="
+        color:white;
+        font-weight:600;
+        text-decoration:none;
+        padding:8px 14px;
+        border-radius:8px;
+        background:#2563eb;
+    ">Volver al panel de gestión</a>
+
+
+</nav>
+
+
+<h2 style="text-align:center; margin-bottom:20px;">Listado de Piezas</h2>
+
+<a href="{% url 'pieza_create' %}" style="padding:10px 20px; background:#4CAF50; color:white; border-radius:6px; text-decoration:none;">
+    + Crear nueva pieza
+</a>
+
+<table border="1" cellpadding="10" cellspacing="0" style="width:100%; margin-top:20px;">
+    <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Stock</th>
+        <th>Acciones</th>
+    </tr>
+
+    {% for p in piezas %}
+    <tr>
+        <td>{{ p.nombre }}</td>
+        <td>{{ p.descripcion }}</td>
+        <td>{{ p.stock }}</td>
+        <td>
+            <a href="{% url 'pieza_edit' p.id %}">Editar</a> |
+            <a href="{% url 'pieza_delete' p.id %}" onclick="return confirm('¿Eliminar pieza?')">Eliminar</a> |
+            <a href="{% url 'movimientos_pieza' p.id %}">Movimientos</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

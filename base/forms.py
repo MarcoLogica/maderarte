@@ -51,3 +51,40 @@ class DatosContactoForm(forms.ModelForm):
             'telefono': forms.TextInput(attrs={'placeholder': 'Teléfono'}),
         }
 
+
+######## perfilamiento de usuarios
+
+from django import forms
+from django.contrib.auth.models import User
+from .models import Perfil, UsuarioPerfil
+
+class PerfilForm(forms.ModelForm):
+    class Meta:
+        model = Perfil
+        fields = [
+            'nombre', 'descripcion',
+            'puede_ver_ventas', 'puede_crear_ventas', 'puede_editar_ventas', 'puede_eliminar_ventas', 'puede_ver_panel_ventas',
+            'puede_ver_productos', 'puede_crear_productos', 'puede_editar_productos', 'puede_eliminar_productos',
+            'puede_importar_excel', 'puede_ejecutar_ia',
+            'puede_ver_carrito', 'puede_procesar_pagos',
+        ]
+
+
+class UsuarioPerfilForm(forms.ModelForm):
+    usuario = forms.ModelChoiceField(queryset=User.objects.all())
+    perfil = forms.ModelChoiceField(queryset=Perfil.objects.all())
+
+    class Meta:
+        model = UsuarioPerfil
+        fields = ['usuario', 'perfil']
+
+
+from django.contrib.auth.models import User
+from django import forms
+
+class CrearUsuarioForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password']

@@ -1,0 +1,22 @@
+<section class="form-testimonio">
+    <h2>Crear Testimonio</h2>
+
+    <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label>Título</label>
+    <input type="text" name="titulo" required>
+
+    <label>Comentario (opcional)</label>
+    <textarea name="comentario"></textarea>
+
+    <label>Imagen 1 (captura del agradecimiento)</label>
+    <input type="file" name="imagen" accept="image/*" required>
+
+    <label>Imagen 2 (foto del niño con el producto)</label>
+    <input type="file" name="imagen2" accept="image/*">
+
+    <button type="submit" class="btn-guardar">Guardar</button>
+</form>
+
+</section>

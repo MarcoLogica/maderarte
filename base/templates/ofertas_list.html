@@ -1,0 +1,29 @@
+<section class="panel-fortalezas">
+    <h2>Gestionar Ofertas del Mes</h2>
+
+    <a href="{% url 'crear_oferta' %}" class="btn-crear">➕ Crear nueva oferta</a>
+
+    <div class="fortalezas-grid">
+        {% for o in ofertas %}
+        <div class="fortaleza-card">
+            <h3>{{ o.titulo }}</h3>
+            <p>{{ o.descripcion }}</p>
+
+            {% if o.imagen %}
+                <img src="{{ o.imagen.url }}" class="media-oferta">
+
+            {% endif %}
+
+            {% if o.video %}
+                <video controls class="media-oferta">
+
+                    <source src="{{ o.video.url }}" type="video/mp4">
+                </video>
+            {% endif %}
+
+            <a href="{% url 'editar_oferta' o.id %}" class="btn-editar">✏️ Editar</a>
+            <a href="{% url 'eliminar_oferta' o.id %}" class="btn-eliminar">🗑️ Eliminar</a>
+        </div>
+        {% endfor %}
+    </div>
+</section>

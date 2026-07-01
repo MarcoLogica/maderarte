@@ -1,0 +1,36 @@
+<h2>Beneficios de {{ producto.nombre }}</h2>
+
+<form method="POST" style="margin-bottom:20px;">
+    {% csrf_token %}
+
+    <label>Título:</label>
+    <input type="text" name="titulo" class="form-control" required>
+
+    <label>Descripción:</label>
+    <textarea name="descripcion" class="form-control"></textarea>
+
+    <label>Icono (opcional):</label>
+    <input type="text" name="icono" class="form-control" placeholder="ej: ⭐ o fa-solid fa-star">
+
+    <button class="btn btn-primary" style="margin-top:10px;">Agregar beneficio</button>
+</form>
+
+<hr>
+
+<h3>Beneficios actuales</h3>
+
+{% for b in beneficios %}
+    <div style="margin-bottom:15px; padding:10px; border:1px solid #ddd; border-radius:8px;">
+        <strong>{{ b.icono }} {{ b.titulo }}</strong><br>
+        <small>{{ b.descripcion }}</small><br><br>
+
+        <a href="{% url 'editar_beneficio_producto' b.id %}" class="btn btn-warning btn-sm" style="margin-right:10px;">
+            Editar
+        </a>
+
+        <a href="{% url 'eliminar_beneficio_producto' b.id %}" class="btn btn-danger btn-sm">
+            Eliminar
+        </a>
+    </div>
+{% endfor %}
+

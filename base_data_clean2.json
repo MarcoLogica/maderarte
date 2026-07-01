@@ -1,0 +1,752 @@
+[
+{
+  "model": "base.producto",
+  "pk": 4,
+  "fields": {
+    "nombre": "Tri├íngulo Pikler",
+    "descripcion": "El tri├íngulo Pikler es una estructura de madera dise├▒ada para que los ni├▒os peque├▒os puedan escalar, trepar y explorar de forma segura y aut├│noma. Aunque fue creado por la pediatra h├║ngara Emmi Pikler, su filosof├¡a se alinea perfectamente con el enfoque Montessori: respetar el ritmo del ni├▒o, fomentar su independencia y permitir el aprendizaje a trav├®s del movimiento libre.\r\n\r\nDimensiones: \r\n\r\n- Ancho: 45 cm\r\n- Alto: 60 cm\r\n- Apertura: 69 cm",
+    "precio": "46000.00",
+    "imagen": "productos/Imagen_de_WhatsApp_2025-09-16_a_las_07.32.38_29f66f31.jpg",
+    "imagen_1": "productos/Imagen_de_WhatsApp_2025-09-16_a_las_07.32.38_81d51956.jpg",
+    "imagen_2": "productos/Imagen_de_WhatsApp_2025-09-16_a_las_07.32.38_17de3f77.jpg",
+    "imagen_3": "productos/IMG-20250905-WA0115_wX7O4hC.jpg",
+    "imagen_4": "productos/IMG-20250905-WA0114_3EmDdmc.jpg",
+    "imagen_5": "",
+    "destacado": true,
+    "categoria": "accesorios",
+    "fecha_creacion": "2025-09-05T22:33:30.698Z"
+  }
+},
+{
+  "model": "base.producto",
+  "pk": 5,
+  "fields": {
+    "nombre": "Torre de Aprendizaje",
+    "descripcion": "Torre de Aprendizaje Montessori\r\nDescubre el mundo a la altura de tu hijo\r\nLa torre de aprendizaje Montessori es una estructura segura y estable que permite a los ni├▒os participar activamente en las tareas cotidianas, al nivel de los adultos. Fabricada en madera, con barandas protectoras y plataforma ajustable, esta herramienta fomenta la autonom├¡a, la confianza y el v├¡nculo familiar.\r\n┬┐Por qu├® elegirla para tu hijo?\r\n- Seguridad y estabilidad: Mucho m├ís segura que un banquito com├║n. Evita ca├¡das y permite que el ni├▒o se mueva libremente.\r\n- Autonom├¡a desde peque├▒os: Facilita que los ni├▒os se laven las manos, ayuden en la cocina, pinten o jueguen en superficies elevadas.\r\n- Desarrollo motor y emocional: Mejora el equilibrio, la coordinaci├│n y la autoestima al permitirles completar tareas por s├¡ mismos.\r\n- Tiempo de calidad en familia: Transforma momentos cotidianos en experiencias educativas y afectivas.\r\n- Adaptable y duradera: Acompa├▒a el crecimiento del ni├▒o desde los 18 meses hasta los 6 a├▒os, gracias a su dise├▒o ajustable.\r\n\r\nEsta torre no es solo un mueble: es una invitaci├│n a que tu hijo explore, colabore y aprenda con libertad y seguridad",
+    "precio": "58000.00",
+    "imagen": "productos/Imagen_de_WhatsApp_2025-09-16_a_las_07.32.38_d453f733.jpg",
+    "imagen_1": "productos/Imagen_de_WhatsApp_2025-09-16_a_las_07.32.38_3834d5e6.jpg",
+    "imagen_2": "productos/Imagen_de_WhatsApp_2025-09-16_a_las_07.32.38_fda4377b.jpg",
+    "imagen_3": "",
+    "imagen_4": "",
+    "imagen_5": "",
+    "destacado": true,
+    "categoria": "accesorios",
+    "fecha_creacion": "2025-09-05T22:35:44.488Z"
+  }
+},
+{
+  "model": "base.producto",
+  "pk": 9,
+  "fields": {
+    "nombre": "Librero Montessori",
+    "descripcion": "Un librero Montessori es un mueble dise├▒ado a la altura de los ni├▒os, con el objetivo de fomentar su independencia y el h├íbito de la lectura desde edades tempranas. Inspirado en la filosof├¡a Montessori, este tipo de librero permite que los ni├▒os accedan f├ícilmente a sus libros, los exploren por s├¡ mismos y elijan qu├® leer sin ayuda de un adulto. Dimensiones: - Ancho: 62 cm - Alto: 37 cm - Fondo: 27 cm",
+    "precio": "35000.00",
+    "imagen": "productos/IMG-20250905-WA0117_goGhJn7.jpg",
+    "imagen_1": "productos/IMG-20250905-WA0116_TLGEfa0.jpg",
+    "imagen_2": "productos/IMG-20250905-WA0118_KOe8qwP.jpg",
+    "imagen_3": "",
+    "imagen_4": "",
+    "imagen_5": "",
+    "destacado": true,
+    "categoria": "estanterias",
+    "fecha_creacion": "2025-09-08T21:14:03.726Z"
+  }
+},
+{
+  "model": "base.producto",
+  "pk": 10,
+  "fields": {
+    "nombre": "Mesa Cubo + Silla",
+    "descripcion": "Mesa Cubo + Silla Montessori  \r\nDise├▒o compacto, autonom├¡a en cada rinc├│n\r\n\r\n┬┐Qu├® es?  \r\nLa Mesa Cubo + Silla Montessori es un conjunto ergon├│mico y multifuncional dise├▒ado especialmente para ni├▒os peque├▒os. Su forma c├║bica permite rotar y adaptar cada pieza seg├║n la actividad, ofreciendo distintas alturas y usos en un solo sistema. Ideal para espacios reducidos, rincones de lectura, arte o alimentaci├│n.\r\n\r\n┬┐Por qu├® elegirla?  \r\n- Autonom├¡a real: el ni├▒o puede sentarse, girar o mover las piezas por s├¡ mismo, fomentando independencia desde el primer a├▒o.  \r\n- Dise├▒o modular: cada cubo puede usarse como mesa, silla o estante, adapt├índose a distintas etapas y actividades.  \r\n- Materiales nobles: fabricada en madera natural, con bordes suaves y acabados seguros para uso infantil.  \r\n- Est├®tica Montessori: l├¡neas limpias, proporciones adecuadas y armon├¡a visual para ambientes educativos y familiares.  \r\n- Postura saludable: altura pensada para que el ni├▒o mantenga la espalda recta y los pies apoyados.\r\n\r\nIdeal para:  \r\n- Ni├▒os desde los 12 meses.  \r\n- Espacios Montessori, rincones de juego o lectura.  \r\n- Familias que valoran la funcionalidad, el dise├▒o y la autonom├¡a infantil.",
+    "precio": "50000.00",
+    "imagen": "productos/Imagen_de_WhatsApp_2025-09-16_a_las_07.32.37_9539a337.jpg",
+    "imagen_1": "productos/Imagen_de_WhatsApp_2025-09-16_a_las_07.32.37_44b4e0a9.jpg",
+    "imagen_2": "productos/Imagen_de_WhatsApp_2025-09-16_a_las_07.32.38_49624642.jpg",
+    "imagen_3": "",
+    "imagen_4": "",
+    "imagen_5": "",
+    "destacado": true,
+    "categoria": "mesas",
+    "fecha_creacion": "2025-09-16T11:49:41.880Z"
+  }
+},
+{
+  "model": "base.producto",
+  "pk": 11,
+  "fields": {
+    "nombre": "Banca - Mesa + Sillas",
+    "descripcion": "Banca - Mesa + Sillas Montessori  \r\nUn espacio flexible para aprender, crear y compartir\r\n\r\n┬┐Qu├® es?  \r\nEste conjunto Montessori incluye una mesa central, dos sillas y una banca multifuncional. Cada pieza est├í dise├▒ada para adaptarse a las proporciones infantiles, permitiendo que los ni├▒os se sienten, trabajen y colaboren c├│modamente. Su dise├▒o modular permite reorganizar el espacio seg├║n la actividad: lectura, juego, alimentaci├│n o arte.\r\n\r\n┬┐Por qu├® elegirlo?  \r\n- Autonom├¡a desde el inicio: los ni├▒os pueden sentarse, levantarse y mover las piezas por s├¡ mismos, fomentando independencia y confianza.  \r\n- Dise├▒o ergon├│mico: altura y proporciones pensadas para una postura saludable y concentraci├│n prolongada.  \r\n- Materiales naturales: madera noble, bordes redondeados y acabados seguros para uso infantil.  \r\n- Modularidad funcional: la banca puede usarse como asiento, estante o mesa auxiliar, adapt├índose a distintas rutinas.  \r\n- Est├®tica Montessori: l├¡neas limpias, armon├¡a visual y versatilidad para ambientes educativos y familiares.  \r\n- Fomento de la colaboraci├│n: ideal para actividades grupales, promoviendo el respeto del espacio compartido.\r\n\r\nIdeal para:  \r\n- Ni├▒os desde los 18 meses.  \r\n- Espacios Montessori, salas de juego o rincones creativos.  \r\n- Familias que valoran la autonom├¡a, el dise├▒o y la interacci├│n infantil.",
+    "precio": "70000.00",
+    "imagen": "productos/Imagen_de_WhatsApp_2025-09-16_a_las_07.32.37_36a03c9b.jpg",
+    "imagen_1": "productos/Imagen_de_WhatsApp_2025-09-16_a_las_07.32.38_7e1fece5.jpg",
+    "imagen_2": "productos/Imagen_de_WhatsApp_2025-09-16_a_las_07.32.37_7929e574.jpg",
+    "imagen_3": "productos/Imagen_de_WhatsApp_2025-09-16_a_las_07.32.37_811d074a.jpg",
+    "imagen_4": "",
+    "imagen_5": "",
+    "destacado": true,
+    "categoria": "mesas",
+    "fecha_creacion": "2025-09-16T11:52:10.222Z"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 4,
+  "fields": {
+    "producto": 4,
+    "canal": "mercado_libre",
+    "origen": "fabricante",
+    "fecha_venta": "2025-10-05",
+    "costo_producto": "31000.00",
+    "precio_venta": "50000.00",
+    "costo_despacho": "4550.00",
+    "comision_venta": "8000.00",
+    "notas": "Despachado con demora",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 5,
+  "fields": {
+    "producto": 9,
+    "canal": "mercado_libre",
+    "origen": "fabricante",
+    "fecha_venta": "2025-10-05",
+    "costo_producto": "25000.00",
+    "precio_venta": "45000.00",
+    "costo_despacho": "10000.00",
+    "comision_venta": "8100.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 6,
+  "fields": {
+    "producto": 9,
+    "canal": "mercado_libre",
+    "origen": "propia",
+    "fecha_venta": "2025-10-06",
+    "costo_producto": "8000.00",
+    "precio_venta": "45000.00",
+    "costo_despacho": "10000.00",
+    "comision_venta": "8100.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 7,
+  "fields": {
+    "producto": 9,
+    "canal": "mercado_libre",
+    "origen": "propia",
+    "fecha_venta": "2025-10-19",
+    "costo_producto": "8000.00",
+    "precio_venta": "45000.00",
+    "costo_despacho": "10000.00",
+    "comision_venta": "8100.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 8,
+  "fields": {
+    "producto": 9,
+    "canal": "mercado_libre",
+    "origen": "propia",
+    "fecha_venta": "2025-10-27",
+    "costo_producto": "8000.00",
+    "precio_venta": "45000.00",
+    "costo_despacho": "10000.00",
+    "comision_venta": "8100.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 9,
+  "fields": {
+    "producto": 9,
+    "canal": "mercado_libre",
+    "origen": "propia",
+    "fecha_venta": "2025-10-28",
+    "costo_producto": "8000.00",
+    "precio_venta": "45000.00",
+    "costo_despacho": "10000.00",
+    "comision_venta": "8100.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 10,
+  "fields": {
+    "producto": 9,
+    "canal": "mercado_libre",
+    "origen": "propia",
+    "fecha_venta": "2025-09-24",
+    "costo_producto": "8000.00",
+    "precio_venta": "45000.00",
+    "costo_despacho": "10000.00",
+    "comision_venta": "8100.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 11,
+  "fields": {
+    "producto": 9,
+    "canal": "mercado_libre",
+    "origen": "propia",
+    "fecha_venta": "2025-09-27",
+    "costo_producto": "8000.00",
+    "precio_venta": "45000.00",
+    "costo_despacho": "10000.00",
+    "comision_venta": "8100.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 12,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "fabricante",
+    "fecha_venta": "2025-09-24",
+    "costo_producto": "25000.00",
+    "precio_venta": "35000.00",
+    "costo_despacho": "2000.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 13,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "fabricante",
+    "fecha_venta": "2025-09-25",
+    "costo_producto": "25000.00",
+    "precio_venta": "35000.00",
+    "costo_despacho": "2000.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 14,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "fabricante",
+    "fecha_venta": "2025-10-17",
+    "costo_producto": "25000.00",
+    "precio_venta": "35000.00",
+    "costo_despacho": "2000.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 15,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-10-21",
+    "costo_producto": "8000.00",
+    "precio_venta": "35000.00",
+    "costo_despacho": "2000.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 16,
+  "fields": {
+    "producto": 5,
+    "canal": "facebook",
+    "origen": "fabricante",
+    "fecha_venta": "2025-11-02",
+    "costo_producto": "40000.00",
+    "precio_venta": "58000.00",
+    "costo_despacho": "0.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": "Catalina"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 17,
+  "fields": {
+    "producto": 5,
+    "canal": "facebook",
+    "origen": "fabricante",
+    "fecha_venta": "2025-11-02",
+    "costo_producto": "40000.00",
+    "precio_venta": "58000.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": "Catalina"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 18,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "fabricante",
+    "fecha_venta": "2025-11-03",
+    "costo_producto": "25000.00",
+    "precio_venta": "38000.00",
+    "costo_despacho": "2000.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": "Catalina"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 19,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "fabricante",
+    "fecha_venta": "2025-11-03",
+    "costo_producto": "28000.00",
+    "precio_venta": "41000.00",
+    "costo_despacho": "2000.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": "Catalina"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 20,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-11-09",
+    "costo_producto": "8000.00",
+    "precio_venta": "30000.00",
+    "costo_despacho": "0.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 21,
+  "fields": {
+    "producto": 5,
+    "canal": "facebook",
+    "origen": "fabricante",
+    "fecha_venta": "2025-11-17",
+    "costo_producto": "41000.00",
+    "precio_venta": "61000.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": "Catalina"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 22,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-11-19",
+    "costo_producto": "13000.00",
+    "precio_venta": "32500.00",
+    "costo_despacho": "2500.00",
+    "comision_venta": "0.00",
+    "notas": "Costo del producto considera madera, clavos y ahora las 2 manos de Laca.",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 23,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-11-19",
+    "costo_producto": "13000.00",
+    "precio_venta": "33000.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "0.00",
+    "notas": "Se suman las manos de LACA al costo del producto",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 24,
+  "fields": {
+    "producto": 9,
+    "canal": "mercado_libre",
+    "origen": "propia",
+    "fecha_venta": "2025-11-19",
+    "costo_producto": "13000.00",
+    "precio_venta": "45000.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "8100.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 25,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-11-28",
+    "costo_producto": "10000.00",
+    "precio_venta": "32500.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 26,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-11-25",
+    "costo_producto": "10000.00",
+    "precio_venta": "32500.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 27,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-11-24",
+    "costo_producto": "10000.00",
+    "precio_venta": "29500.00",
+    "costo_despacho": "0.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 28,
+  "fields": {
+    "producto": 4,
+    "canal": "mercado_libre",
+    "origen": "fabricante",
+    "fecha_venta": "2025-11-29",
+    "costo_producto": "31000.00",
+    "precio_venta": "50000.00",
+    "costo_despacho": "4550.00",
+    "comision_venta": "10000.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 29,
+  "fields": {
+    "producto": 4,
+    "canal": "mercado_libre",
+    "origen": "fabricante",
+    "fecha_venta": "2025-12-02",
+    "costo_producto": "31000.00",
+    "precio_venta": "50000.00",
+    "costo_despacho": "4550.00",
+    "comision_venta": "10000.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 30,
+  "fields": {
+    "producto": 4,
+    "canal": "mercado_libre",
+    "origen": "fabricante",
+    "fecha_venta": "2025-12-05",
+    "costo_producto": "31000.00",
+    "precio_venta": "50000.00",
+    "costo_despacho": "4550.00",
+    "comision_venta": "10000.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 31,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-12-05",
+    "costo_producto": "10000.00",
+    "precio_venta": "33000.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": null
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 32,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-12-05",
+    "costo_producto": "10000.00",
+    "precio_venta": "33000.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 33,
+  "fields": {
+    "producto": 4,
+    "canal": "mercado_libre",
+    "origen": "fabricante",
+    "fecha_venta": "2025-12-05",
+    "costo_producto": "31000.00",
+    "precio_venta": "50000.00",
+    "costo_despacho": "4550.00",
+    "comision_venta": "10000.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 34,
+  "fields": {
+    "producto": 9,
+    "canal": "mercado_libre",
+    "origen": "propia",
+    "fecha_venta": "2025-12-06",
+    "costo_producto": "10000.00",
+    "precio_venta": "42750.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "7695.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 35,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-12-05",
+    "costo_producto": "10000.00",
+    "precio_venta": "32500.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "0.00",
+    "notas": "Vendido a Francisca. direcci├│n: Roberto del r├¡o #1780, Providencia. Fono: +56996305886",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 36,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-12-08",
+    "costo_producto": "10000.00",
+    "precio_venta": "33500.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "0.00",
+    "notas": "",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 37,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-12-09",
+    "costo_producto": "10000.00",
+    "precio_venta": "32500.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "0.00",
+    "notas": "Francisca providencia",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 38,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-12-09",
+    "costo_producto": "10000.00",
+    "precio_venta": "32500.00",
+    "costo_despacho": "4000.00",
+    "comision_venta": "0.00",
+    "notas": "MIchelle - colina",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 39,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-12-12",
+    "costo_producto": "10000.00",
+    "precio_venta": "32500.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "0.00",
+    "notas": "Maggie - puente alto",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 40,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-12-12",
+    "costo_producto": "10000.00",
+    "precio_venta": "32500.00",
+    "costo_despacho": "4000.00",
+    "comision_venta": "0.00",
+    "notas": "Daniel - San jos├® de Maipo",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 41,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-12-12",
+    "costo_producto": "10000.00",
+    "precio_venta": "32500.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "0.00",
+    "notas": "San bernardo",
+    "vendedor": "Catalina"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 42,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-12-12",
+    "costo_producto": "10000.00",
+    "precio_venta": "32500.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "0.00",
+    "notas": "Macul",
+    "vendedor": "Catalina"
+  }
+},
+{
+  "model": "base.venta",
+  "pk": 43,
+  "fields": {
+    "producto": 9,
+    "canal": "facebook",
+    "origen": "propia",
+    "fecha_venta": "2025-12-16",
+    "costo_producto": "8000.00",
+    "precio_venta": "32500.00",
+    "costo_despacho": "3000.00",
+    "comision_venta": "0.00",
+    "notas": "Valentina - providencia",
+    "vendedor": "Marco"
+  }
+},
+{
+  "model": "base.datoscontacto",
+  "pk": 1,
+  "fields": {
+    "nombre": "aaa",
+    "direccion": "aaa",
+    "correo_electronico": "aaaaaa@hhhh.com",
+    "telefono": null
+  }
+},
+{
+  "model": "base.datoscontacto",
+  "pk": 2,
+  "fields": {
+    "nombre": "a",
+    "direccion": "aaa",
+    "correo_electronico": "ssss@gg.com",
+    "telefono": "930171147"
+  }
+}
+]

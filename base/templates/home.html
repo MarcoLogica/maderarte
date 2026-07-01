@@ -8,243 +8,967 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
-<nav class="navbar">
-    <div class="logo-nav">
-    <a href="{% url 'home' %}">
-        <img src="{% static 'img/logo.png' %}" alt="LOGICA Montessori">
-        
-    </a>
-</div>
-    <ul class="nav-links">
-        <li><a href="{% url 'panel' %}">Panel</a></li>
-        <li><a href="{% url 'crear_producto' %}">Crear producto</a></li>
-        <li><a href="{% url 'lista_productos' %}">Gestionar productos</a></li>
-        <li><a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a></li>
-        <li><a href="#">Contacto</a></li>
-        <li><a href="{% url 'administracion_ventas' %}">📊 Administración</a></li>
-    </ul>
-</nav>
 
 <style>
 
-
+/* ------------------------------
+   ESTILO GENERAL
+------------------------------ */
 body {
-    font-family: 'Quicksand', sans-serif;
-    background-color: #fdf6f0;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
-    padding: 0;
+    background: #fafafa;
+    color: #333;
 }
 
-.navbar {
-    background-color: #a3c9a8;
-    padding: 1rem 2rem;
+h1, h2, h3 {
+    font-weight: 600;
+    color: #2c2c2c;
+}
+
+section {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* ------------------------------
+   HERO PRINCIPAL
+------------------------------ */
+.hero-vipalu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #fdfdfd, #f3f3f3);
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.hero-texto {
+    max-width: 50%;
+}
+
+.hero-texto h1 {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+}
+
+.hero-texto p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.hero-img {
+    width: 45%;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.btn-cta {
+    background: #1e3a8a;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-cta:hover {
+    background: #162f6b;
+}
+
+/* ------------------------------
+   POR QUÉ ELEGIR VIPALÚ
+------------------------------ */
+.porque-vipalu h2 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.beneficios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 25px;
+}
+
+.beneficio {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.beneficio h3 {
+    margin-bottom: 10px;
+    color: #1e3a8a;
+}
+
+/* ------------------------------
+   CATÁLOGO (TUS PRODUCTOS)
+------------------------------ */
+.productos-destacados h2 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.grid-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    border: 1px solid #eee;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    margin-bottom: 8px;
+}
+
+.card p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e3a8a;
+}
+
+.btn-agregar {
+    display: block;
+    margin-top: 10px;
+    background: #1e3a8a;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-agregar:hover {
+    background: #162f6b;
+}
+
+/* ------------------------------
+   OFERTAS DEL MES
+------------------------------ */
+.ofertas-mes {
+    text-align: center;
+
+}
+
+.ofertas-banner {
+    background: #ffffff;
+    color: 0A0A0A;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.btn-ofertas {
+    display: inline-block;
+    margin-top: 15px;
+    background: white;
+    color: #1e3a8a;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-ofertas:hover {
+    background: #f0f0f0;
+}
+
+.ofertas-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+    gap: 30px;
+    justify-items: center; /* centra cada tarjeta */
+    margin-top: 30px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .ofertas-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablet */
+    }
+}
+
+@media (max-width: 600px) {
+    .ofertas-grid {
+        grid-template-columns: 1fr; /* 1 columna en móvil */
+    }
+}
+
+
+/* ------------------------------
+   TESTIMONIOS
+------------------------------ */
+.testimonios h2 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.testimonios-grid {
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.testimonio {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    font-style: italic;
+}
+
+.testimonio span {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+    color: #1e3a8a;
+}
+
+/* ------------------------------
+   GALERÍA CLIENTES FELICES
+------------------------------ */
+.galeria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.galeria-grid img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* ------------------------------
+   SECCIÓN MONTESSORI
+------------------------------ */
+.montessori-info {
+    text-align: center;
+    background: #f7f9ff;
+    padding: 60px 20px;
+    border-radius: 12px;
+}
+
+.btn-educativo {
+    display: inline-block;
+    margin-top: 20px;
+    background: #1e3a8a;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-educativo:hover {
+    background: #162f6b;
+}
+
+/* ------------------------------
+   CTA FINAL
+------------------------------ */
+.cta-final {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.btn-cta-grande {
+    background: #1e3a8a;
+    color: white;
+    padding: 16px 32px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-cta-grande:hover {
+    background: #162f6b;
+}
+
+/* ------------------------------
+   FOOTER
+------------------------------ */
+footer {
+    text-align: center;
+    padding: 30px;
+    background: #C7DDF2;
+    color: 080807;
+    margin-top: 40px;
+}
+
+    /* NAVBAR VIPALÚ */
+.navbar-vipalu {
+    width: 100%;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 12px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: 'Quicksand', sans-serif;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
 }
 
-.logo a {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
+.nav-logo a {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1e3a8a;
     text-decoration: none;
+    letter-spacing: -0.5px;
 }
 
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 1.5rem;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-links li a {
-    color: #8E44AD;
     text-decoration: none;
-    font-weight: bold;
-    font-size: 1rem;
-    transition: color 0.3s ease;
+    color: #374151;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: 0.2s;
 }
 
 .nav-links li a:hover {
-    color: #fce4ec;
-}
-
-.banner {
-    text-align: center;
-    background-color: #dbeadf;
-    padding: 2rem;
-    color: #8E44AD;
-}
-
-.grid-productos {
-    background-color: #EBDEF0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    padding: 2rem;
+    background: #1e3a8a;
+    color: white;
 }
 
 
-.publicidad {
-    background-color: #fce4ec;
-    padding: 2rem;
-    text-align: center;
-    color: #8E44AD;
+   /* ============================================================
+   VIPALÚ MONTESSORI – COLORES SUAVES Y TRANSICIONES ARMÓNICAS
+   (no modifica tamaños ni estructura)
+   ============================================================ */
+
+/* Fondo general */
+body {
+    background: #FAF9F6 !important;
 }
 
-footer {
-    background-color: #c8e6c9;
-    text-align: center;
-    padding: 1rem;
-    font-size: 0.9rem;
-    color: #8E44AD;
+/* HERO – lavanda tenue */
+
+
+/* HERO más ancho */
+
+.hero-vipalu {
+    max-width: 1400px !important; /* antes 1200 */
+    margin: auto !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
 }
 
-    .productos-destacados {
-    padding: 2rem;
-    background-color: #fdf6f0;
+/* HERO con degradado Montessori premium */
+.hero-vipalu {
+    background: linear-gradient(
+        135deg,
+        #E2D3F2 30%,   /* lavanda tenue */
+        #D4B2F7 70%,  /* arena cálida */
+        #C38FF7 100%  /* azul Montessori suave */
+    ) !important;
+
+    border-bottom: none !important;
+    border-radius: 0 0 40px 40px; /* borde inferior suave y elegante */
+    padding-top: 120px !important;
+    padding-bottom: 120px !important;
 }
 
-.grid-productos {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 columnas fijas */
-    gap: 2rem;
-    justify-items: center;
+
+
+
+/* POR QUÉ ELEGIR VIPALÚ – arena cálida */
+.porque-vipalu {
+max-width: 1700px;
+    background: linear-gradient(
+        135deg,
+        #F9FAC8 50%,   /* lavanda tenue */
+        #F9FAB4 70%,  /* arena cálida */
+        #FBFCA2 100%  /* azul Montessori suave */
+    ) !important;
+    border-radius: 20px;
+    margin-top: 60px;
+    margin-bottom: 60px;
 }
 
-.card {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 250px;
-    text-align: center;
+/* CATÁLOGO – verde salvia claro */
+.productos-destacados {
+max-width: 1700px;
+    background: linear-gradient(
+        135deg,
+        #DEFACA 50%,   /* lavanda tenue */
+        #CAF7AB 70%,  /* arena cálida */
+        #B7F58C 100%  /* azul Montessori suave */
+    ) !important;
+    border-radius: 20px;
+    padding-top: 80px !important;
+    padding-bottom: 80px !important;
+    margin-top: 60px;
+    margin-bottom: 60px;
 }
 
-.card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover; /* Recorta sin deformar */
-    border-radius: 6px;
+/* OFERTAS – durazno suave */
+.ofertas-mes {
+max-width: 1700px;
+    background: linear-gradient(
+        135deg,
+        #CBE5F5 50%,   /* lavanda tenue */
+        #BAE0F7 70%,  /* arena cálida */
+        #9DD7FA 100%  /* azul Montessori suave */
+    ) !important;
+    border-radius: 20px;
+    margin-top: 60px;
+    margin-bottom: 60px;
 }
 
-    h1 {
-      color: #2E8B57; /* Verde suave */
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      margin-top: 40px;
-    }
-
-    p {
-      color: #555555; /* Gris oscuro */
-      font-size: 18px;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .btn-agregar {
-    background-color: #a3c9a8; /* Verde claro VIPALÚ */
-    color: #2e7d32;            /* Verde profundo para el texto */
-    padding: 0.6rem 1rem;
-    border-radius: 8px;
-    font-weight: bold;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 1rem;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+/* TESTIMONIOS – lavanda suave */
+.testimonios {
+max-width: 1700px;
+    background: linear-gradient(
+        135deg,
+        #F2CEC7 50%,   /* lavanda tenue */
+        #F2BEB3 70%,  /* arena cálida */
+        #F5AC9D 100%  /* azul Montessori suave */
+    ) !important;
+    border-radius: 20px;
+    margin-top: 60px;
+    margin-bottom: 60px;
 }
 
-.btn-agregar:hover {
-    background-color: #8cbf91; /* Verde más intenso al pasar el mouse */
+/* GALERÍA – blanco cálido */
+.galeria-clientes {
+    background: #FAF9F6 !important;
+    margin-top: 60px;
+    margin-bottom: 60px;
 }
 
-    .contenedor-banner {
-    width: 100%;
-    max-width: 1800px;
-    height: 300px;
-    margin: 2rem auto;
-    border-radius: 16px;
+/* SECCIÓN MONTESSORI – azul Montessori suave */
+.montessori-info {
+max-width: 1700px;
+    background: #FAD7EC !important;
+    border-radius: 20px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+/* CTA FINAL – arena cálida */
+.cta-final {
+    background: #E7F2A5 !important;
+    border-radius: 20px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+/* NAVBAR – azul Montessori suave */
+.navbar-vipalu {
+    background: #C7DDF2 !important;
+    border-bottom: 1px solid #AFC9DF !important;
+}
+
+/* ============================================================
+   BOTONES MONTESSORI (adiós azul corporativo)
+   ============================================================ */
+
+.btn-cta,
+.btn-agregar,
+.btn-ofertas,
+.btn-educativo,
+.btn-cta-grande {
+    background: #8FBFA8 !important; /* verde salvia */
+    color: #ffffff !important;
+    border-radius: 10px !important;
+    border: none !important;
+}
+
+.btn-cta:hover,
+.btn-agregar:hover,
+.btn-ofertas:hover,
+.btn-educativo:hover,
+.btn-cta-grande:hover {
+    background: #7BA4C8 !important; /* azul Montessori suave */
+}
+
+    /* ============================================================
+   CARRUSEL PROMOCIONAL VIPALÚ
+   ============================================================ */
+
+.banner-carrusel {
+    max-width: 1700px;
+    margin: 40px auto;
+    padding: 10px 20px; /* antes 20px */
+    background: linear-gradient(
+        135deg,
+        #FAA2D9 30%,   /* lavanda tenue */
+        #F7C3E3 70%,  /* arena cálida */
+        #F7D7EB 100%  /* azul Montessori suave */
+    ) !important;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    max-height: 800px; /* NUEVO: limita la altura total */
+    overflow: hidden; /* evita que el contenido se salga */
+}
+
+
+.carrusel-contenedor {
+    max-width: 1500px;
+    position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f4f1f7;
+    border-radius: 16px;
 }
 
-.contenedor-banner img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.carrusel-item {
+    display: none;
+    width: 50%;
+}
+
+.carrusel-item.activo {
     display: block;
 }
 
-    .logo-nav {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 1rem;
+.carrusel-item img {
+    width: 100%;
+    border-radius: 16px;
+    object-fit: cover;
 }
 
-.logo-nav img {
-    height: 80px;
-    width: auto;
-    object-fit: contain;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
+/* Puntos del carrusel */
+.carrusel-controles {
+    text-align: center;
+    margin-top: 15px;
 }
 
-.logo-nav img:hover {
-    transform: scale(1.05);
+.carrusel-controles .punto {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: #C7DDF2;
+    border-radius: 50%;
+    margin: 0 6px;
+    cursor: pointer;
+    transition: 0.3s;
 }
+
+.carrusel-controles .punto.activo {
+    background: #8FBFA8;
+    transform: scale(1.2);
+}
+
+
+     /* ============================================================
+ SECCION FORTALEZAS
+   ============================================================ */
+
+
+
+
+
+    .img-fortaleza,
+.video-fortaleza {
+    width: 100%;
+    border-radius: 12px;
+    margin-top: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.btn-subir-media {
+    display: inline-block;
+    margin-top: 12px;
+    background: #8FBFA8;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-subir-media:hover {
+    background: #7BA4C8;
+}
+
+   .media-fortaleza {
+    width: 100%;
+    max-height: 550px; /* tamaño tipo pantalla de celular */
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-top: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+    /* Publicación estilo Instagram para ofertas */
+.media-oferta {
+    width: 100%;
+    max-width: 320px;      /* tamaño tipo publicación Instagram */
+    aspect-ratio: 1 / 1;   /* cuadrado perfecto */
+    object-fit: cover;     /* recorte profesional */
+    border-radius: 14px;   /* estilo moderno */
+    margin: 0 auto;
+    display: block;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+    .oferta-card {
+    background: white; /* o el color que quieras */
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+    .media-testimonio-admin {
+    width: 80%;
+    max-width: 260px;
+    aspect-ratio: 9 / 16; /* vertical tipo reels */
+    object-fit: cover;
+    border-radius: 12px;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+    .testimonio-hover {
+    position: relative;
+    width: 100%;
+    max-width: 260px;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.testimonio-hover img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.4s ease;
+}
+
+/* Imagen base visible */
+.testimonio-hover .img-base {
+    opacity: 1;
+}
+
+/* Imagen secundaria oculta */
+.testimonio-hover .img-hover {
+    opacity: 0;
+}
+
+/* Al pasar el mouse, se invierten */
+.testimonio-hover:hover .img-base {
+    opacity: 0;
+}
+
+.testimonio-hover:hover .img-hover {
+    opacity: 1;
+}
+
+
+
+
+
+
 
 </style>
 
 
 <body>
 
-<div class="contenedor-banner">
-            <img src="{% static 'img/banner_home.png' %}" alt="Banner LOGICA Montessori">
-     </div>
+<!-- NAVBAR VIPALÚ -->
+<nav class="navbar-vipalu">
+    <div class="nav-logo">
+        <a href="/">Vipalú</a>
+    </div>
 
-    <header class="banner">
+    <ul class="nav-links">
+        <li><a href="{% url 'panel' %}">Panel</a></li>
+        <li><a href="{% url 'crear_producto' %}">Crear producto</a></li>
+        <li><a href="{% url 'lista_productos' %}">Gestionar productos</a></li>
+        <li><a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a></li>
+        <li><a href="{% url 'panel' %}">Contacto</a></li>
+        <li><a href="{% url 'administracion_ventas' %}">📊 Administración</a></li>
 
-        <h1>Bienvenido a VIPALÚ</h1>
-        <p>Diseño funcional, emocional y educativo para los más pequeños, basado en la filosofía Montessori</p>
-    </header>
+    </ul>
+</nav>
 
 
+<!-- HERO PRINCIPAL -->
+<section class="hero-vipalu">
+    <div class="hero-texto">
+        <h1>Bienvenida a Vipalú</h1>
+        <p>Diseño funcional, emocional y educativo para los más pequeños, inspirado en Montessori.</p>
+        <a href="#catalogo" class="btn-cta">Explorar catálogo</a>
+    </div>
+    <img src="{% static 'img/banner_home.png' %}" alt="Vipalú Montessori" class="hero-img">
+</section>
 
-    <section class="productos-destacados">
-
-
-
-        <div class="grid-productos">
-            {% for producto in productos %}
-            <div class="card">
-                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
-                <h3>{{ producto.nombre }}</h3>
-                <p>${{ producto.precio }}</p>
-                <a href="{% url 'detalle_producto' producto.id %}">Ver más</a>
-                <a href="{% url 'agregar_al_carrito' producto.id %}" class="btn-agregar">🛒 Agregar al carrito</a>
-            </div>
-            {% endfor %}
+<!-- BANNER PROMOCIONAL / CARRUSEL -->
+<section class="banner-carrusel">
+    <div class="carrusel-contenedor">
+        <div class="carrusel-item activo">
+            <img src="{% static 'img/banner_final.png' %}" alt="Promoción Vipalú">
         </div>
-    </section>
 
-    <section class="publicidad">
-        <h2>Promociones y novedades</h2>
-        <div class="banner-publicidad">
 
-            <p>¡Descubre nuestras nuevas estanterías lúdicas!</p>
+
+        <!-- Si quieres más imágenes, solo duplica esto -->
+        <!--
+        <div class="carrusel-item activo">
+            <img src="{% static 'img/banner_librero.png' %}" alt="Promoción Vipalú">
         </div>
-    </section>
+        -->
+    </div>
 
-    <footer>
-        <p>&copy; 2025 LOGICA Montessori - Diseño modular para crecer</p>
-    </footer>
+    <!-- Controles -->
+    <div class="carrusel-controles">
+        <span class="punto activo"></span>
+
+        <!-- Agrega más puntos si agregas más imágenes -->
+    </div>
+</section>
+
+
+<!-- POR QUÉ ELEGIR VIPALÚ -->
+<section class="porque-vipalu">
+    <h2 style="
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    text-align: center;
+    background: #FAFAC3;
+    padding: 28px 30px;
+    border-radius: 22px;
+    margin-bottom: 40px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+">
+🌟 ¿Por qué elegir Vipalú? 🌟
+</h2>
+
+
+    <div class="beneficios-grid">
+
+        {% for f in fortalezas %}
+        <div class="beneficio">
+
+            <h3>{{ f.titulo }}</h3>
+            <p>{{ f.descripcion }}</p>
+
+            {% if f.imagen %}
+                <img src="{{ f.imagen.url }}" class="media-fortaleza">
+            {% endif %}
+
+            {% if f.video %}
+                <video class="media-fortaleza" autoplay muted loop playsinline>
+                    <source src="{{ f.video.url }}" type="video/mp4">
+                </video>
+            {% endif %}
+
+        </div>
+        {% endfor %}
+
+    </div>
+</section>
+
+
+<!-- CATÁLOGO (SE MANTIENE TAL CUAL) -->
+<section id="catalogo" class="productos-destacados">
+    <h2 style="
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    text-align: center;
+    background: #DBF0D1;
+    padding: 25px 30px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+">
+🌿 Productos destacados 🌿
+</h2>
+
+
+    <div class="grid-productos">
+        {% for producto in productos %}
+        <div class="card">
+            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+            <h3>{{ producto.nombre }}</h3>
+            <p>${{ producto.precio }}</p>
+            <a href="{% url 'detalle_producto' producto.id %}">Ver más</a>
+            <a href="{% url 'agregar_al_carrito' producto.id %}" class="btn-agregar">🛒 Agregar al carrito</a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- OFERTAS DEL MES -->
+<section class="ofertas-mes">
+    <h2 style="
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    text-align: center;
+    background: #EEF5F6;
+    padding: 25px 30px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+">
+✨ Ofertas del mes ✨
+</h2>
+
+
+    <div class="ofertas-grid">
+        {% for o in ofertas %}
+        <div class="oferta-card">
+
+            <h3>{{ o.titulo }}</h3>
+            <p>{{ o.descripcion }}</p>
+
+           {% if o.imagen %}
+    <img src="{{ o.imagen.url }}" class="media-oferta">
+{% endif %}
+
+{% if o.video %}
+    <video autoplay muted loop playsinline class="media-oferta">
+        <source src="{{ o.video.url }}" type="video/mp4">
+    </video>
+{% endif %}
+
+
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+
+<!-- TESTIMONIOS -->
+<section class="testimonios">
+    <h2 style="
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    line-height: 1.4;
+    background: #F7DEDA;
+    padding: 25px 30px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+">
+Lo que dicen nuestros clientes:<br>
+<span style="font-size: 1.2rem; font-weight: 400; color:#444;">
+Nuestras reseñas son mucho más que una estrellita y un simple número...
+Nuestros pequeclientes hablan por sí solos, y sus mamitas nos prefieren.
+</span>
+</h2>
+
+
+    <div class="testimonios-grid">
+        {% for t in testimonios %}
+       <div class="testimonio">
+    <h3>{{ t.titulo }}</h3>
+    <p>{{ t.comentario }}</p>
+
+    <div class="testimonio-hover">
+    <img src="{{ t.imagen.url }}" class="img-base">
+
+    {% if t.imagen2 %}
+        <img src="{{ t.imagen2.url }}" class="img-hover">
+    {% endif %}
+</div>
+
+</div>
+
+        {% endfor %}
+    </div>
+</section>
+
+
+<!-- SECCIÓN EDUCATIVA MONTESSORI -->
+<section class="montessori-info">
+    <h2>Montessori en casa</h2>
+    <p>La filosofía Montessori promueve independencia, autonomía y aprendizaje activo. Nuestros muebles están diseñados para acompañar ese proceso de forma segura y estética.</p>
+    <a href="{% url 'montessori_en_casa' %}" class="btn-educativo">Aprender más</a>
+
+
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+    <h2>¿Listo para transformar el espacio de tu hijo?</h2>
+    <a href="#catalogo" class="btn-cta-grande">Explorar catálogo</a>
+</section>
+
+<footer>
+    <p>&copy; 2025 Vipalú - Diseño modular para crecer</p>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const items = document.querySelectorAll(".carrusel-item");
+    const puntos = document.querySelectorAll(".punto");
+    let index = 0;
+
+    function mostrarSlide(i) {
+        items.forEach(item => item.classList.remove("activo"));
+        puntos.forEach(p => p.classList.remove("activo"));
+
+        items[i].classList.add("activo");
+        puntos[i].classList.add("activo");
+    }
+
+    puntos.forEach((punto, i) => {
+        punto.addEventListener("click", () => {
+            index = i;
+            mostrarSlide(index);
+        });
+    });
+
+    // Auto-rotación cada 5 segundos
+    setInterval(() => {
+        index = (index + 1) % items.length;
+        mostrarSlide(index);
+    }, 5000);
+});
+</script>
+
+
 </body>
+
 </html>

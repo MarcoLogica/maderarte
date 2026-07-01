@@ -1,0 +1,24 @@
+<h2>Editar video del proceso</h2>
+
+<form method="POST" enctype="multipart/form-data" style="margin-bottom:20px;">
+    {% csrf_token %}
+
+    <label>Título del proceso:</label>
+    <input type="text" name="titulo" value="{{ video.titulo }}" class="form-control">
+
+    <label>Reemplazar video (opcional):</label>
+    <input type="file" name="video" accept="video/mp4" class="form-control">
+
+    <p style="margin-top:10px; color:#555;">Video actual:</p>
+    <video controls width="250">
+        <source src="{{ video.video.url }}" type="video/mp4">
+    </video>
+
+    <button type="submit" class="btn btn-primary" style="margin-top:15px;">
+        Guardar cambios
+    </button>
+</form>
+
+<a href="{% url 'administrar_videos_producto' video.producto.id %}" class="btn btn-secondary">
+    Volver
+</a>

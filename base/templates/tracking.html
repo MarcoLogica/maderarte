@@ -1,0 +1,171 @@
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #F7F5F0;
+        padding: 20px;
+    }
+
+    .tracking-container {
+        max-width: 700px;
+        margin: auto;
+        background: white;
+        padding: 35px;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        border: 2px solid #E8E2D6;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 2rem;
+        color: #1e3a8a;
+        margin-bottom: 25px;
+    }
+
+    .info-box {
+        background: #EAF4ED;
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+        border-left: 6px solid #8FBFA8;
+    }
+
+    .info-box p {
+        margin: 6px 0;
+        font-size: 1.1rem;
+        color: #333;
+    }
+
+    .progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    margin-top: 25px;
+    color: #555;
+    font-weight: 600;
+}
+
+
+    .progress-bar {
+        height: 12px;
+        background: #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 12px;
+        background: #8FBFA8;
+        border-radius: 10px;
+        transition: 0.4s ease;
+    }
+
+    .details-box {
+        margin-top: 30px;
+        background: #F6EEDC;
+        padding: 20px;
+        border-radius: 15px;
+        border: 2px solid #E4D8C4;
+    }
+
+    .details-box h3 {
+        margin-bottom: 15px;
+        color: #1e3a8a;
+    }
+
+    .item {
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        border: 1px solid #E4D8C4;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .item p {
+        margin: 5px 0;
+        color: #444;
+    }
+</style>
+
+
+
+<h2>Estado de tu Pedido</h2>
+
+<p><strong>Código:</strong> {{ orden.codigo_seguimiento }}</p>
+<p><strong>Cliente:</strong> {{ orden.nombre }}</p>
+<p><strong>Estado actual:</strong> {{ orden.estado|title }}</p>
+
+<div class="tracking-container">
+
+    <h2>Estado de tu Pedido</h2>
+
+    <div class="info-box">
+        <p><strong>Código:</strong> {{ orden.codigo_seguimiento }}</p>
+        <p><strong>Cliente:</strong> {{ orden.nombre }}</p>
+        <p><strong>Estado actual:</strong> {{ orden.estado|title }}</p>
+    </div>
+
+
+
+    {% if orden.estado == "pendiente" %}
+    <p style="margin-top:15px; color:#555; font-size:1.1rem;">
+        Tu pedido está comenzando su camino. Nuestro equipo ya recibió tu información y está revisando cada detalle con dedicación. Gracias por confiar en nosotros.
+    </p>
+
+{% elif orden.estado == "produccion" %}
+    <p style="margin-top:15px; color:#555; font-size:1.1rem;">
+        Estamos creando tu pedido con manos cuidadosas y materiales nobles. Cada pieza se trabaja con calma, respeto y precisión, como merece un proyecto pensado para acompañar a tu familia.
+    </p>
+
+{% elif orden.estado == "listo" %}
+    <p style="margin-top:15px; color:#555; font-size:1.1rem;">
+        Tu pedido ya está terminado. Lo revisamos con cariño para asegurarnos de que llegue perfecto a tu hogar. Ahora está esperando su despacho.
+    </p>
+
+{% elif orden.estado == "enviado" %}
+    <p style="margin-top:15px; color:#555; font-size:1.1rem;">
+        Tu pedido ya va en camino. Pronto llegará a tu hogar para comenzar a acompañar momentos importantes. Gracias por tu paciencia y confianza.
+    </p>
+
+{% elif orden.estado == "entregado" %}
+    <p style="margin-top:15px; color:#555; font-size:1.1rem;">
+        Tu pedido ya está contigo. Esperamos que aporte belleza, calma y aprendizaje a tu espacio. Gracias por permitirnos ser parte de tu hogar.
+    </p>
+{% endif %}
+
+    <div class="progress-labels">
+    <span>Pendiente</span>
+    <span>Producción</span>
+    <span>Listo</span>
+    <span>Enviado</span>
+    <span>Entregado</span>
+</div>
+
+    <div class="progress-bar">
+
+
+
+
+        <div class="progress-fill" style="width: {{ progreso }}%;"></div>
+
+
+
+    </div>
+
+    <div class="details-box">
+        <h3>Detalles del pedido</h3>
+
+        {% for item in items %}
+        <div class="item">
+            <p><strong>Producto:</strong> {{ item.producto.nombre }}</p>
+            <p><strong>Cantidad:</strong> {{ item.cantidad }}</p>
+            <p><strong>Precio unitario:</strong> ${{ item.precio_unitario }}</p>
+        </div>
+        {% endfor %}
+
+        <p><strong>Fecha de creación:</strong> {{ orden.fecha }}</p>
+    </div>
+
+</div>

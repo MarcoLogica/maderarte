@@ -1,0 +1,94 @@
+<nav style="
+    background:#1e3a8a;
+    padding:15px 20px;
+    border-radius:12px;
+    margin-bottom:25px;
+    display:flex;
+    gap:20px;
+    justify-content:center;
+">
+    <a href="{% url 'piezas_list' %}" style="
+        color:white;
+        font-weight:600;
+        text-decoration:none;
+        padding:8px 14px;
+        border-radius:8px;
+        background:#3b82f6;
+    ">Piezas</a>
+
+    <a href="{% url 'configuracion_list' %}" style="
+        color:white;
+        font-weight:600;
+        text-decoration:none;
+        padding:8px 14px;
+        border-radius:8px;
+        background:#3b82f6;
+    ">Recetas</a>
+
+    <a href="{% url 'control_stock' %}" style="
+        color:white;
+        font-weight:600;
+        text-decoration:none;
+        padding:8px 14px;
+        border-radius:8px;
+        background:#2563eb;
+    ">Control de Stock</a>
+
+    <a href="{% url 'panel' %}" style="
+        color:white;
+        font-weight:600;
+        text-decoration:none;
+        padding:8px 14px;
+        border-radius:8px;
+        background:#2563eb;
+    ">Volver al panel de gestión</a>
+
+
+</nav>
+
+
+<h2>Configuración de Productos (Recetas)</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <label>Seleccionar producto</label>
+    <select name="producto_id" onchange="this.form.submit()">
+        <option value="">Seleccione...</option>
+        {% for p in productos %}
+            <option value="{{ p.id }}" {% if producto_seleccionado and p.id == producto_seleccionado.id %}selected{% endif %}>
+                {{ p.nombre }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
+
+{% if producto_seleccionado %}
+<hr>
+
+
+
+
+<h3>Piezas necesarias para {{ producto_seleccionado.nombre }}</h3>
+
+<a href="{% url 'configuracion_create' %}" style="padding:10px; background:#4CAF50; color:white; border-radius:6px; text-decoration:none;">
+    + Agregar pieza a producto
+</a>
+
+<table border="1" cellpadding="10" cellspacing="0" style="width:100%; margin-top:20px;">
+    <tr>
+        <th>Pieza</th>
+        <th>Cantidad necesaria</th>
+        <th>Acciones</th>
+    </tr>
+
+    {% for c in configuraciones %}
+    <tr>
+        <td>{{ c.pieza.nombre }}</td>
+        <td>{{ c.cantidad_necesaria }}</td>
+        <td>
+            <a href="{% url 'configuracion_delete' c.id %}" onclick="return confirm('¿Eliminar configuración?')">Eliminar</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}

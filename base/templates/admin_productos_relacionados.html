@@ -1,0 +1,35 @@
+<h2>Productos relacionados de {{ producto.nombre }}</h2>
+
+<form method="POST" enctype="multipart/form-data" style="margin-bottom:20px;">
+    {% csrf_token %}
+
+    <label>Imagen:</label>
+    <input type="file" name="imagen" class="form-control">
+
+    <label>Título:</label>
+    <input type="text" name="titulo" class="form-control">
+
+    <label>Producto destino:</label>
+    <select name="producto_destino" class="form-control">
+        {% for p in productos %}
+            <option value="{{ p.id }}">{{ p.nombre }}</option>
+        {% endfor %}
+    </select>
+
+    <button class="btn btn-primary" style="margin-top:10px;">Agregar</button>
+</form>
+
+<hr>
+
+<h3>Actuales</h3>
+
+{% for r in relacionados %}
+    <div style="margin-bottom:20px; border:1px solid #ddd; padding:10px; border-radius:8px;">
+        <img src="{{ r.imagen.url }}" style="width:200px; border-radius:8px;">
+        <h4>{{ r.titulo }}</h4>
+        <p>Destino: {{ r.producto_destino.nombre }}</p>
+
+        <a href="{% url 'editar_producto_relacionado' r.id %}" class="btn btn-warning btn-sm">Editar</a>
+        <a href="{% url 'eliminar_producto_relacionado' r.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+    </div>
+{% endfor %}

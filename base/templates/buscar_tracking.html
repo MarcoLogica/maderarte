@@ -1,0 +1,10 @@
+<h2>Seguimiento de Pedido</h2>
+
+<form method="POST" style="margin-top:20px;">
+    {% csrf_token %}
+    <input type="text" name="codigo" placeholder="Ingresa tu código de seguimiento"
+           style="padding:10px; width:250px; border-radius:6px; border:1px solid #ccc;">
+    <button type="submit" style="padding:10px 15px; background:#2e7d32; color:white; border:none; border-radius:6px;">
+        Buscar
+    </button>
+</form>

@@ -1,0 +1,20 @@
+<h2>Editar beneficio</h2>
+
+<form method="POST" style="margin-bottom:20px;">
+    {% csrf_token %}
+
+    <label>Título:</label>
+    <input type="text" name="titulo" value="{{ beneficio.titulo }}" class="form-control" required>
+
+    <label>Descripción:</label>
+    <textarea name="descripcion" class="form-control">{{ beneficio.descripcion }}</textarea>
+
+    <label>Icono (opcional):</label>
+    <input type="text" name="icono" value="{{ beneficio.icono }}" class="form-control">
+
+    <button class="btn btn-primary" style="margin-top:15px;">Guardar cambios</button>
+</form>
+
+<a href="{% url 'administrar_beneficios_producto' beneficio.producto.id %}" class="btn btn-secondary">
+    Volver
+</a>

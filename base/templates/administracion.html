@@ -203,6 +203,14 @@ body {
 }
 </style>
 
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <div>
+        <p>Usuario activo: <strong>{{ request.user.username }}</strong></p>
+    </div>
+    <div>
+        <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar sesión</a>
+    </div>
+</div>
 
 
 <div class="bloque-ventas">

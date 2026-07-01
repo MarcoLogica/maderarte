@@ -1,0 +1,35 @@
+<h2>Editar uso real</h2>
+
+<form method="POST" enctype="multipart/form-data" style="margin-bottom:20px;">
+    {% csrf_token %}
+
+    <label>Imagen actual:</label><br>
+    {% if uso.imagen %}
+        <img src="{{ uso.imagen.url }}" style="width:200px; border-radius:8px;">
+    {% else %}
+        <p>No hay imagen</p>
+    {% endif %}
+
+    <label>Reemplazar imagen:</label>
+    <input type="file" name="imagen" class="form-control">
+
+    <br>
+
+    <label>Video actual:</label><br>
+    {% if uso.video %}
+        <video width="200" controls>
+            <source src="{{ uso.video.url }}" type="video/mp4">
+        </video>
+    {% else %}
+        <p>No hay video</p>
+    {% endif %}
+
+    <label>Reemplazar video:</label>
+    <input type="file" name="video" class="form-control">
+
+    <button class="btn btn-primary" style="margin-top:15px;">Guardar cambios</button>
+</form>
+
+<a href="{% url 'administrar_uso_real_producto' uso.producto.id %}" class="btn btn-secondary">
+    Volver
+</a>

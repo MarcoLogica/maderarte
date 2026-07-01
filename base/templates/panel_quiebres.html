@@ -1,0 +1,71 @@
+<!-- NAVBAR GLOBAL -->
+<style>
+    .navbar {
+        background: #2e7d32;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 8px;
+        margin-bottom: 25px;
+    }
+
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        margin-right: 18px;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    .navbar a:hover {
+        text-decoration: underline;
+    }
+
+    .navbar .left-links,
+    .navbar .right-links {
+        display: flex;
+        align-items: center;
+    }
+</style>
+
+<div class="navbar">
+    <div class="left-links">
+        <a href="{% url 'panel_ordenes' %}">Órdenes</a>
+        <a href="{% url 'panel_quiebres' %}">Quiebres</a>
+        <a href="{% url 'panel_produccion' %}">Producción</a>
+        <a href="{% url 'dashboard_stock' %}">Stock</a>
+         <a href="{% url 'panel' %}">Volver al panel de gestión</a>
+    </div>
+
+
+</div>
+
+
+<h2 style="margin-bottom:20px;">Panel de Quiebres de Stock</h2>
+
+<table style="width:100%; border-collapse: collapse;">
+    <tr style="background:#f0f0f0;">
+        <th style="padding:10px; border:1px solid #ccc;">Fecha</th>
+        <th style="padding:10px; border:1px solid #ccc;">Pieza</th>
+        <th style="padding:10px; border:1px solid #ccc;">Faltan</th>
+        <th style="padding:10px; border:1px solid #ccc;">Producto</th>
+        <th style="padding:10px; border:1px solid #ccc;">Orden</th>
+        <th style="padding:10px; border:1px solid #ccc;">Acción</th>
+    </tr>
+
+    {% for q in quiebres %}
+    <tr>
+        <td style="padding:10px; border:1px solid #ccc;">{{ q.fecha|date:"d/m/Y H:i" }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ q.pieza.nombre }}</td>
+        <td style="padding:10px; border:1px solid #ccc; color:red; font-weight:bold;">
+            {{ q.cantidad_faltante }}
+        </td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ q.producto.nombre }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">#{{ q.orden.id }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">
+            <a href="{% url 'resolver_quiebre' q.id %}">Marcar como resuelto</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

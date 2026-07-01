@@ -1,0 +1,24 @@
+<h2>Agregar Pieza a Producto</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Producto</label>
+    <select name="producto" required>
+        {% for p in productos %}
+            <option value="{{ p.id }}">{{ p.nombre }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Pieza</label>
+    <select name="pieza" required>
+        {% for pieza in piezas %}
+            <option value="{{ pieza.id }}">{{ pieza.nombre }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Cantidad necesaria</label>
+    <input type="number" name="cantidad" required>
+
+    <button type="submit">Guardar</button>
+</form>

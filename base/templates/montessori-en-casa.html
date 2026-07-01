@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Montessori en Casa – Tips Valiosos para Mamás</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #F4F8F3;
+            margin: 0;
+            padding: 0;
+            color: #3A4A3F;
+        }
+
+        header {
+            background: #DDEED8;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 2px solid #C7DFC2;
+        }
+
+        header h1 {
+            font-size: 2.4rem;
+            margin: 0;
+            color: #4A7C59;
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .tip {
+            background: #FFFFFF;
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            border: 1px solid #D6E8D2;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .tip h2 {
+            color: #4A7C59;
+            margin-top: 0;
+        }
+
+        .tip p {
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+
+        footer {
+            background: #DDEED8;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+            border-top: 2px solid #C7DFC2;
+        }
+
+        footer p {
+            margin: 0;
+            color: #4A7C59;
+            font-weight: 600;
+        }
+
+          /* NAVBAR VIPALÚ */
+.navbar-vipalu {
+    width: 100%;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 12px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+
+.nav-logo a {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #374151;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.nav-links li a:hover {
+    background: #1e3a8a;
+    color: white;
+}
+
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR VIPALÚ -->
+<nav class="navbar-vipalu">
+    <div class="nav-logo">
+        <a href="/">Vipalú</a>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'crear_producto' %}">Crear producto</a></li>
+        <li><a href="{% url 'lista_productos' %}">Gestionar productos</a></li>
+        <li><a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a></li>
+        <li><a href="{% url 'panel' %}">Contacto</a></li>
+        <li><a href="{% url 'administracion_ventas' %}">📊 Administración</a></li>
+
+    </ul>
+</nav>
+
+<header>
+    <h1>Montessori en Casa</h1>
+    <p>Tips valiosos para acompañar el desarrollo de tu hijo con amor, autonomía y respeto.</p>
+</header>
+
+<div class="contenedor">
+
+    <div class="tip">
+        <h2>1. Prepara un ambiente accesible</h2>
+        <p>
+            El corazón del método Montessori es la autonomía. Crea espacios donde tu hijo pueda
+            <strong>alcanzar, elegir y guardar</strong> sus cosas sin ayuda. Muebles bajos, estantes abiertos y
+            materiales a su altura permiten que participe activamente en su día a día.
+            Esto desarrolla independencia, orden y seguridad personal.
+        </p>
+    </div>
+
+    <div class="tip">
+        <h2>2. Menos es más: ofrece pocas opciones</h2>
+        <p>
+            Un ambiente saturado abruma. Selecciona solo algunos juguetes o materiales y rota el resto.
+            Esto aumenta la concentración, el interés y el uso profundo de cada actividad.
+            La simplicidad es una de las claves del <strong>enfoque Montessori</strong>.
+        </p>
+    </div>
+
+    <div class="tip">
+        <h2>3. Permite que tu hijo participe en la vida real</h2>
+        <p>
+            Invítalo a ayudarte a cocinar, limpiar, regar plantas o poner la mesa.
+            Estas actividades fortalecen motricidad, autoestima y sentido de pertenencia.
+            La participación activa es más valiosa que cualquier juguete.
+        </p>
+    </div>
+
+    <div class="tip">
+        <h2>4. Observa antes de intervenir</h2>
+        <p>
+            La observación es una herramienta poderosa. Mira cómo tu hijo explora, qué le interesa y
+            cómo resuelve problemas. Intervén solo cuando sea necesario.
+            Esto fomenta <strong>autonomía, concentración y confianza</strong>.
+        </p>
+    </div>
+
+    <div class="tip">
+        <h2>5. Respeta los tiempos de tu hijo</h2>
+        <p>
+            Cada niño tiene su propio ritmo. Evita apurarlo o corregirlo constantemente.
+            Cuando le das tiempo para intentar, repetir y dominar una habilidad, estás fortaleciendo
+            su desarrollo emocional y cognitivo.
+        </p>
+    </div>
+
+</div>
+
+<footer>
+    <p>Montessori en Casa – Creando espacios que acompañan el desarrollo real</p>
+</footer>
+
+</body>
+</html>
