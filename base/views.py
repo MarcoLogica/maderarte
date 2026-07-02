@@ -93,7 +93,8 @@ from django.shortcuts import render, redirect
 from .forms import ProductoForm
 from django.contrib.auth.decorators import login_required
 
-@login_required(login_url='login')
+@login_required(login_url='/login/')
+
 def crear_producto(request):
 
     if request.method == 'POST':
@@ -112,7 +113,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .models import Producto
 
-@login_required(login_url='login')
+@login_required(login_url='/login/')
+
 def lista_productos(request):
     productos = Producto.objects.all().order_by('-fecha_creacion')
     return render(request, 'lista_productos.html', {'productos': productos})
@@ -350,7 +352,8 @@ from .models import Venta, Producto
 from .forms import VentaForm
 
 
-@login_required(login_url='login')  # 👈 ESTA ES LA LÍNEA CLAVE
+@login_required(login_url='/login/')
+  # 👈 ESTA ES LA LÍNEA CLAVE
 def administracion_ventas(request):
     user = request.user
 
