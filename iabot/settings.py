@@ -144,5 +144,6 @@ MIDDLEWARE += [
 
 ]
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/panel/'
+
 LOGOUT_REDIRECT_URL = '/login/'
