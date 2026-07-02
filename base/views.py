@@ -68,9 +68,7 @@ def run_predictor(request):
 from django.shortcuts import render
 from .models import Producto
 
-def home(request):
-    productos = Producto.objects.filter(destacado=True)[:6]
-    return render(request, 'home.html', {'productos': productos})
+
 
 from django.shortcuts import render, get_object_or_404
 from .models import Producto
