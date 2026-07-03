@@ -336,65 +336,44 @@
     font-weight: bold;
 }
 
-/* Mostrar solo en mobile */
-@media (max-width: 768px) {
-    .sticky-add-to-cart {
-        display: flex;
-    }
-}
-
-    .videos-producto {
-    max-width: 1500px;
-    background: #F7F5F0;
-    padding: 20px;
-    border-radius: 18px;
-    border: 2px solid #E4D8C4;
-    margin-bottom: 30px;
-}
-
-.videos-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-.videos-grid {
-
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center; /* ✔ centra los reels */
-}
-
-
-.video-reel {
+/* CONTENEDOR PRINCIPAL DE VIDEOS */
+.videos-producto-container {
     width: 100%;
-    max-width: 280px; /* ancho típico de un reel */
-    aspect-ratio: 9 / 16;
-    height: auto;
-    object-fit: cover;
-    border-radius: 14px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-}
-
-    .videos-producto-container {
-
-
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center; /* centra títulos y textos */
-    background: #F7F3EB; /* beige cálido Montessori */
-    width: 1500px;
-    border: 2px solid #E4D8C4; /* borde suave */
+    max-width: 1500px;
+    margin: 0 auto;
+    background: #F7F3EB;
+    border: 2px solid #E4D8C4;
     border-radius: 18px;
     padding: 25px;
     margin-bottom: 35px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    text-align: center;
 }
 
+/* GRID DE REELS */
+.videos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* REELS */
+.video-reel {
+    width: 100%;
+    max-width: 280px;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    background: black;
+}
+
+/* TITULOS */
 .videos-producto-titulo {
     font-size: 1.4rem;
     font-weight: bold;
-    color: #1e3a8a; /* azul Montessori */
+    color: #1e3a8a;
     margin-bottom: 8px;
 }
 
@@ -404,59 +383,6 @@
     margin-bottom: 20px;
 }
 
-.videos-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.video-reel {
-    width: 100%;
-    max-width: 280px; /* tamaño reel perfecto */
-    aspect-ratio: 9 / 16;
-    object-fit: cover;
-    border-radius: 14px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    background: black;
-}
-
-
-.video-proceso {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #5a4632;
-    margin-bottom: 8px;
-    text-align: center;
-    font-family: 'Poppins', sans-serif;
-}
-
-.video-proceso-numero {
-    display: inline-block;
-    background: #E4D8C4;
-    color: #1e3a8a;
-    font-weight: bold;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    line-height: 28px;
-    margin-right: 8px;
-    font-size: 0.95rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-
-.video-proceso-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.video-proceso-flecha {
-    font-size: 1.6rem;
-    color: #C2A98A; /* beige cálido */
-    margin: 6px 0 12px 0;
-    font-weight: 300;
-}
 
 .beneficios-producto {
     max-width: 1500px;
