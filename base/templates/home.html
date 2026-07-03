@@ -828,7 +828,10 @@ max-width: 1700px;
         <div class="card">
             <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
             <h3>{{ producto.nombre }}</h3>
-            <p>${{ producto.precio }}</p>
+            {% with precio_str=producto.precio|stringformat:"d" %}
+    <p>${{ precio_str|slice:":-3" }}.{{ precio_str|slice:"-3:" }}</p>
+{% endwith %}
+
             <a href="{% url 'detalle_producto' producto.id %}">Ver más</a>
             <a href="{% url 'agregar_al_carrito' producto.id %}" class="btn-agregar">🛒 Agregar al carrito</a>
         </div>
