@@ -42,25 +42,40 @@ section {
     padding: 80px 20px;
     background: linear-gradient(135deg, #fdfdfd, #f3f3f3);
     border-bottom: 1px solid #e5e5e5;
+
+    height: 150px;        /* ← ALTO FIJO DEL HERO */
+    overflow: hidden;     /* ← EVITA QUE LA IMAGEN LO AGRANDE */
+}
+
 }
 
 .hero-texto {
-    max-width: 50%;
+    max-width: 600px;        /* ← El texto queda ordenado */
+    padding: 20px 10px;      /* ← Aire interno */
 }
+
 
 .hero-texto h1 {
     font-size: 2.8rem;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    margin-top: -50px;   /* ← Subimos el título */
+    line-height: 1.2;
 }
+
+
 
 .hero-texto p {
     font-size: 1.2rem;
-    margin-bottom: 20px;
+    line-height: 1.6;
     color: #555;
+    max-width: 950px;
+    margin-bottom: 35px;   /* ← Aumentamos el espacio */
 }
 
+
+
 .hero-img {
-    width: 45%;
+    width: 25%;
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.08);
 }
@@ -73,7 +88,9 @@ section {
     text-decoration: none;
     font-weight: 600;
     transition: 0.3s;
+    margin-top: 80px;   /* ← Bajamos el botón */
 }
+
 
 .btn-cta:hover {
     background: #162f6b;
@@ -530,65 +547,51 @@ max-width: 1700px;
    ============================================================ */
 
 .banner-carrusel {
-    max-width: 1700px;
-    margin: 40px auto;
-    padding: 10px 20px; /* antes 20px */
+    margin-top: 40px; /* ← separación superior */
+    width: 80%;
+    max-width: 100%;
+    padding: 0;
     background: linear-gradient(
         135deg,
-        #FAA2D9 30%,   /* lavanda tenue */
-        #F7C3E3 70%,  /* arena cálida */
-        #F7D7EB 100%  /* azul Montessori suave */
+        #FAA2D9 30%,
+        #F7C3E3 70%,
+        #F7D7EB 100%
     ) !important;
     border-radius: 20px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    max-height: 800px; /* NUEVO: limita la altura total */
-    overflow: hidden; /* evita que el contenido se salga */
+    max-height: 800px;
+    overflow: hidden;
 }
 
 
 .carrusel-contenedor {
-    max-width: 1500px;
+    width: 100%;
     position: relative;
     overflow: hidden;
-    border-radius: 16px;
+    border-radius: 0; /* opcional para continuidad */
+    display: flex; /* permite que las imágenes se alineen horizontalmente */
+    justify-content: center;
+    align-items: center;
 }
 
 .carrusel-item {
-    display: none;
-    width: 50%;
-}
-
-.carrusel-item.activo {
+    flex: 1; /* cada imagen ocupa la mitad del ancho */
     display: block;
 }
 
 .carrusel-item img {
-    width: 100%;
-    border-radius: 16px;
+    width: calc(100% - 40px); /* resta margen horizontal */
+    height: calc(100% - 40px); /* resta margen vertical */
     object-fit: cover;
+    border-radius: 16px;
+
+    /* márgenes externos */
+    margin: 20px;
+
+    /* opcional: sombra suave */
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-/* Puntos del carrusel */
-.carrusel-controles {
-    text-align: center;
-    margin-top: 15px;
-}
-
-.carrusel-controles .punto {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    background: #C7DDF2;
-    border-radius: 50%;
-    margin: 0 6px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.carrusel-controles .punto.activo {
-    background: #8FBFA8;
-    transform: scale(1.2);
-}
 
 
      /* ============================================================
@@ -732,17 +735,20 @@ max-width: 1700px;
 <section class="hero-vipalu">
     <div class="hero-texto">
         <h1>Bienvenida a Vipalú</h1>
-        <p>Diseño funcional, emocional y educativo para los más pequeños, inspirado en Montessori.</p>
+        <p>Tu hijo está viviendo una etapa irrepetible. Cada día aprende, explora y crece a una velocidad que nunca volverá a repetirse.
+En Vipalú lo acompañamos con muebles seguros, sin acabados sintéticos, hechos en Chile y diseñados para potenciar su autonomía.
+Despachamos a todo Chile y ofrecemos garantía total de satisfacción: si no te encanta, te devolvemos tu dinero.
+Porque la infancia no espera… y tú puedes darle lo mejor hoy.</p>
         <a href="#catalogo" class="btn-cta">Explorar catálogo</a>
     </div>
-    <img src="{% static 'img/banner_home.png' %}" alt="Vipalú Montessori" class="hero-img">
+    <img src="{% static 'img/bienvenida.jpeg' %}" alt="Vipalú Montessori" class="hero-img">
 </section>
 
 <!-- BANNER PROMOCIONAL / CARRUSEL -->
 <section class="banner-carrusel">
     <div class="carrusel-contenedor">
         <div class="carrusel-item activo">
-            <img src="{% static 'img/banner_final.png' %}" alt="Promoción Vipalú">
+            <img src="{% static 'img/banner_home.png' %}" alt="Promoción Vipalú">
         </div>
 
 
