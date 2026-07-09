@@ -52,6 +52,22 @@
     background: #7BA4C8;
 }
 
+    .btn-eliminar {
+    display: inline-block;
+    background: #E57373; /* rojo suave */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.btn-eliminar:hover {
+    background: #D32F2F; /* rojo más fuerte */
+}
+
+
 
 </style>
 
@@ -77,6 +93,13 @@
             {% endif %}
 
             <a href="{% url 'editar_fortaleza' f.id %}" class="btn-editar">✏️ Editar</a>
+            <a href="{% url 'editar_fortaleza' f.id %}" class="btn-editar">✏️ Editar</a>
+
+<a href="{% url 'eliminar_fortaleza' f.id %}" class="btn-eliminar"
+   onclick="return confirm('¿Seguro que deseas eliminar esta fortaleza?');">
+   🗑️ Eliminar
+</a>
+
         </div>
         {% endfor %}
     </div>

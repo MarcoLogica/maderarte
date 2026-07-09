@@ -40,6 +40,7 @@ urlpatterns = [
     path('fortalezas/', views.lista_fortalezas, name='lista_fortalezas'),
     path('fortalezas/crear/', views.crear_fortaleza, name='crear_fortaleza'),
     path('fortalezas/editar/<int:id>/', views.editar_fortaleza, name='editar_fortaleza'),
+    path('fortalezas/eliminar/<int:id>/', views.eliminar_fortaleza, name='eliminar_fortaleza'),
     path('ofertas/', views.lista_ofertas, name='lista_ofertas'),
     path('ofertas/crear/', views.crear_oferta, name='crear_oferta'),
     path('ofertas/editar/<int:id>/', views.editar_oferta, name='editar_oferta'),

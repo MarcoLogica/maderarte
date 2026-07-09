@@ -723,6 +723,13 @@ def editar_fortaleza(request, id):
         return redirect('lista_fortalezas')
     return render(request, 'editar_fortaleza.html', {'fortaleza': fortaleza})
 
+def eliminar_fortaleza(request, id):
+    fortaleza = get_object_or_404(Fortaleza, id=id)
+    fortaleza.delete()
+    return redirect('lista_fortalezas')
+
+
+
 
 def home(request):
     fortalezas = Fortaleza.objects.all()
