@@ -205,6 +205,28 @@ td a[href*="eliminar"]:hover {
     color: white;
 }
 
+    .cantidad-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-cantidad {
+    background: #C7B4E3; /* violeta pastel */
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: 0.2s ease;
+}
+
+.btn-cantidad:hover {
+    background: #B49AD8;
+}
+
+
 
 </style>
 <body>
@@ -254,6 +276,14 @@ td a[href*="eliminar"]:hover {
                     <td>
                         <a href="{% url 'eliminar_del_carrito' producto.id %}">Eliminar</a>
                     </td>
+                    <td class="cantidad-controls">
+    <a href="{% url 'restar_cantidad' producto.id %}" class="btn-cantidad">−</a>
+    <span>{{ producto.cantidad }}</span>
+    <a href="{% url 'sumar_cantidad' producto.id %}" class="btn-cantidad">+</a>
+</td>
+
+
+
                 </tr>
                 {% endfor %}
             </tbody>
@@ -267,6 +297,13 @@ td a[href*="eliminar"]:hover {
         <p>Tu carrito está vacío. ¡Agrega productos desde el catálogo!</p>
         {% endif %}
     </section>
+
+<div class="mensaje-refuerzo">
+    <p>✨ Tu selección es perfecta para acompañar el crecimiento de tu pequeño.
+    Estos productos están listos para ser fabricados especialmente para ti.
+    ¡Asegura tu compra y recíbelo en pocos días! 💚</p>
+</div>
+
 
     <footer>
         <a href="{% url 'home' %}" class="btn-volver">← Volver al catálogo</a>

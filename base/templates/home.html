@@ -702,6 +702,23 @@ max-width: 1700px;
     opacity: 1;
 }
 
+    .btn-ver {
+    display: inline-block;
+    background: #C7B4E3; /* violeta pastel Montessori */
+    color: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: 0.3s ease;
+}
+
+.btn-ver:hover {
+    background: #B49AD8; /* violeta pastel más profundo */
+}
+
+
 
 
 
@@ -838,7 +855,8 @@ Porque la infancia no espera… y tú puedes darle lo mejor hoy.</p>
     <p>${{ precio_str|slice:":-3" }}.{{ precio_str|slice:"-3:" }}</p>
 {% endwith %}
 
-            <a href="{% url 'detalle_producto' producto.id %}">Ver más</a>
+           <a href="{% url 'detalle_producto' producto.id %}" class="btn-ver">Ver más</a>
+
             <a href="{% url 'agregar_al_carrito' producto.id %}" class="btn-agregar">🛒 Agregar al carrito</a>
         </div>
         {% endfor %}

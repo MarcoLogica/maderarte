@@ -159,12 +159,22 @@ def ver_carrito(request):
 
     for id, cantidad in carrito.items():
         producto = Producto.objects.get(id=id)
-        producto.cantidad = cantidad
-        producto.subtotal = producto.precio * cantidad
-        productos.append(producto)
-        total += producto.subtotal
+
+        # Crear un objeto temporal con atributos dinámicos
+        item = type('ItemCarrito', (), {})()
+        item.id = producto.id
+        item.nombre = producto.nombre
+        item.imagen = producto.imagen
+        item.precio = producto.precio
+        item.cantidad = cantidad
+        item.subtotal = producto.precio * cantidad
+
+        productos.append(item)
+        total += item.subtotal
 
     return render(request, 'carrito.html', {'productos': productos, 'total': total})
+
+
 
 def eliminar_del_carrito(request, id):
     carrito = request.session.get('carrito', {})
@@ -1424,3 +1434,27 @@ def eliminar_producto_relacionado(request, rel_id):
 
 def montessori_en_casa(request):
     return render(request, 'montessori-en-casa.html')
+
+
+# carrito de compra
+
+def sumar_cantidad(request, item_id):
+    carrito = request.session.get('carrito', {})
+    item_id = str(item_id)
+
+    if item_id in carrito:
+        carrito[item_id] += 1
+
+    request.session['carrito'] = carrito
+    return redirect('ver_carrito')
+
+
+def restar_cantidad(request, item_id):
+    carrito = request.session.get('carrito', {})
+    item_id = str(item_id)
+
+    if item_id in carrito and carrito[item_id] > 1:
+        carrito[item_id] -= 1
+
+    request.session['carrito'] = carrito
+    return redirect('ver_carrito')
