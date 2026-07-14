@@ -706,7 +706,7 @@
     {% endif %}
 {% endwith %}
 
-            {% if producto.stock_disponible == 1 %}
+           {% if producto.stock_comercial == 1 %}
     <p style="
         background:#FFEBEE;
         color:#C62828;
@@ -720,7 +720,7 @@
         <br>🚚 Entrega estimada: <strong>1 a 2 días</strong>
     </p>
 
-{% elif producto.stock_disponible <= 10 %}
+{% elif producto.stock_comercial <= 10 %}
     <p style="
         background:#FFF3E0;
         color:#EF6C00;
@@ -752,6 +752,7 @@
 
 
 
+
             <p>{{ producto.descripcion }}</p>
             <p class="categoria">Categoría: {{ producto.get_categoria_display }}</p>
             <p style="
@@ -763,7 +764,8 @@
     border-radius: 8px;
     display: inline-block;
 ">
-    Stock disponible: {{ producto.stock_disponible }}
+    Stock disponible: {{ producto.stock_comercial }}
+
 </p>
 
             <div style="

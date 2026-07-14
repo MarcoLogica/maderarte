@@ -74,6 +74,7 @@ class Producto(models.Model):
         ('accesorios', 'Accesorios'),
     ])
     fecha_creacion = models.DateTimeField(auto_now_add=True)
+    stock_comercial = models.IntegerField(default=0)
 
     def stock_disponible(self):
         configuraciones = ConfiguracionProducto.objects.filter(producto=self)
@@ -102,7 +103,7 @@ class Producto(models.Model):
         return self.nombre
 
     def mensaje_stock(self):
-        stock = self.stock_disponible()
+        stock = self.stock_comercial
 
         if stock >= 3:
             return {
@@ -113,13 +114,13 @@ class Producto(models.Model):
         elif 1 <= stock <= 2:
             return {
                 "tipo": "bajo",
-                "texto": "🔥 Stock bajo, alta demanda"
+                "texto": "🔥 Últimas unidades disponibles"
             }
 
         else:
             return {
                 "tipo": "pedido",
-                "texto": "⚠️ Sin stock inmediato, fabricación bajo pedido (entrega 7–10 días)"
+                "texto": "⚠️ Disponible bajo pedido (fabricación 7–10 días)"
             }
 
 

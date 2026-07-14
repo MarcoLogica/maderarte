@@ -247,7 +247,6 @@ def pago(request):
             # 4) Crear los ORDENITEMS y rebajar stock de piezas
             # ---------------------------------------------------------
             for p in productos:
-
                 # Crear item
                 OrdenItem.objects.create(
                     orden=orden,
@@ -256,24 +255,9 @@ def pago(request):
                     precio_unitario=p.precio
                 )
 
-                # Rebajar piezas según receta
-                receta = ConfiguracionProducto.objects.filter(producto=p)
-
-                for config in receta:
-                    pieza = config.pieza
-                    piezas_a_rebajar = config.cantidad_necesaria * p.cantidad
-
-                    pieza.stock -= piezas_a_rebajar
-                    pieza.save()
-
-                    # VALIDACIÓN DE QUIEBRE
-                    if pieza.stock < 0:
-                        QuiebreStock.objects.create(
-                            pieza=pieza,
-                            producto=p,
-                            orden=orden,
-                            cantidad_faltante=abs(pieza.stock)
-                        )
+                # Rebajar stock comercial (solo ecommerce)
+                p.stock_comercial -= p.cantidad
+                p.save()
 
             # ---------------------------------------------------------
             # 5) Enviar correo interno a Vipalú
@@ -1079,8 +1063,29 @@ def marcar_fabricado(request, orden_id):
     orden.estado = "listo"
     orden.save()
 
+    # Obtener items de la orden
+    items = OrdenItem.objects.filter(orden=orden)
+
+    for item in items:
+        producto = item.producto
+
+        # 1) Rebajar piezas según receta (producción real)
+        configuraciones = ConfiguracionProducto.objects.filter(producto=producto)
+
+        for config in configuraciones:
+            pieza = config.pieza
+            piezas_a_rebajar = config.cantidad_necesaria * item.cantidad
+
+            pieza.stock -= piezas_a_rebajar
+            pieza.save()
+
+        # 2) Actualizar stock comercial según stock disponible real
+        producto.stock_comercial = producto.stock_disponible()
+        producto.save()
+
     messages.success(request, f"Orden #{orden.id} marcada como fabricada.")
     return redirect("panel_produccion")
+
 
 
 # dashboard stock

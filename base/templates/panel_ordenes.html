@@ -106,7 +106,7 @@
                 <a href="{% url 'cambiar_estado_orden' orden.id 'produccion' %}">Mover a producción</a>
 
             {% elif orden.estado == "produccion" %}
-                <a href="{% url 'cambiar_estado_orden' orden.id 'listo' %}">Marcar como listo</a>
+                
 
             {% elif orden.estado == "listo" %}
                 <a href="{% url 'cambiar_estado_orden' orden.id 'enviado' %}">Enviar</a>
