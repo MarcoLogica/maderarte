@@ -27,6 +27,77 @@
         display: flex;
         align-items: center;
     }
+
+    .dashboard-resumen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-resumen {
+    flex: 1 1 180px;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-resumen-titulo {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 0.3rem;
+}
+
+.card-resumen-valor {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.card-resumen-extra {
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    opacity: 0.9;
+}
+
+/* Colores */
+.card-pendientes { background: #4b5563; }
+.card-produccion { background: #f97316; }
+.card-listas { background: #22c55e; }
+.card-quiebre { background: #ef4444; }
+.card-ventas { background: #3b82f6; }
+.card-entregados {
+    background: #6366f1; /* morado suave */
+}
+
+    .detalle-row {
+    background: #f9fafb;
+}
+
+.detalle-box {
+    padding: 1rem;
+    border-left: 4px solid #3b82f6;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.detalle-box h4 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.3rem;
+    font-size: 1rem;
+    color: #374151;
+}
+
+.detalle-box p {
+    margin: 0.2rem 0;
+    font-size: 0.9rem;
+}
+
+
 </style>
 
 <div class="navbar">
@@ -40,6 +111,50 @@
 
 
 </div>
+
+<div class="dashboard-resumen">
+
+    <div class="card-resumen card-pendientes">
+        <div class="card-resumen-titulo">Pendientes</div>
+        <div class="card-resumen-valor">{{ pendientes_count }}</div>
+    </div>
+
+    <div class="card-resumen card-produccion">
+        <div class="card-resumen-titulo">En producción</div>
+        <div class="card-resumen-valor">{{ produccion_count }}</div>
+    </div>
+
+    <div class="card-resumen card-listas">
+        <div class="card-resumen-titulo">Listas para envío</div>
+        <div class="card-resumen-valor">{{ listas_envio_count }}</div>
+    </div>
+
+    <div class="card-resumen card-quiebre">
+        <div class="card-resumen-titulo">Con quiebre</div>
+        <div class="card-resumen-valor">{{ ordenes_con_quiebre_count }}</div>
+    </div>
+
+    <div class="card-resumen card-entregados">
+    <div class="card-resumen-titulo">Entregados</div>
+    <div class="card-resumen-valor">{{ entregados_count }}</div>
+</div>
+
+    <div class="card-resumen card-ventas">
+        <div class="card-resumen-titulo">Ventas mes actual vs anterior</div>
+        <div class="card-resumen-valor">
+            ${{ ventas_mes_actual|floatformat:0 }} /
+            ${{ ventas_mes_anterior|floatformat:0 }}
+        </div>
+        <div class="card-resumen-extra">
+            Variación: {{ variacion_porcentaje|floatformat:1 }}%
+        </div>
+    </div>
+
+
+
+
+</div>
+
 
 
 <h2 style="margin-bottom: 20px;">Panel de Órdenes</h2>
@@ -70,7 +185,8 @@
     </tr>
 
     {% for orden in ordenes %}
-    <tr>
+    <!-- FILA PRINCIPAL (clickeable) -->
+    <tr onclick="toggleDetalle('{{ orden.id }}')" style="cursor:pointer;">
         <td style="padding:10px; border:1px solid #ccc;">#{{ orden.id }}</td>
         <td style="padding:10px; border:1px solid #ccc;">{{ orden.nombre }}</td>
         <td style="padding:10px; border:1px solid #ccc;">{{ orden.fecha|date:"d/m/Y H:i" }}</td>
@@ -106,7 +222,7 @@
                 <a href="{% url 'cambiar_estado_orden' orden.id 'produccion' %}">Mover a producción</a>
 
             {% elif orden.estado == "produccion" %}
-                
+                <!-- Sin acción -->
 
             {% elif orden.estado == "listo" %}
                 <a href="{% url 'cambiar_estado_orden' orden.id 'enviado' %}">Enviar</a>
@@ -116,5 +232,44 @@
             {% endif %}
         </td>
     </tr>
+
+    <!-- FILA EXPANDIBLE -->
+    <tr id="detalle-{{ orden.id }}" style="display:none; background:#f9fafb;">
+        <td colspan="7" style="padding:0;">
+            <div style="
+                padding:15px;
+                border-left:4px solid #3b82f6;
+                background:white;
+                border-radius:6px;
+                box-shadow:0 2px 4px rgba(0,0,0,0.05);
+            ">
+
+                <h4 style="margin:5px 0;">Detalles de la orden</h4>
+
+                <p><strong>Cliente:</strong> {{ orden.nombre }}</p>
+                <p><strong>Dirección:</strong> {{ orden.direccion }}</p>
+                <p><strong>Correo:</strong> {{ orden.correo_electronico }}</p>
+                <p><strong>Teléfono:</strong> {{ orden.telefono }}</p>
+
+                <h4 style="margin:10px 0 5px 0;">Productos incluidos</h4>
+                {% for item in orden.items.all %}
+                    <p>
+                        • {{ item.producto.nombre }}
+                        (x{{ item.cantidad }})
+                        — ${{ item.precio_unitario }} c/u
+                    </p>
+                {% endfor %}
+
+            </div>
+        </td>
+    </tr>
+
     {% endfor %}
 </table>
+
+<script>
+function toggleDetalle(id) {
+    const fila = document.getElementById("detalle-" + id);
+    fila.style.display = fila.style.display === "none" ? "table-row" : "none";
+}
+</script>

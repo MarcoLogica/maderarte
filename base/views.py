@@ -977,6 +977,11 @@ def exito(request):
 
 # panel de ordenes
 
+from django.db.models import Sum
+from django.utils import timezone
+from datetime import timedelta
+
+
 def panel_ordenes(request):
     estado_filtro = request.GET.get("estado", "")
 
@@ -985,10 +990,64 @@ def panel_ordenes(request):
     else:
         ordenes = Orden.objects.all().order_by("-fecha")
 
+    # -----------------------------
+    # MÉTRICAS OPERATIVAS
+    # -----------------------------
+
+    # 0) Órdenes pendientes
+    pendientes_count = Orden.objects.filter(estado="pendiente").count()
+
+    # 1) Órdenes en producción
+    produccion_count = Orden.objects.filter(estado="produccion").count()
+
+    # 2) Órdenes listas para envío
+    listas_envio_count = Orden.objects.filter(estado="listo").count()
+
+    # 3) Órdenes con quiebre
+    ordenes_con_quiebre_count = Orden.objects.filter(
+        quiebrestock__isnull=False
+    ).distinct().count()
+
+    # 4) Ventas mes actual vs mes anterior
+    hoy = timezone.now().date()
+    primer_dia_mes_actual = hoy.replace(day=1)
+
+    mes_anterior_fin = primer_dia_mes_actual - timedelta(days=1)
+    mes_anterior_inicio = mes_anterior_fin.replace(day=1)
+
+    ventas_mes_actual = Orden.objects.filter(
+        fecha__date__gte=primer_dia_mes_actual
+    ).aggregate(total=Sum("total"))["total"] or 0
+
+    ventas_mes_anterior = Orden.objects.filter(
+        fecha__date__gte=mes_anterior_inicio,
+        fecha__date__lte=mes_anterior_fin
+    ).aggregate(total=Sum("total"))["total"] or 0
+
+    if ventas_mes_anterior > 0:
+        variacion_porcentaje = ((ventas_mes_actual - ventas_mes_anterior) / ventas_mes_anterior) * 100
+    else:
+        variacion_porcentaje = 0
+
+        # 5) Órdenes entregadas
+        entregados_count = Orden.objects.filter(estado="entregado").count()
+
     return render(request, "panel_ordenes.html", {
         "ordenes": ordenes,
         "estado_filtro": estado_filtro,
+
+        # métricas
+        "pendientes_count": pendientes_count,
+        "produccion_count": produccion_count,
+        "listas_envio_count": listas_envio_count,
+        "ordenes_con_quiebre_count": ordenes_con_quiebre_count,
+        "ventas_mes_actual": ventas_mes_actual,
+        "ventas_mes_anterior": ventas_mes_anterior,
+        "variacion_porcentaje": variacion_porcentaje,
+        "entregados_count": entregados_count,
+
     })
+
 
 def cambiar_estado_orden(request, orden_id, nuevo_estado):
     orden = Orden.objects.get(id=orden_id)
@@ -1018,17 +1077,46 @@ def resolver_quiebre(request, quiebre_id):
 
 #panel de produccion
 
+from django.utils import timezone
+
+from django.utils import timezone
+from django.utils import timezone
+
+from django.utils import timezone
+
 def panel_produccion(request):
     ordenes = Orden.objects.filter(estado="produccion").order_by("fecha")
 
     data_ordenes = []
 
+    # -----------------------------
+    # MÉTRICAS DEL PANEL SUPERIOR
+    # -----------------------------
+    total_produccion = 0
+    total_riesgo = 0
+    total_retrasadas = 0
+    total_tiempo = 0
+
     for orden in ordenes:
-        items = OrdenItem.objects.filter(orden=orden)  # ← AQUÍ EL CAMBIO
+        items = OrdenItem.objects.filter(orden=orden)
 
         piezas_necesarias = []
         piezas_faltantes = False
 
+        # DÍAS EN PRODUCCIÓN
+        dias_en_produccion = (timezone.now() - orden.fecha).days
+
+        # CLASIFICACIÓN
+        total_produccion += 1
+
+        if dias_en_produccion > 3:
+            total_retrasadas += 1
+        elif dias_en_produccion > 1:
+            total_riesgo += 1
+        else:
+            total_tiempo += 1
+
+        # PIEZAS NECESARIAS
         for item in items:
             configuraciones = ConfiguracionProducto.objects.filter(producto=item.producto)
 
@@ -1051,11 +1139,18 @@ def panel_produccion(request):
             "orden": orden,
             "piezas": piezas_necesarias,
             "faltantes": piezas_faltantes,
+            "dias_en_produccion": dias_en_produccion,
+            "direccion": orden.direccion,
         })
 
     return render(request, "panel_produccion.html", {
-        "ordenes": data_ordenes
+        "ordenes": data_ordenes,
+        "total_produccion": total_produccion,
+        "total_riesgo": total_riesgo,
+        "total_retrasadas": total_retrasadas,
+        "total_tiempo": total_tiempo,
     })
+
 
 
 def marcar_fabricado(request, orden_id):
