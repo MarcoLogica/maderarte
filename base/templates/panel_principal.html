@@ -2,32 +2,75 @@
 {% block content %}
 
 <style>
+    body {
+        background-color: #E8F3F8;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .page-title {
+        font-size: 34px;
+        font-weight: 700;
+        color: #0D47A1;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+    }
+
+    .page-subtitle {
+        font-size: 16px;
+        color: #455A64;
+        margin-bottom: 25px;
+    }
+
     .dashboard-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 25px;
-        margin-top: 25px;
+        padding: 0 20px;
+        max-width: 1200px;
+        margin: auto;
     }
 
     .card-log {
-        border-radius: 12px;
-        padding: 25px;
+        border-radius: 14px;
+        padding: 28px;
         color: white;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
         transition: all 0.25s ease;
         text-align: center;
         font-weight: 500;
+        position: relative;
+        overflow: hidden;
     }
 
     .card-log:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+        transform: translateY(-6px);
+        box-shadow: 0 10px 22px rgba(0,0,0,0.20);
+    }
+
+    .card-log h3 {
+        font-size: 22px;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .card-log p {
+        font-size: 15px;
+        opacity: 0.95;
+        margin-bottom: 18px;
     }
 
     .btn-log {
         display: inline-block;
         margin-top: 15px;
-        padding: 10px 18px;
+        padding: 12px 20px;
         background: rgba(255,255,255,0.25);
         color: white;
         border-radius: 6px;
@@ -49,8 +92,10 @@
     .purple { background: #8e24aa; }
 </style>
 
-<h2>Panel Logístico Principal</h2>
-<p style="color:#666;">Acceso rápido a los módulos operativos del sistema logístico.</p>
+<div class="page-header">
+    <h1 class="page-title">Panel Logístico Principal</h1>
+    <p class="page-subtitle">Gestión centralizada de rutas, transportistas y operaciones de entrega.</p>
+</div>
 
 <div class="dashboard-grid">
 
@@ -62,7 +107,6 @@
             Ir al Panel de Rutas
         </a>
     </div>
-
 
     <!-- Lista de transportistas -->
     <div class="card-log orange">
@@ -76,14 +120,12 @@
     <!-- Panel del transportista -->
     <div class="card-log gray">
         <h3>📍 Panel del Transportista</h3>
-        <p>Ver rutas asignadas y órdenes en entrega.</p>
+        <p>Rutas asignadas y estado de entregas.</p>
         <a class="btn-log" href="{% url 'panel_transportista' transportista_id=1 %}">
             Ir al Panel del Transportista
         </a>
         <p style="font-size:12px; opacity:0.8;">(Reemplaza el ID según el transportista)</p>
     </div>
-
-
 
 </div>
 
