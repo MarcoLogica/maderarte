@@ -1,0 +1,98 @@
+
+{% load static %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #f4f6f9;
+    }
+
+    .card {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        max-width: 600px;
+        margin: auto;
+        margin-top: 30px;
+    }
+
+    .card h2 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    label {
+        font-weight: bold;
+        margin-top: 10px;
+        display: block;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        background: #2e7d32;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+
+    .btn:hover {
+        background: #1b5e20;
+    }
+
+    .btn-secondary {
+        background: #1565c0;
+        margin-top: 10px;
+    }
+
+    .btn-secondary:hover {
+        background: #0d47a1;
+    }
+</style>
+
+<div class="card">
+    <h2>Crear Transportista</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Nombre</label>
+        <input type="text" name="nombre" required>
+
+        <label>Teléfono</label>
+        <input type="text" name="telefono" required>
+
+        <label>Correo</label>
+        <input type="email" name="correo">
+
+        <label>Vehículo</label>
+        <input type="text" name="vehiculo" placeholder="Ej: Furgón, Camioneta">
+
+        <label>Patente</label>
+        <input type="text" name="patente">
+
+        <button class="btn" type="submit">Guardar Transportista</button>
+    </form>
+
+    <a class="btn-secondary" href="{% url 'lista_transportistas' %}">
+        Volver a la lista
+    </a>
+</div>
+
+{% endblock %}

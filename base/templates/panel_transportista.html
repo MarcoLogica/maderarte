@@ -1,0 +1,116 @@
+
+{% load static %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #f4f6f9;
+    }
+
+    .card {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        margin-bottom: 25px;
+    }
+
+    .card h2 {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .ruta-box {
+        background: #ffffff;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        background: #1565c0;
+        color: white;
+        padding: 10px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        display: inline-block;
+        margin-top: 10px;
+    }
+
+    .btn:hover {
+        background: #0d47a1;
+    }
+
+    .btn-whatsapp {
+        background: #25D366;
+        color: white;
+        padding: 10px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+    .btn-whatsapp:hover {
+        background: #1ebe57;
+    }
+
+    .estado {
+        font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+        .btn, .btn-whatsapp {
+            width: 100%;
+            margin-top: 10px;
+        }
+    }
+</style>
+
+<div class="card">
+    <h2>Panel del Transportista</h2>
+    <p><strong>Transportista:</strong> {{ transportista.nombre }}</p>
+    <p><strong>Teléfono:</strong> {{ transportista.telefono }}</p>
+</div>
+
+{% for ruta in rutas %}
+<div class="ruta-box">
+    <h3>Ruta #{{ ruta.id }}</h3>
+
+    <p><strong>Fecha creación:</strong> {{ ruta.fecha_creacion }}</p>
+    <p><strong>Órdenes asignadas:</strong> {{ ruta.ordenes.count }}</p>
+
+    <p class="estado">
+        <strong>Estado:</strong>
+        {% if ruta.estado == "pendiente" %}
+            <span style="color: orange;">Pendiente</span>
+        {% elif ruta.estado == "en_camino" %}
+            <span style="color: blue;">En camino</span>
+        {% elif ruta.estado == "completada" %}
+            <span style="color: green;">Completada</span>
+        {% endif %}
+    </p>
+
+    <a class="btn" href="{% url 'detalle_ruta' ruta.id %}">
+        Ver detalles de la ruta
+    </a>
+
+    <a class="btn-whatsapp"
+       href="https://wa.me/{{ transportista.telefono }}?text=Hola%20{{ transportista.nombre }},%20tu%20ruta%20{{ ruta.id }}%20ya%20está%20lista.%20Vamos%20en%20camino!"
+       target="_blank">
+        WhatsApp: Voy en camino
+    </a>
+</div>
+{% empty %}
+<div class="card">
+    <p>No tienes rutas asignadas.</p>
+</div>
+{% endfor %}
+
+{% endblock %}

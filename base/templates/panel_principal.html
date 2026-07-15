@@ -1,0 +1,98 @@
+
+{% block content %}
+
+<style>
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-top: 25px;
+    }
+
+    .card-log {
+        border-radius: 12px;
+        padding: 25px;
+        color: white;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        transition: all 0.25s ease;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    .card-log:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    }
+
+    .btn-log {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 18px;
+        background: rgba(255,255,255,0.25);
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.2s ease;
+    }
+
+    .btn-log:hover {
+        background: rgba(255,255,255,0.45);
+    }
+
+    /* Colores logísticos */
+    .blue { background: #1e88e5; }
+    .green { background: #43a047; }
+    .orange { background: #fb8c00; }
+    .cyan { background: #00acc1; }
+    .gray { background: #546e7a; }
+    .purple { background: #8e24aa; }
+</style>
+
+<h2>Panel Logístico Principal</h2>
+<p style="color:#666;">Acceso rápido a los módulos operativos del sistema logístico.</p>
+
+<div class="dashboard-grid">
+
+    <!-- Panel administrativo de rutas -->
+    <div class="card-log blue">
+        <h3>🛣 Panel de Rutas</h3>
+        <p>Administración completa de rutas logísticas.</p>
+        <a class="btn-log" href="{% url 'panel_administrativo_rutas' %}">
+            Ir al Panel de Rutas
+        </a>
+    </div>
+
+
+    <!-- Lista de transportistas -->
+    <div class="card-log orange">
+        <h3>🚚 Transportistas</h3>
+        <p>Ver y administrar todos los transportistas.</p>
+        <a class="btn-log" href="{% url 'lista_transportistas' %}">
+            Lista de Transportistas
+        </a>
+    </div>
+
+    <!-- Panel del transportista -->
+    <div class="card-log gray">
+        <h3>📍 Panel del Transportista</h3>
+        <p>Ver rutas asignadas y órdenes en entrega.</p>
+        <a class="btn-log" href="{% url 'panel_transportista' transportista_id=1 %}">
+            Ir al Panel del Transportista
+        </a>
+        <p style="font-size:12px; opacity:0.8;">(Reemplaza el ID según el transportista)</p>
+    </div>
+
+    <!-- Detalle de ruta -->
+    <div class="card-log purple">
+        <h3>📄 Detalle de Ruta</h3>
+        <p>Ver el detalle de una ruta específica.</p>
+        <a class="btn-log" href="{% url 'detalle_ruta' ruta_id=1 %}">
+            Ver Ruta #1
+        </a>
+        <p style="font-size:12px; opacity:0.8;">(Reemplaza el ID según la ruta)</p>
+    </div>
+
+</div>
+
+{% endblock %}

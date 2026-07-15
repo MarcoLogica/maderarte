@@ -6,7 +6,9 @@ from .views import administrar_videos_producto, eliminar_video_producto, editar_
     administrar_beneficios_producto, editar_beneficio_producto, eliminar_beneficio_producto, editar_uso_real_producto, \
     eliminar_uso_real_producto, administrar_uso_real_producto, administrar_faq_producto, editar_faq_producto, \
     eliminar_faq_producto, administrar_productos_relacionados, editar_producto_relacionado, \
-    eliminar_producto_relacionado
+    eliminar_producto_relacionado, cambiar_estado_ruta, detalle_ruta, generar_ruta, panel_administrativo_rutas, \
+    lista_transportistas, crear_transportista, editar_transportista, toggle_transportista, panel_transportista, \
+    marcar_entregada, panel_principal
 
 urlpatterns = [
 
@@ -102,6 +104,21 @@ path('montessori-en-casa/', views.montessori_en_casa, name='montessori_en_casa')
 
 
 
+    path("panel-rutas/", panel_administrativo_rutas, name="panel_administrativo_rutas"),
+    path("generar-ruta/", generar_ruta, name="generar_ruta"),
+    path("detalle-ruta/<int:ruta_id>/", detalle_ruta, name="detalle_ruta"),
+    path("ruta-estado/<int:ruta_id>/<str:nuevo_estado>/", cambiar_estado_ruta, name="cambiar_estado_ruta"),
+
+
+
+
+    path("transportistas/", lista_transportistas, name="lista_transportistas"),
+    path("transportistas/crear/", crear_transportista, name="crear_transportista"),
+    path("transportistas/editar/<int:transportista_id>/", editar_transportista, name="editar_transportista"),
+    path("transportistas/estado/<int:transportista_id>/", toggle_transportista, name="toggle_transportista"),
+    path("transportista/panel/<int:transportista_id>/", panel_transportista, name="panel_transportista"),
+    path("orden/entregar/<int:orden_id>/", marcar_entregada, name="marcar_entregada"),
+    path("panel-principal/", panel_principal, name="panel_principal"),
 
 
 

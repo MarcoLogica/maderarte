@@ -1,0 +1,159 @@
+
+{% load static %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #f4f6f9;
+    }
+
+    .panel-container {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .card {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    table th, table td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    table th {
+        background: #e8f5e9;
+        text-align: left;
+    }
+
+    .btn {
+        background: #2e7d32;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background: #1b5e20;
+    }
+
+    .btn-secondary {
+        background: #1565c0;
+    }
+
+    .btn-secondary:hover {
+        background: #0d47a1;
+    }
+
+    .transportista-select {
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        width: 250px;
+        margin-right: 20px;
+    }
+
+    .ruta-card {
+        background: #f5f6f7;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+</style>
+
+<div class="panel-container">
+
+    <!-- PANEL A: ÓRDENES LISTAS PARA ENVÍO -->
+    <div class="card">
+        <h2>Órdenes listas para envío</h2>
+
+        <form method="POST" action="{% url 'generar_ruta' %}">
+            {% csrf_token %}
+
+            <table>
+                <tr>
+                    <th>Seleccionar</th>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Dirección</th>
+                    <th>Teléfono</th>
+                    <th>Fecha</th>
+                </tr>
+
+                {% for orden in ordenes_listas %}
+                <tr>
+                    <td>
+                        <input type="checkbox" name="ordenes" value="{{ orden.id }}">
+                    </td>
+                    <td>{{ orden.id }}</td>
+                    <td>{{ orden.nombre }}</td>
+                    <td>{{ orden.direccion }}</td>
+                    <td>{{ orden.telefono }}</td>
+                    <td>{{ orden.fecha|date:"d/m/Y H:i" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No hay órdenes listas para envío.</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <br>
+
+            <!-- PANEL B: SELECCIÓN DE TRANSPORTISTA -->
+            <label><strong>Transportista:</strong></label>
+            <select name="transportista" class="transportista-select">
+                <option value="">Seleccione un transportista</option>
+                {% for t in transportistas %}
+                <option value="{{ t.id }}">{{ t.nombre }} ({{ t.telefono }})</option>
+                {% endfor %}
+            </select>
+
+            <button class="btn" type="submit">Generar Ruta</button>
+        </form>
+    </div>
+
+    <!-- PANEL C: HISTORIAL DE RUTAS -->
+    <div class="card">
+        <h2>Historial de rutas</h2>
+
+        {% for ruta in rutas %}
+        <div class="ruta-card">
+            <h3>Ruta #{{ ruta.id }}</h3>
+            <p><strong>Transportista:</strong> {{ ruta.transportista.nombre }}</p>
+            <p><strong>Fecha:</strong> {{ ruta.fecha_creacion|date:"d/m/Y H:i" }}</p>
+            <p><strong>Estado:</strong> {{ ruta.estado }}</p>
+
+            <a class="btn-secondary" href="{% url 'detalle_ruta' ruta.id %}">
+                Ver detalle
+            </a>
+        </div>
+        {% empty %}
+        <p>No hay rutas creadas.</p>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

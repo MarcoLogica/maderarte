@@ -1,0 +1,140 @@
+
+
+
+{% load static %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #f4f6f9;
+    }
+
+    .card {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        margin-bottom: 25px;
+    }
+
+    .card h2 {
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+
+    .orden-card {
+        background: #f5f6f7;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .btn {
+        background: #2e7d32;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background: #1b5e20;
+    }
+
+    .btn-secondary {
+        background: #1565c0;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+        background: #0d47a1;
+    }
+</style>
+
+<div class="card">
+    <h2>Detalle de Ruta #{{ ruta.id }}</h2>
+
+    <p><strong>Transportista:</strong> {{ ruta.transportista.nombre }}</p>
+    <p><strong>Teléfono:</strong> {{ ruta.transportista.telefono }}</p>
+    <p><strong>Fecha de creación:</strong> {{ ruta.fecha_creacion|date:"d/m/Y H:i" }}</p>
+    <p><strong>Estado:</strong> {{ ruta.estado }}</p>
+
+    <!-- Botones para cambiar estado -->
+    <a class="btn-secondary" href="{% url 'cambiar_estado_ruta' ruta.id 'en_ruta' %}">
+        Marcar como En Ruta
+    </a>
+
+    <a class="btn" href="{% url 'cambiar_estado_ruta' ruta.id 'completada' %}">
+        Marcar como Completada
+    </a>
+</div>
+
+<div class="card">
+    <h2>Órdenes asignadas a esta ruta</h2>
+
+    {% for item in ordenes %}
+    <div class="orden-card">
+        <h3>Orden #{{ item.orden.id }} - {{ item.orden.nombre }}</h3>
+
+        <p><strong>Dirección:</strong> {{ item.orden.direccion }}</p>
+        <p><strong>Teléfono:</strong> {{ item.orden.telefono }}</p>
+        <p><strong>Fecha:</strong> {{ item.orden.fecha|date:"d/m/Y H:i" }}</p>
+
+        <!-- Indicador de estado -->
+        {% if item.orden.estado == "entregado" %}
+    <p style="color: green; font-weight: bold;">
+        ✔ Orden entregada
+    </p>
+{% else %}
+    <p style="color: orange; font-weight: bold;">
+        ⏳ Pendiente de entrega
+    </p>
+{% endif %}
+
+
+        <p><strong>Productos:</strong></p>
+        <ul>
+            {% for prod in item.orden.items.all %}
+            <li>{{ prod.producto.nombre }} x{{ prod.cantidad }}</li>
+            {% endfor %}
+        </ul>
+
+        <br>
+
+        <!-- WhatsApp -->
+        <a class="btn-secondary"
+           href="https://wa.me/56{{ item.orden.telefono }}?text=Hola {{ item.orden.nombre }}, vamos en camino con tu pedido."
+           target="_blank">
+            Enviar WhatsApp
+        </a>
+
+        <!-- Botón entregar (solo si NO está entregada) -->
+       {% if item.orden.estado != "entregado" %}
+    <a class="btn" href="{% url 'marcar_entregada' item.orden.id %}">
+        Marcar como entregada
+    </a>
+{% else %}
+    <span class="btn" style="background: #4caf50;">
+        ✔ Entregada
+    </span>
+{% endif %}
+
+
+    </div>
+    {% empty %}
+    <p>No hay órdenes asignadas a esta ruta.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

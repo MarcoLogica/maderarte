@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from .models import Accion, DecisionBot, ProductoVideo, BeneficioProducto, UsoRealProducto, PreguntaFrecuenteProducto, \
-    ProductoRelacionado
+    ProductoRelacionado, RegistroEntrega
 
 
 @csrf_exempt
@@ -1558,3 +1558,192 @@ def restar_cantidad(request, item_id):
 
     request.session['carrito'] = carrito
     return redirect('ver_carrito')
+
+
+# panel de logistica
+
+from .models import Orden, RutaEntrega, RutaOrden, Transportista
+
+
+
+def panel_administrativo_rutas(request):
+    ordenes_listas = Orden.objects.filter(estado="listo").order_by("fecha")
+    transportistas = Transportista.objects.filter(activo=True).order_by("nombre")
+    rutas = RutaEntrega.objects.all().order_by("-fecha_creacion")
+
+    return render(request, "panel_administrativo_rutas.html", {
+        "ordenes_listas": ordenes_listas,
+        "transportistas": transportistas,
+        "rutas": rutas,
+    })
+
+
+def generar_ruta(request):
+    ordenes_ids = request.POST.getlist("ordenes")
+    transportista_id = request.POST.get("transportista")
+
+    # Validaciones
+    if not ordenes_ids or not transportista_id:
+        # manejar error
+        pass
+
+    transportista = Transportista.objects.get(id=transportista_id)
+
+    # Crear ruta
+    ruta = RutaEntrega.objects.create(
+        transportista=transportista,
+        estado="pendiente"
+    )
+
+    # Asignar órdenes
+    for oid in ordenes_ids:
+        orden = Orden.objects.get(id=oid)
+        RutaOrden.objects.create(ruta=ruta, orden=orden)
+        orden.estado = "enviado"
+        orden.save()
+
+    return redirect("panel_administrativo_rutas")
+
+
+
+def detalle_ruta(request, ruta_id):
+    ruta = RutaEntrega.objects.get(id=ruta_id)
+
+    # Cargar ordenes con la orden real
+    ordenes = RutaOrden.objects.filter(ruta=ruta).select_related("orden")
+
+    # Refrescar cada orden desde la base de datos
+    for item in ordenes:
+        item.orden.refresh_from_db()
+
+    return render(request, "detalle_ruta.html", {
+        "ruta": ruta,
+        "ordenes": ordenes
+    })
+
+
+
+
+
+
+
+def cambiar_estado_ruta(request, ruta_id, nuevo_estado):
+    ruta = RutaEntrega.objects.get(id=ruta_id)
+    ruta.estado = nuevo_estado
+    ruta.save()
+
+    return redirect("detalle_ruta", ruta_id=ruta_id)
+
+
+def lista_transportistas(request):
+    transportistas = Transportista.objects.all().order_by("nombre")
+
+    return render(request, "transportistas_lista.html", {
+        "transportistas": transportistas,
+    })
+
+def crear_transportista(request):
+    if request.method == "POST":
+        nombre = request.POST.get("nombre")
+        telefono = request.POST.get("telefono")
+        correo = request.POST.get("correo")
+        vehiculo = request.POST.get("vehiculo")
+        patente = request.POST.get("patente")
+
+        Transportista.objects.create(
+            nombre=nombre,
+            telefono=telefono,
+            correo=correo,
+            vehiculo=vehiculo,
+            patente=patente,
+            activo=True
+        )
+
+        return redirect("lista_transportistas")
+
+    return render(request, "transportistas_crear.html")
+
+
+def editar_transportista(request, transportista_id):
+    transportista = Transportista.objects.get(id=transportista_id)
+
+    if request.method == "POST":
+        transportista.nombre = request.POST.get("nombre")
+        transportista.telefono = request.POST.get("telefono")
+        transportista.correo = request.POST.get("correo")
+        transportista.vehiculo = request.POST.get("vehiculo")
+        transportista.patente = request.POST.get("patente")
+
+        transportista.save()
+
+        return redirect("lista_transportistas")
+
+    return render(request, "transportistas_editar.html", {
+        "transportista": transportista
+    })
+
+def toggle_transportista(request, transportista_id):
+    transportista = Transportista.objects.get(id=transportista_id)
+
+    # Cambiar estado
+    transportista.activo = not transportista.activo
+    transportista.save()
+
+    return redirect("lista_transportistas")
+
+
+def panel_transportista(request, transportista_id):
+    transportista = Transportista.objects.get(id=transportista_id)
+
+    rutas = RutaEntrega.objects.filter(transportista=transportista).order_by("-fecha_creacion")
+
+    return render(request, "panel_transportista.html", {
+        "transportista": transportista,
+        "rutas": rutas,
+    })
+
+from django.utils import timezone
+
+from .models import RutaOrden
+
+def marcar_entregada(request, orden_id):
+    orden = Orden.objects.get(id=orden_id)
+
+    if request.method == "POST":
+        nombre_receptor = request.POST.get("receptor")
+        observaciones = request.POST.get("observaciones")
+
+        # Obtener o crear el registro de entrega
+        registro, creado = RegistroEntrega.objects.get_or_create(
+            orden=orden,
+            defaults={
+                "nombre_receptor": nombre_receptor,
+                "observaciones": observaciones,
+                "fecha_entrega": timezone.now()
+            }
+        )
+
+        # Si ya existía, lo actualizamos
+        if not creado:
+            registro.nombre_receptor = nombre_receptor
+            registro.observaciones = observaciones
+            registro.fecha_entrega = timezone.now()
+            registro.save()
+
+        # Cambiar estado de la orden
+        orden.estado = "entregado"
+        orden.save()
+
+        # Obtener la ruta desde el modelo intermedio
+        relacion = RutaOrden.objects.get(orden=orden)
+        ruta = relacion.ruta
+
+        # Redirigir al panel del transportista
+        return redirect("panel_transportista", transportista_id=ruta.transportista.id)
+
+    return render(request, "marcar_entregada.html", {
+        "orden": orden
+    })
+
+def panel_principal(request):
+    return render(request, "panel_principal.html")

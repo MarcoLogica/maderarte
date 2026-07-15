@@ -432,3 +432,56 @@ class ProductoRelacionado(models.Model):
 
     def __str__(self):
         return f"{self.titulo} relacionado con {self.producto.nombre}"
+
+
+#panel logístico
+
+class Transportista(models.Model):
+    nombre = models.CharField(max_length=255)
+    telefono = models.CharField(max_length=20)
+    correo = models.EmailField(blank=True, null=True)
+
+    activo = models.BooleanField(default=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    vehiculo = models.CharField(max_length=100, blank=True, null=True)
+    patente = models.CharField(max_length=20, blank=True, null=True)
+
+    def __str__(self):
+        return self.nombre
+
+
+class RutaEntrega(models.Model):
+    transportista = models.ForeignKey(Transportista, on_delete=models.CASCADE, related_name="rutas")
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    ESTADOS = (
+        ("pendiente", "Pendiente"),
+        ("en_ruta", "En ruta"),
+        ("completada", "Completada"),
+    )
+    estado = models.CharField(max_length=20, choices=ESTADOS, default="pendiente")
+
+    def __str__(self):
+        return f"Ruta #{self.id} - {self.transportista.nombre}"
+
+
+class RutaOrden(models.Model):
+    ruta = models.ForeignKey(RutaEntrega, on_delete=models.CASCADE, related_name="ordenes_ruta")
+    orden = models.ForeignKey(Orden, on_delete=models.CASCADE, related_name="ruta_asignada")
+
+    fecha_asignacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Ruta {self.ruta.id} → Orden {self.orden.id}"
+
+
+class RegistroEntrega(models.Model):
+    orden = models.OneToOneField(Orden, on_delete=models.CASCADE, related_name="registro_entrega")
+
+    nombre_receptor = models.CharField(max_length=255)
+    fecha_entrega = models.DateTimeField(auto_now_add=True)
+    observaciones = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Entrega Orden {self.orden.id}"
