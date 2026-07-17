@@ -36,16 +36,108 @@ section {
    HERO PRINCIPAL
 ------------------------------ */
 .hero-vipalu {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #fdfdfd, #f3f3f3);
-    border-bottom: 1px solid #e5e5e5;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
 
-    height: 200px;        /* ← ALTO FIJO DEL HERO */
-    overflow: hidden;     /* ← EVITA QUE LA IMAGEN LO AGRANDE */
+    height: 600px; /* puedes subirlo a 500 o 600 si quieres más impacto */
+
+    /* ⭐ IMAGEN DE FONDO COMPLETA */
+    background-image: url('/static/img/hero.png'); /* ← tu imagen */
+    background-size: cover;      /* ocupa todo el contenedor */
+    background-position: center; /* centrada */
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: row;         /* logo + links en línea */
+    align-items: center;         /* centrado vertical */
+    gap: 45px;                   /* separación entre logo y links */
+    position: relative;
 }
+
+
+.navbar-hero {
+    width: 100%;
+    padding: 25px 40px;
+    display: flex;
+    justify-content: flex-start !important;  /* ← CLAVE */;
+    align-items: center;
+    gap: 1300px;
+
+    position: absolute;              /* ← Se superpone al hero */
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.navbar-hero a {
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 16px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.hero-content {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    color: white;
+    z-index: 9;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.4);
+}
+
+.hero-title {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.hero-subtitle {
+    font-size: 20px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 14px 32px;
+    background: #E8C4C4; /* rosa pastel Vipalú */
+    color: #ffffff;
+    font-weight: 700;
+    border-radius: 10px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* ⭐ Borde animado */
+.hero-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    border: 2px solid #D9A9A9; /* rosa palo más profundo */
+    transform: scale(0.85);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.hero-btn:hover::before {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* ⭐ Efecto de elevación suave */
+.hero-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+
 
 }
 
@@ -75,7 +167,7 @@ section {
 
 
 .hero-img {
-    width: 25%;
+    width: 100%;
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.08);
 }
@@ -398,7 +490,7 @@ footer {
 
 /* Fondo general */
 body {
-    background: #FAF9F6 !important;
+    background: #ffffff !important;
 }
 
 /* HERO – lavanda tenue */
@@ -406,27 +498,9 @@ body {
 
 /* HERO más ancho */
 
-.hero-vipalu {
-    max-width: 1400px !important; /* antes 1200 */
-    margin: auto !important;
-    padding-left: 40px !important;
-    padding-right: 40px !important;
-}
 
-/* HERO con degradado Montessori premium */
-.hero-vipalu {
-    background: linear-gradient(
-        135deg,
-        #E2D3F2 30%,   /* lavanda tenue */
-        #D4B2F7 70%,  /* arena cálida */
-        #C38FF7 100%  /* azul Montessori suave */
-    ) !important;
 
-    border-bottom: none !important;
-    border-radius: 0 0 40px 40px; /* borde inferior suave y elegante */
-    padding-top: 120px !important;
-    padding-bottom: 120px !important;
-}
+
 
 
 
@@ -448,12 +522,7 @@ max-width: 1700px;
 /* CATÁLOGO – verde salvia claro */
 .productos-destacados {
 max-width: 1700px;
-    background: linear-gradient(
-        135deg,
-        #DEFACA 50%,   /* lavanda tenue */
-        #CAF7AB 70%,  /* arena cálida */
-        #B7F58C 100%  /* azul Montessori suave */
-    ) !important;
+    background: #ffffff;
     border-radius: 20px;
     padding-top: 80px !important;
     padding-bottom: 80px !important;
@@ -718,11 +787,172 @@ max-width: 1700px;
     background: #B49AD8; /* violeta pastel más profundo */
 }
 
+    .logo-vipalu {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: #1e3a8a;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    transition: 0.3s ease;
+}
+
+.logo-vipalu:hover {
+    opacity: 0.7;
+}
+.logo-img {
+    height: 80px !important;
+    width: auto !important;
+    display: block;
+    object-fit: contain;
+
+    /* ⭐ SOMBRA PREMIUM */
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));
+}
+    .navbar-hero {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.6); /* línea blanca semitransparente */
+    backdrop-filter: blur(4px); /* suaviza el fondo detrás */
+}
+.navbar-links a {
+    position: relative;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+}
+
+.navbar-links a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -4px; /* distancia de la línea */
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.navbar-links a:hover::after {
+    width: 100%;
+}
 
 
+.vipalu-marquee {
+    width: 100%;
+    background: #E8C4C4; /* rosa pastel Vipalú */
+    padding: 12px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.vipalu-marquee-content {
+    display: inline-block;
+    white-space: nowrap;
+    font-weight: 600;
+    font-size: 18px;
+    color: #6FA58F; /* verde salvia profundo */
+    will-change: transform;
+    animation: marquee 22s linear infinite;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+    /* Título */
+.titulo-destacados {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    text-align: center;
+    background: #DBF0D1;
+    padding: 25px 30px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 10px 0;
+}
+
+/* Track horizontal */
+.carousel-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px;
+    scroll-snap-type: x mandatory;
+}
+
+/* Ocultar scrollbar */
+.carousel-track::-webkit-scrollbar {
+    display: none;
+}
+
+/* Cada tarjeta ocupa 80% del ancho → se ve la mitad de la siguiente */
+.card {
+    flex: 0 0 35%; /* mantiene el peek */
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    scroll-snap-align: start;
+
+    /* ⭐ Aumentamos altura */
+    height: 900px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* ⭐ Ajuste de imagen para que se vea completa */
+.card img {
+    width: 100%;
+    height: 600px;
+    object-fit: contain; /* ⭐ evita recortes */
+    border-radius: 10px;
+}
 
 
+/* Flechas */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #E8C4C4; /* rosa pastel Vipalú */
+    border: none;
+    color: white;
+    font-size: 28px;
+    padding: 10px 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
 
+.carousel-btn:hover {
+    background: #D9A9A9;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-btn.left {
+    left: 10px;
+}
+
+.carousel-btn.right {
+    right: 10px;
+}
 
 
 </style>
@@ -730,61 +960,41 @@ max-width: 1700px;
 
 <body>
 
-<!-- NAVBAR VIPALÚ -->
-<nav class="navbar-vipalu">
-    <div class="nav-logo">
-        <a href="/">Vipalú</a>
-    </div>
-
-    <ul class="nav-links">
-        <li><a href="{% url 'panel' %}">Panel</a></li>
-        <li><a href="{% url 'crear_producto' %}">Crear producto</a></li>
-        <li><a href="{% url 'lista_productos' %}">Gestionar productos</a></li>
-        <li><a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a></li>
-        <li><a href="{% url 'panel' %}">Contacto</a></li>
-        <li><a href="{% url 'administracion_ventas' %}">📊 Administración</a></li>
-
-    </ul>
-</nav>
-
 
 <!-- HERO PRINCIPAL -->
-<section class="hero-vipalu">
-    <div class="hero-texto">
-        <h1>Bienvenida a Vipalú</h1>
-        <p>Tu hijo está viviendo una etapa irrepetible. Cada día aprende, explora y crece a una velocidad que nunca volverá a repetirse.
-En Vipalú lo acompañamos con muebles seguros, sin acabados sintéticos, hechos en Chile y diseñados para potenciar su autonomía.
-Despachamos a todo Chile y ofrecemos garantía total de satisfacción: si no te encanta, te devolvemos tu dinero.
-Porque la infancia no espera… y tú puedes darle lo mejor hoy.</p>
-        <a href="#catalogo" class="btn-cta">Explorar catálogo</a>
-    </div>
-    <img src="{% static 'img/bienvenida.jpeg' %}" alt="Vipalú Montessori" class="hero-img">
-</section>
+<div class="hero-vipalu">
 
-<!-- BANNER PROMOCIONAL / CARRUSEL -->
-<section class="banner-carrusel">
-    <div class="carrusel-contenedor">
-        <div class="carrusel-item activo">
-            <img src="{% static 'img/banner_home.png' %}" alt="Promoción Vipalú">
+    <div class="navbar-hero">
+        <a href="/" class="logo-vipalu">
+            <img src="/static/img/logo_vipalu.jpeg" alt="Vipalú" class="logo-img">
+        </a>
+
+
+        <div class="navbar-links">
+            <a href="{% url 'panel' %}">Panel</a>
+            <a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a>
+            <a href="{% url 'home' %}">Contacto</a></li>
+
         </div>
-
-
-
-        <!-- Si quieres más imágenes, solo duplica esto -->
-        <!--
-        <div class="carrusel-item activo">
-            <img src="{% static 'img/banner_librero.png' %}" alt="Promoción Vipalú">
-        </div>
-        -->
     </div>
 
-    <!-- Controles -->
-    <div class="carrusel-controles">
-        <span class="punto activo"></span>
-
-        <!-- Agrega más puntos si agregas más imágenes -->
+    <div class="hero-content">
+        <div class="hero-title">Vipalú | Carpintaría con sentido</div>
+        <div class="hero-subtitle">Porque la primera infancia ocurre solo una vez, no hay retorno, no hay otra oportunidad para estimular a tu bebé en esta etapa.</div>
+        <div class="hero-subtitle">Te compañamos en este maravilloso viaje para tu bebé...</div>
+        <a class="hero-btn" href="#catalogo">Ver Catálogo</a>
     </div>
-</section>
+
+</div>
+
+
+<div class="vipalu-marquee">
+    <div class="vipalu-marquee-content">
+        Despacho gratis a todo Santiago — Despachamos a todo Chile — Llegamos con tus productos favoritos en menos de 3 días —
+        Despacho gratis a todo Santiago — Despachamos a todo Chile — Llegamos con tus productos favoritos en menos de 3 días —
+    </div>
+</div>
+
 
 
 <!-- POR QUÉ ELEGIR VIPALÚ -->
@@ -831,37 +1041,37 @@ Porque la infancia no espera… y tú puedes darle lo mejor hoy.</p>
 
 <!-- CATÁLOGO (SE MANTIENE TAL CUAL) -->
 <section id="catalogo" class="productos-destacados">
-    <h2 style="
-    font-size: 2.4rem;
-    font-weight: 700;
-    color: #1e3a8a;
-    text-align: center;
-    background: #DBF0D1;
-    padding: 25px 30px;
-    border-radius: 20px;
-    margin-bottom: 40px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-">
-🌿 Productos destacados 🌿
-</h2>
+    <h2 class="titulo-destacados">
+        🌿 Productos destacados 🌿
+    </h2>
 
+    <div class="carousel-container">
+        <button class="carousel-btn left">❮</button>
 
-    <div class="grid-productos">
+        <div class="carousel-container">
+    <button class="carousel-btn left">❮</button>
+
+    <div class="carousel-track">
         {% for producto in productos %}
         <div class="card">
             <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
             <h3>{{ producto.nombre }}</h3>
+
             {% with precio_str=producto.precio|stringformat:"d" %}
-    <p>${{ precio_str|slice:":-3" }}.{{ precio_str|slice:"-3:" }}</p>
-{% endwith %}
+                <p>${{ precio_str|slice:":-3" }}.{{ precio_str|slice:"-3:" }}</p>
+            {% endwith %}
 
-           <a href="{% url 'detalle_producto' producto.id %}" class="btn-ver">Ver más</a>
-
+            <a href="{% url 'detalle_producto' producto.id %}" class="btn-ver">Ver más</a>
             <a href="{% url 'agregar_al_carrito' producto.id %}" class="btn-agregar">🛒 Agregar al carrito</a>
         </div>
         {% endfor %}
     </div>
+
+    <button class="carousel-btn right">❯</button>
+</div>
+
 </section>
+
 
 <!-- OFERTAS DEL MES -->
 <section class="ofertas-mes">
