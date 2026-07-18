@@ -1063,6 +1063,87 @@ max-width: 1700px;
     z-index: 20;
 }
 
+    .testimonios-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px;
+    scroll-snap-type: x mandatory;
+}
+
+.carousel-track::-webkit-scrollbar {
+    display: none;
+}
+
+/* Tarjetas Montessori */
+.testimonio-card {
+    flex: 0 0 320px;
+    background: linear-gradient(
+        135deg,
+        rgba(168, 213, 186, 0.85),
+        rgba(199, 180, 227, 0.85),
+        rgba(232, 196, 196, 0.85)
+    );
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    scroll-snap-align: start;
+    text-align: left;
+}
+
+/* Títulos y textos */
+.testimonio-card h3 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.4rem;
+    color: #6FA58F;
+    margin-bottom: 10px;
+}
+
+.testimonio-card p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Flechas Montessori */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #C7B4E3;
+    border: none;
+    color: white;
+    font-size: 28px;
+    padding: 10px 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.carousel-btn:hover {
+    background: #A8D5BA;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-btn.left {
+    left: 10px;
+}
+
+.carousel-btn.right {
+    right: 10px;
+}
+
+
 
 
 </style>
@@ -1287,24 +1368,26 @@ Nuestros pequeclientes hablan por sí solos, y sus mamitas nos prefieren.
 </h2>
 
 
-    <div class="testimonios-grid">
+   <div class="testimonios-carousel">
+    <button class="carousel-btn left">‹</button>
+    <div class="carousel-track">
         {% for t in testimonios %}
-       <div class="testimonio">
-    <h3>{{ t.titulo }}</h3>
-    <p>{{ t.comentario }}</p>
+        <div class="testimonio-card">
+            <h3>{{ t.titulo }}</h3>
+            <p>{{ t.comentario }}</p>
 
-    <div class="testimonio-hover">
-    <img src="{{ t.imagen.url }}" class="img-base">
-
-    {% if t.imagen2 %}
-        <img src="{{ t.imagen2.url }}" class="img-hover">
-    {% endif %}
-</div>
-
-</div>
-
+            <div class="testimonio-hover">
+                <img src="{{ t.imagen.url }}" class="img-base">
+                {% if t.imagen2 %}
+                    <img src="{{ t.imagen2.url }}" class="img-hover">
+                {% endif %}
+            </div>
+        </div>
         {% endfor %}
     </div>
+    <button class="carousel-btn right">›</button>
+</div>
+
 </section>
 
 
@@ -1377,6 +1460,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const track = document.querySelector('.carousel-track');
+    const btnLeft = document.querySelector('.carousel-btn.left');
+    const btnRight = document.querySelector('.carousel-btn.right');
+
+    btnLeft.addEventListener('click', () => {
+        track.scrollBy({ left: -350, behavior: 'smooth' });
+    });
+
+    btnRight.addEventListener('click', () => {
+        track.scrollBy({ left: 350, behavior: 'smooth' });
+    });
+});
+</script>
+
 
 
 
