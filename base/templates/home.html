@@ -64,7 +64,7 @@ section {
     justify-content: flex-start !important;  /* ← CLAVE */;
     align-items: center;
     gap: 1300px;
-
+    position: relative; /* necesario para anclar el menú */
     position: absolute;              /* ← Se superpone al hero */
     top: 0;
     left: 0;
@@ -954,6 +954,105 @@ max-width: 1700px;
     right: 10px;
 }
 
+/* Desktop: navbar normal */
+.navbar-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 18px;
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #1e3a8a;
+}
+
+
+/* ⭐ Móviles */
+@media (max-width: 600px) {
+
+    .navbar-hero {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 12px;
+        position: relative;
+        width: 100%;
+    }
+
+    .navbar-top {
+        display: flex;
+        justify-content: space-between; /* logo izquierda, ⋮ derecha */
+        align-items: center;
+        width: 100%;
+    }
+
+    .menu-toggle {
+        display: block;
+        font-size: 2rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #1e3a8a;
+        z-index: 20; /* siempre encima */
+    }
+
+    /* ⭐ Menú desplegable premium */
+    .navbar-links {
+        display: none;
+        flex-direction: column;
+        gap: 12px;
+
+        position: absolute;
+        top: 55px;      /* aparece justo debajo del botón ⋮ */
+        right: 10px;    /* alineado al botón */
+        width: 180px;
+
+        background: rgba(255, 255, 255, 0.9); /* fondo elegante */
+        backdrop-filter: blur(6px);           /* efecto premium */
+        border-radius: 14px;
+        padding: 14px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+
+        animation: fadeIn 0.25s ease-out;
+        z-index: 15;
+    }
+
+    .navbar-links.active {
+        display: flex;
+    }
+
+    .navbar-links a {
+        font-size: 1rem;
+        padding: 8px 0;
+        display: block;
+        color: #1e3a8a;
+        font-weight: 500;
+    }
+
+    /* Animación suave */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-6px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo-img {
+        width: 120px;
+    }
+}
+
+
+
+
+
+
 
 </style>
 
@@ -964,19 +1063,25 @@ max-width: 1700px;
 <!-- HERO PRINCIPAL -->
 <div class="hero-vipalu">
 
-    <div class="navbar-hero">
+   <div class="navbar-hero">
+
+    <div class="navbar-top">
         <a href="/" class="logo-vipalu">
             <img src="/static/img/logo_vipalu.jpeg" alt="Vipalú" class="logo-img">
         </a>
 
-
-        <div class="navbar-links">
-            <a href="{% url 'panel' %}">Panel</a>
-            <a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a>
-            <a href="{% url 'home' %}">Contacto</a></li>
-
-        </div>
+        <!-- Botón de menú para móviles -->
+        <button class="menu-toggle">⋮</button>
     </div>
+
+    <div class="navbar-links">
+        <a href="{% url 'panel' %}">Panel</a>
+        <a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a>
+        <a href="{% url 'home' %}">Contacto</a>
+    </div>
+
+</div>
+
 
     <div class="hero-content">
         <div class="hero-title">Vipalú | Carpintaría con sentido</div>
@@ -1204,6 +1309,16 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 5000);
 });
 </script>
+
+<script>
+    const toggle = document.querySelector('.menu-toggle');
+    const links = document.querySelector('.navbar-links');
+
+    toggle.addEventListener('click', () => {
+        links.classList.toggle('active');
+    });
+</script>
+
 
 
 </body>
