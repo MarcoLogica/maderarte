@@ -300,7 +300,7 @@ def pago(request):
             Tu código de seguimiento es: {orden.codigo_seguimiento}
 
             Puedes ver el estado de tu pedido aquí:
-            https://tu-dominio.cl/tracking/{orden.codigo_seguimiento}/
+            https://maderarte.pythonanywhere.com/tracking/{orden.codigo_seguimiento}/
 
             Nuestro equipo confirmará tu pago y te avisaremos cuando tu pedido esté listo para despacho.
 
@@ -1747,3 +1747,47 @@ def marcar_entregada(request, orden_id):
 
 def panel_principal(request):
     return render(request, "panel_principal.html")
+
+
+# mercado pago en cuetas
+
+# views.py
+from django.shortcuts import render
+
+def mercado_pago(request):
+    return render(request, "mercado_pago.html")
+
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect
+
+def contactanos(request):
+    if request.method == "POST":
+        nombre = request.POST.get("nombre")
+        correo = request.POST.get("correo")
+        telefono = request.POST.get("telefono")
+        mensaje = request.POST.get("mensaje")
+
+        cuerpo = (
+            f"Nuevo mensaje desde la página de contacto Vipalú:\n\n"
+            f"Nombre: {nombre}\n"
+            f"Correo: {correo}\n"
+            f"Teléfono: {telefono}\n"
+            f"Mensaje:\n{mensaje}\n"
+        )
+
+        send_mail(
+            subject="Nuevo mensaje desde Contactanos - Vipalú",
+            message=cuerpo,
+            from_email="no-reply@vipalu.cl",  # puede ser cualquiera
+            recipient_list=["marco.sepulvedam85@gmail.com"],
+            fail_silently=False,
+        )
+
+        return redirect("contacto_enviado")
+
+    return render(request, "contactanos.html")
+
+
+def contacto_enviado(request):
+    return render(request, "contacto_enviado.html")
+

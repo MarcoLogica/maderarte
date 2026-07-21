@@ -263,6 +263,23 @@ tr:hover {
 .toast-copiado.show {
     opacity: 1;
 }
+
+    .grilla-medios-pago {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.cuadro-mercado-pago {
+    background: linear-gradient(135deg, #FFF176, #FFEE58, #FFEB3B);
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    font-family: 'Quicksand', sans-serif;
+}
+
 </style>
 
 
@@ -299,57 +316,153 @@ tr:hover {
             <h3>Total a pagar: ${{ total }}</h3>
         </div>
 
-        <div class="contenedor-pago">
-            <div class="formulario-comprobante">
-              <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="contenedor-pago">
 
-       <!-- BLOQUE DE DATOS BANCARIOS FORMAL VIPALÚ -->
-<div class="transferencia-formal">
-    <h3>💳 Datos para realizar la transferencia</h3>
+        <div style="
+    width: 100%;
+    height: 4px;
+    background: #d1d5db;
+    border-radius: 2px;
+    margin: 2rem 0;
+"></div>
 
-    <p class="texto-confianza-formal">
-        Realiza la transferencia a la cuenta indicada y adjunta el comprobante.
-        Recibirás la confirmación por correo una vez validado el pago.
-    </p>
+        <h3 style="
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2e7d32;
+    margin-bottom: 0.5rem;
+">
+    Medios de pago
+</h3>
 
-    <div class="datos-bancarios-formal">
-        <div class="dato">
-            <strong>Banco:</strong> Banco Estado
-            <button type="button" class="btn-copiar" onclick="copiarTexto('Banco Estado')">Copiar</button>
+<p style="
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+">
+    Ponemos TODO medio de pago a tu disposición de manera segura y confiable... puedes pagar con transferencia directa ( Datos a la izquierda), o utilizar Tarjetas de crédito, debito, o cualquier otro medio de pago con 3 cuotas sin interes, en el cuadro a la derecha.
+</p>
+
+
+       <!-- CONTENEDOR SUPERIOR: MEDIOS DE PAGO -->
+<div class="grilla-medios-pago">
+
+    <!-- BLOQUE DE DATOS BANCARIOS FORMAL VIPALÚ -->
+    <div class="transferencia-formal">
+        <h3>💳 Datos para realizar la transferencia</h3>
+
+        <p class="texto-confianza-formal">
+            Realiza la transferencia a la cuenta indicada y adjunta el comprobante.
+            Recibirás la confirmación por correo una vez validado el pago.
+        </p>
+
+        <div class="datos-bancarios-formal">
+            <div class="dato">
+                <strong>Banco:</strong> Banco Estado
+                <button type="button" class="btn-copiar" onclick="copiarTexto('Banco Estado')">Copiar</button>
+            </div>
+
+            <div class="dato">
+                <strong>Tipo de cuenta:</strong> Cuenta Vista
+                <button type="button" class="btn-copiar" onclick="copiarTexto('Cuenta Vista')">Copiar</button>
+            </div>
+
+            <div class="dato">
+                <strong>Nombre:</strong> Vipalú
+                <button type="button" class="btn-copiar" onclick="copiarTexto('Vipalú')">Copiar</button>
+            </div>
+
+            <div class="dato">
+                <strong>RUT:</strong> 12.345.678-9
+                <button type="button" class="btn-copiar" onclick="copiarTexto('12.345.678-9')">Copiar</button>
+            </div>
+
+            <div class="dato">
+                <strong>N° de cuenta:</strong> 123456789
+                <button type="button" class="btn-copiar" onclick="copiarTexto('123456789')">Copiar</button>
+            </div>
+
+            <div class="dato">
+                <strong>Correo de confirmación:</strong> contacto@vipalu.cl
+                <button type="button" class="btn-copiar" onclick="copiarTexto('contacto@vipalu.cl')">Copiar</button>
+            </div>
         </div>
 
-        <div class="dato">
-            <strong>Tipo de cuenta:</strong> Cuenta Vista
-            <button type="button" class="btn-copiar" onclick="copiarTexto('Cuenta Vista')">Copiar</button>
-        </div>
-
-        <div class="dato">
-            <strong>Nombre:</strong> Vipalú
-            <button type="button" class="btn-copiar" onclick="copiarTexto('Vipalú')">Copiar</button>
-        </div>
-
-        <div class="dato">
-            <strong>RUT:</strong> 12.345.678-9
-            <button type="button" class="btn-copiar" onclick="copiarTexto('12.345.678-9')">Copiar</button>
-        </div>
-
-        <div class="dato">
-            <strong>N° de cuenta:</strong> 123456789
-            <button type="button" class="btn-copiar" onclick="copiarTexto('123456789')">Copiar</button>
-        </div>
-
-        <div class="dato">
-            <strong>Correo de confirmación:</strong> contacto@vipalu.cl
-            <button type="button" class="btn-copiar" onclick="copiarTexto('contacto@vipalu.cl')">Copiar</button>
+        <div class="mensaje-seguridad-formal">
+            🔒 <strong>Vipalú nunca solicitará claves, códigos ni información bancaria adicional.</strong>
         </div>
     </div>
 
-    <div class="mensaje-seguridad-formal">
-        🔒 <strong>Vipalú nunca solicitará claves, códigos ni información bancaria adicional.</strong>
+    <!-- CUADRO MERCADO PAGO -->
+    <div class="cuadro-mercado-pago">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 18px;">
+            <img src="{% static 'img/medios_pago.png' %}" alt="Medios de pago" style="width: 70px; height: 70px;">
+            <h3 style="font-size: 1.5rem; font-weight: 700; color: #333; margin: 0;">
+                Todo medio de pago<br>
+                <span style="font-size: 1.1rem; color:#444;">3 cuotas sin interés</span>
+            </h3>
+        </div>
+
+        <p style="font-size: 1rem; color: #444; line-height: 1.6; margin-bottom: 22px;">
+            Paga con tarjeta de crédito, débito, prepago o saldo Mercado Pago.
+            Compra protegida y con la confianza de Mercado Libre.
+        </p>
+
+        <a href="TU_LINK_DE_MERCADO_PAGO_AQUÍ" style="
+            display: inline-block;
+            background: #3483FA;
+            color: #ffffff;
+            padding: 14px 26px;
+            border-radius: 14px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            transition: all 0.25s ease;
+        ">
+            Pagar con Mercado Pago
+        </a>
+
+        <p style="font-size: 0.9rem; color: #555; margin-top: 18px;">
+            Serás redirigido a una página segura de Mercado Pago para completar tu pago.
+        </p>
     </div>
+
 </div>
+
+<div style="
+    width: 100%;
+    height: 4px;
+    background: #d1d5db;
+    border-radius: 2px;
+    margin: 2rem 0;
+"></div>
+
+<h3 style="
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2e7d32;
+    margin-bottom: 0.5rem;
+">
+    🚚💨 Datos para tu despacho
+</h3>
+
+<p style="
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+">
+    Una vez realizado tu pago, vuelve a esta sección para dejarnos tus datos de envío.
+    Con esta información podremos preparar y despachar tus productos favoritos directo a la puerta de tu casa.
+</p>
+
+
+
 
 <!-- Toast elegante -->
 <div id="toast-copiado" class="toast-copiado">Copiado al portapapeles</div>
@@ -372,9 +485,13 @@ function copiarTexto(texto) {
 
 
 
+<!-- FORMULARIO REAL (ESTE SÍ SE ENVÍA) -->
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
 
+    <div class="contenedor-pago">
 
-        <!-- FORMULARIO DE CONTACTO -->
+        <!-- FORMULARIO CONTACTO -->
         <div class="formulario-contacto">
             <h3>📇 Datos de contacto</h3>
 
@@ -389,22 +506,21 @@ function copiarTexto(texto) {
 
             <label for="telefono">Teléfono de contacto:</label>
             <input type="text" name="telefono" placeholder="Teléfono de contacto (opcional)">
-
         </div>
 
-
-
-        <!-- FORMULARIO DE COMPROBANTE -->
+        <!-- FORMULARIO COMPROBANTE -->
         <div class="formulario-comprobante">
             <label for="comprobante">📎 Adjuntar comprobante de pago:</label>
             <input type="file" name="comprobante" required>
         </div>
+
     </div>
 
     <div style="text-align:center; margin-top:2rem;">
         <button type="submit">Enviar pago</button>
     </div>
 </form>
+
             </div>
         </div>
     </section>

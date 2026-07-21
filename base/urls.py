@@ -119,6 +119,12 @@ path('montessori-en-casa/', views.montessori_en_casa, name='montessori_en_casa')
     path("transportista/panel/<int:transportista_id>/", panel_transportista, name="panel_transportista"),
     path("orden/entregar/<int:orden_id>/", marcar_entregada, name="marcar_entregada"),
     path("panel-principal/", panel_principal, name="panel_principal"),
+    path("mercado-pago/", views.mercado_pago, name="mercado_pago"),
+path("contactanos/", views.contactanos, name="contactanos"),
+path("contacto-enviado/", views.contacto_enviado, name="contacto_enviado"),
+
+
+
 
 
 

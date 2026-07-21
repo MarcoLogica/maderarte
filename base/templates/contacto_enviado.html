@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mensaje enviado</title>
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: #f4f1f7;
+            text-align: center;
+            padding: 40px;
+        }
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #2e7d32;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        a {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 12px 20px;
+            background: #a3c9a8;
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s ease;
+        }
+        a:hover {
+            background: #8bbf91;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>✨ ¡Gracias por tu mensaje!</h2>
+    <p>Tu mensaje fue enviado correctamente.
+       Nos pondremos en contacto contigo muy pronto.</p>
+
+    <a href="{% url 'home' %}">Volver al inicio</a>
+</div>
+
+</body>
+</html>
