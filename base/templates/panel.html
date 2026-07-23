@@ -3,21 +3,20 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Panel LOGICA Montessori</title>
+    <title>VIPALÚ</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <nav class="navbar">
     <div class="logo">
-        <a href="{% url 'home' %}">LOGICA Montessori</a>
+        <a href="{% url 'home' %}">Vipalú</a>
     </div>
     <ul class="nav-links">
         <li><a href="{% url 'home' %}">Home</a></li>
         <li><a href="{% url 'panel' %}">Panel</a></li>
-        <li><a href="{% url 'crear_producto' %}">Crear producto</a></li>
-        <li><a href="{% url 'lista_productos' %}">Gestionar productos</a></li>
+
         <li><a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a></li>
-        <li><a href="#">Contacto</a></li>
+        <li><a href="{% url 'contactanos' %}">Contacto</a></li>
     </ul>
 </nav>
 

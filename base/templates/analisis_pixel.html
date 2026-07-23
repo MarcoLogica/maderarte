@@ -82,7 +82,55 @@
             grid-template-columns: repeat(1, 1fr);
         }
     }
+
+    .navbar {
+    background-color: #a3c9a8;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Quicksand', sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links li a {
+    color: #8E44AD;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #fce4ec;
+}
 </style>
+
+<nav class="navbar">
+    <div class="logo">
+        <a href="{% url 'home' %}">Vipalú</a>
+    </div>
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'panel' %}">Panel</a></li>
+
+        <li><a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a></li>
+        <li><a href="{% url 'contactanos' %}">Contacto</a></li>
+    </ul>
+</nav>
 
 <div class="pixel-container">
 
