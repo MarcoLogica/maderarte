@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pixel VIPALÚ – Panel HOME</title>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f7f7f7;
+        }
+
+        h1, h2 {
+            margin-bottom: 20px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #eee;
+        }
+
+        .charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.chart-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+    </style>
+</head>
+
+<body>
+
+    <h1>Pixel VIPALÚ – Panel HOME</h1>
+
+    <!-- RESUMEN GENERAL -->
+    <div class="summary-grid">
+    <div class="summary-card">
+        <h4>Visitas al HOME</h4>
+        <p id="visitasHome">0</p>
+    </div>
+
+    <div class="summary-card">
+        <h4>Clicks totales</h4>
+        <p id="clicksTotales">0</p>
+    </div>
+
+    <div class="summary-card">
+        <h4>Scroll promedio</h4>
+        <p id="scrollPromedio">0 px</p>
+    </div>
+
+    <div class="summary-card">
+        <h4>Tiempo promedio</h4>
+        <p id="tiempoPromedio">0 seg</p>
+    </div>
+</div>
+
+
+    <!-- GRÁFICOS -->
+   <section id="pixel-charts">
+    <h2>Gráficos principales</h2>
+
+    <div class="charts-grid">
+
+        <!-- Eventos por categoría -->
+        <div class="chart-card">
+            <h3>Eventos por categoría (cantidad)</h3>
+            <canvas id="chartEventosCategoria"></canvas>
+        </div>
+
+        <!-- Clicks por elemento -->
+        <div class="chart-card">
+    <h3>Clicks por botón y producto (cantidad)</h3>
+    <canvas id="chartClicksProducto"></canvas>
+</div>
+
+
+        <!-- Scroll depth -->
+        <div class="chart-card">
+            <h3>Scroll máximo por sesión (px)</h3>
+            <canvas id="chartScrollDepth"></canvas>
+        </div>
+
+        <!-- Tiempo en HOME -->
+        <div class="chart-card">
+            <h3>Tiempo total por sesión (segundos)</h3>
+            <canvas id="chartTiempoSesion"></canvas>
+        </div>
+
+    </div>
+
+       <div class="chart-card">
+    <h3>Clicks por botón (sin producto)</h3>
+    <canvas id="chartClicksBotones"></canvas>
+</div>
+
+</section>
+
+
+
+
+    <!-- SCRIPT DEL PANEL -->
+    <script>
+        // ============================
+        // Procesar datos desde Django
+        // ============================
+
+        const eventos = JSON.parse(`{{ eventos_json|safe }}`);
+
+        // Convertir value_number a número real
+eventos.forEach(e => {
+    if (e.value_number !== null && e.value_number !== undefined) {
+        e.value_number = Number(e.value_number);
+    }
+});
+
+
+
+
+        // Resumen general
+        const visitasHome = eventos.filter(e => e.event === "home_visit").length;
+        const clicksTotales = eventos.filter(e => e.category === "catalogo" || e.category === "navbar").length;
+
+        const scrollEvents = eventos.filter(e => e.event === "scroll_depth");
+        const scrollPromedio = scrollEvents.length > 0
+            ? Math.round(scrollEvents.reduce((acc, e) => acc + (e.value_number || 0), 0) / scrollEvents.length)
+            : 0;
+
+        const tiemposSalida = eventos.filter(e => e.event === "home_exit");
+        const tiempoPromedio = tiemposSalida.length > 0
+            ? Math.round((tiemposSalida.reduce((acc, e) => acc + (e.value_number || 0), 0) / tiemposSalida.length) / 1000)
+            : 0;
+
+        document.getElementById("visitasHome").textContent = visitasHome;
+        document.getElementById("clicksTotales").textContent = clicksTotales;
+        document.getElementById("scrollPromedio").textContent = scrollPromedio + " px";
+        document.getElementById("tiempoPromedio").textContent = tiempoPromedio + " seg";
+
+        // ============================
+        // Gráfico: Eventos por categoría
+        // ============================
+
+        const categorias = {};
+        eventos.forEach(e => {
+            if (!categorias[e.category]) categorias[e.category] = 0;
+            categorias[e.category]++;
+        });
+
+        new Chart(document.getElementById("chartEventosCategoria"), {
+            type: "bar",
+            data: {
+                labels: Object.keys(categorias),
+                datasets: [{
+                    label: "Eventos",
+                    data: Object.values(categorias),
+                    backgroundColor: "rgba(46, 125, 50, 0.6)"
+                }]
+            }
+        });
+
+        // ============================
+        // Gráfico: Clicks por elemento
+        // ============================
+
+        const elementos = {};
+        eventos.forEach(e => {
+            if (e.category === "catalogo" || e.category === "navbar") {
+                if (!elementos[e.element]) elementos[e.element] = 0;
+                elementos[e.element]++;
+            }
+        });
+
+        new Chart(document.getElementById("chartClicksElemento"), {
+            type: "pie",
+            data: {
+                labels: Object.keys(elementos),
+                datasets: [{
+                    data: Object.values(elementos),
+                    backgroundColor: [
+                        "rgba(198, 40, 40, 0.7)",
+                        "rgba(239, 83, 80, 0.7)",
+                        "rgba(255, 167, 38, 0.7)",
+                        "rgba(67, 160, 71, 0.7)"
+                    ]
+                }]
+            }
+        });
+
+      // ============================
+// Gráfico: Scroll depth
+// ============================
+
+new Chart(document.getElementById("chartScrollDepth"), {
+    type: "line",
+    data: {
+        labels: scrollEvents.map(e => {
+            const fecha = new Date(e.timestamp);
+            return fecha.toLocaleString("es-CL", {
+                day: "2-digit",
+                month: "short",
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+        }),
+        datasets: [{
+            label: "Scroll máximo (px)",
+            data: scrollEvents.map(e => e.value_number),
+            borderColor: "rgba(46, 125, 50, 1)",
+            fill: false
+        }]
+    }
+});
+
+
+        // ============================
+// Gráfico: Clicks por botón y producto
+// ============================
+
+// Filtrar solo eventos de catálogo con nombre de producto
+const clicksProducto = eventos.filter(e =>
+    e.category === "catalogo" &&
+    (e.event === "click_ver_producto" || e.event === "click_agregar_carrito")
+);
+
+// Construir estructura: "Producto - Botón"
+const conteo = {};
+
+clicksProducto.forEach(e => {
+    const producto = e.value_text || "Producto desconocido";
+    const boton = e.element || "boton_desconocido";
+    const clave = `${producto} (${boton})`;
+
+    if (!conteo[clave]) conteo[clave] = 0;
+    conteo[clave]++;
+});
+
+// Crear gráfico
+new Chart(document.getElementById("chartClicksProducto"), {
+    type: "bar",
+    data: {
+        labels: Object.keys(conteo),
+        datasets: [{
+            label: "Cantidad de clics",
+            data: Object.values(conteo),
+            backgroundColor: "rgba(67, 160, 71, 0.7)"
+        }]
+    },
+    options: {
+        indexAxis: "y",
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: "Clics"
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: "Producto y botón"
+                }
+            }
+        }
+    }
+});
+
+      const tiempos = eventos.filter(e => e.event === "home_exit");
+
+new Chart(document.getElementById("chartTiempoSesion"), {
+    type: "line",
+    data: {
+        labels: tiempos.map(e => {
+            const fecha = new Date(e.timestamp);
+            return fecha.toLocaleString("es-CL", {
+                day: "2-digit",
+                month: "short",
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+        }),
+        datasets: [{
+            label: "Tiempo total (segundos)",
+            data: tiempos.map(e => Math.round((e.value_number || 0) / 1000)),
+            borderColor: "rgba(239, 83, 80, 1)",
+            fill: false
+        }]
+    }
+});
+
+     // ============================
+// Gráfico: Clicks por botón (sin producto)
+// ============================
+
+// Filtrar eventos que NO tienen producto asociado y NO son scroll ni footer_section
+const clicksBotones = eventos.filter(e =>
+    (e.value_text === null || e.value_text === "" || e.value_text === undefined) &&
+    e.event !== "scroll_depth" &&
+    e.element !== "footer_section"
+);
+
+// Contar clics por botón
+const conteoBotones = {};
+
+clicksBotones.forEach(e => {
+    const boton = e.element || e.event || "boton_desconocido";
+    if (!conteoBotones[boton]) conteoBotones[boton] = 0;
+    conteoBotones[boton]++;
+});
+
+// Crear gráfico
+new Chart(document.getElementById("chartClicksBotones"), {
+    type: "bar",
+    data: {
+        labels: Object.keys(conteoBotones),
+        datasets: [{
+            label: "Clics",
+            data: Object.values(conteoBotones),
+            backgroundColor: "rgba(30, 136, 229, 0.7)"
+        }]
+    },
+    options: {
+        indexAxis: "y",
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: "Clics"
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: "Botón"
+                }
+            }
+        }
+    }
+});
+
+
+
+
+
+    </script>
+
+
+
+</body>
+</html>

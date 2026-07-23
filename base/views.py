@@ -1791,3 +1791,117 @@ def contactanos(request):
 def contacto_enviado(request):
     return render(request, "contacto_enviado.html")
 
+
+#PIXELS
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from .models import PixelEvent
+
+@csrf_exempt
+def pixel_event(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Método inválido"}, status=400)
+
+    try:
+        payload = json.loads(request.body)
+
+        PixelEvent.objects.create(
+            event=payload.get("event"),
+            category=payload.get("category"),
+            element=payload.get("element"),
+            visitor_id=payload.get("visitor_id"),
+            session_id=payload.get("session_id"),
+            page=payload.get("page"),
+            value_number=payload.get("value_number"),
+            value_text=payload.get("value_text"),
+            data=payload.get("data")
+        )
+
+        return JsonResponse({"status": "ok"})
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+
+from django.core.serializers import serialize
+import json
+
+from django.core.serializers import serialize
+import json
+from base.models import PixelEvent
+
+
+def pixel_home(request):
+    eventos_qs = PixelEvent.objects.filter(page="HOME").order_by("-timestamp")[:500]
+
+    eventos_json = json.loads(serialize("json", eventos_qs))
+
+    eventos = [
+        {
+            "timestamp": e["fields"]["timestamp"],
+            "event": e["fields"]["event"],
+            "category": e["fields"]["category"],
+            "element": e["fields"]["element"],
+            "visitor_id": e["fields"]["visitor_id"],
+            "session_id": e["fields"]["session_id"],
+            "value_number": e["fields"]["value_number"],
+            "value_text": e["fields"]["value_text"],
+            "data": e["fields"]["data"],
+        }
+        for e in eventos_json
+    ]
+
+    return render(request, "pixel_home.html", {
+        "eventos_json": json.dumps(eventos)
+    })
+
+
+from base.models import PixelEvent
+import json
+from django.shortcuts import render
+
+def pixel_librero(request):
+
+    # Filtramos solo eventos del detalle del Librero
+    eventos = PixelEvent.objects.filter(page="PRODUCTO_9")
+
+    # Convertimos a JSON para el front
+    eventos_json = json.dumps(list(eventos.values()), default=str)
+
+    return render(request, "pixel_librero.html", {
+        "eventos_json": eventos_json
+    })
+
+# pixel librero
+
+from django.http import JsonResponse
+from base.models import PixelEvent
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+@csrf_exempt
+def pixel(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+
+        PixelEvent.objects.create(
+            event=data.get("event"),
+            category=data.get("category"),
+            element=data.get("element"),
+            value_number=data.get("value_number"),
+            value_text=data.get("value_text"),
+            session_id=data.get("session_id"),
+            visitor_id=data.get("visitor_id"),
+            page=data.get("page"),
+            data=data.get("data")
+        )
+
+        return JsonResponse({"status": "ok"})
+
+    return JsonResponse({"error": "Método no permitido"}, status=405)
+
+
+def analisis_pixel(request):
+    return render(request, "analisis_pixel.html")

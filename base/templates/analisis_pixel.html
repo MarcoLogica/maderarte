@@ -1,0 +1,127 @@
+{% load static %}
+
+{% block content %}
+
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+
+    .pixel-container {
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .panel-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .panel-subtitle {
+        font-size: 16px;
+        color: #616161;
+        margin-bottom: 30px;
+    }
+
+    .links-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .link-card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .link-card h3 {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .link-card p {
+        font-size: 14px;
+        color: #757575;
+        margin-bottom: 15px;
+    }
+
+    .link-card a {
+        display: inline-block;
+        padding: 8px 14px;
+        border-radius: 8px;
+        background: #1e88e5;
+        color: #fff;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .link-card a:hover {
+        background: #1565c0;
+    }
+
+    @media (max-width: 900px) {
+        .links-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .links-grid {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+</style>
+
+<div class="pixel-container">
+
+    <h2 class="panel-title">Pixel VIPALÚ – Paneles de análisis</h2>
+    <p class="panel-subtitle">
+        Accesos rápidos a los dashboards de comportamiento y conversión.
+    </p>
+
+    <div class="links-grid">
+
+        <!-- PANEL HOME -->
+        <div class="link-card">
+            <h3>Panel HOME</h3>
+            <p>
+                Analítica completa de la página principal: visitas, scroll, clics, tiempo y eventos por categoría.
+            </p>
+            <a href="{% url 'pixel_home' %}">Ver panel HOME</a>
+        </div>
+
+        <!-- PANEL LIBRERO (PRODUCTO) -->
+        <div class="link-card">
+            <h3>Panel Librero Montessori</h3>
+            <p>
+                Detalle de comportamiento en la página de producto: visitas, clics en CTA, scroll y tiempo por sesión.
+            </p>
+            <a href="{% url 'pixel_librero' %}">Ver panel Librero</a>
+        </div>
+
+        <!-- ESPACIO PARA FUTUROS PANELES -->
+        <div class="link-card">
+            <h3>Próximos paneles</h3>
+            <p>
+                Aquí irán los accesos a los próximos productos y páginas con Pixel VIPALÚ integrado.
+            </p>
+            <a href="#">Próximamente</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

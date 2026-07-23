@@ -8,7 +8,7 @@ from .views import administrar_videos_producto, eliminar_video_producto, editar_
     eliminar_faq_producto, administrar_productos_relacionados, editar_producto_relacionado, \
     eliminar_producto_relacionado, cambiar_estado_ruta, detalle_ruta, generar_ruta, panel_administrativo_rutas, \
     lista_transportistas, crear_transportista, editar_transportista, toggle_transportista, panel_transportista, \
-    marcar_entregada, panel_principal
+    marcar_entregada, panel_principal, analisis_pixel
 
 urlpatterns = [
 
@@ -122,6 +122,21 @@ path('montessori-en-casa/', views.montessori_en_casa, name='montessori_en_casa')
     path("mercado-pago/", views.mercado_pago, name="mercado_pago"),
 path("contactanos/", views.contactanos, name="contactanos"),
 path("contacto-enviado/", views.contacto_enviado, name="contacto_enviado"),
+
+
+#PIXELS
+
+path("pixel-event/", views.pixel_event, name="pixel_event"),
+path("pixel/home/", views.pixel_home, name="pixel_home"),
+path("pixel/librero/", views.pixel_librero, name="pixel_librero"),
+path("pixel/", views.pixel, name="pixel"),
+path("analisis-pixel/", analisis_pixel, name="analisis_pixel"),
+
+
+
+
+
+
 
 
 

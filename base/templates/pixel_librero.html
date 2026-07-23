@@ -1,0 +1,443 @@
+{% load static %}
+
+{% block content %}
+
+<style>
+    .pixel-container {
+        max-width: 1300px;
+        margin: auto;
+        padding: 20px;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .panel-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    .indicadores {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .indicador-card {
+        flex: 1;
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .indicador-card h3 {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .indicador-valor {
+        font-size: 26px;
+        font-weight: 700;
+        color: #1e88e5;
+    }
+
+    .subtitulo {
+        margin-top: 40px;
+        margin-bottom: 20px;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    /* === GRILLA DE 4 COLUMNAS === */
+    .charts-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+
+    .chart-card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        min-height: 300px;
+    }
+
+    .chart-card h3 {
+        font-size: 16px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    /* === TABLA === */
+    .table-card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        margin-top: 40px;
+    }
+
+    .table-scroll {
+        max-height: 350px; /* ≈ 10 filas */
+        overflow-y: auto;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #e0e0e0;
+        text-align: left;
+    }
+
+    th {
+        background: #f5f5f5;
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+    }
+
+    tr:hover {
+        background: #fafafa;
+    }
+
+    /* === FILTRO === */
+    .filtro-fecha {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 15px;
+        align-items: center;
+    }
+
+    .filtro-fecha input {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    .filtro-fecha button {
+        padding: 8px 14px;
+        border: none;
+        background: #1e88e5;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .filtro-fecha button:hover {
+        background: #1565c0;
+    }
+
+    .btn-limpiar {
+        background: #757575;
+    }
+
+    .btn-limpiar:hover {
+        background: #616161;
+    }
+
+    /* Responsivo */
+    @media (max-width: 1200px) {
+        .charts-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 700px) {
+        .charts-grid {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+</style>
+
+<div class="pixel-container">
+
+    <h2 class="panel-title">Pixel VIPALÚ – Panel LIBRERO</h2>
+
+    <!-- Indicadores -->
+    <div class="indicadores">
+        <div class="card indicador-card">
+            <h3>Visitas al producto</h3>
+            <p id="visitasProducto" class="indicador-valor">--</p>
+        </div>
+
+        <div class="card indicador-card">
+            <h3>Clicks totales</h3>
+            <p id="clicksTotales" class="indicador-valor">--</p>
+        </div>
+
+        <div class="card indicador-card">
+            <h3>Scroll promedio</h3>
+            <p id="scrollPromedio" class="indicador-valor">--</p>
+        </div>
+
+        <div class="card indicador-card">
+            <h3>Tiempo promedio</h3>
+            <p id="tiempoPromedio" class="indicador-valor">--</p>
+        </div>
+    </div>
+
+    <h3 class="subtitulo">Gráficos principales</h3>
+
+    <!-- === GRILLA DE 4 GRÁFICAS === -->
+    <div class="charts-grid">
+
+        <div class="chart-card">
+            <h3>Eventos por categoría (sin scroll)</h3>
+            <canvas id="chartCategorias"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h3>Clics por botón</h3>
+            <canvas id="chartClicksBotones"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h3>Scroll máximo por sesión</h3>
+            <canvas id="chartScroll"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h3>Tiempo total por sesión</h3>
+            <canvas id="chartTiempoSesion"></canvas>
+        </div>
+
+    </div>
+
+    <!-- === TABLA COMPLETA CON SCROLL === -->
+    <div class="table-card">
+        <h3>Eventos del producto (sin scroll)</h3>
+
+        <!-- FILTRO POR FECHA -->
+        <div class="filtro-fecha">
+            <label>Desde:</label>
+            <input type="date" id="fechaDesde">
+
+            <label>Hasta:</label>
+            <input type="date" id="fechaHasta">
+
+            <button onclick="filtrarTabla()">Filtrar</button>
+            <button class="btn-limpiar" onclick="limpiarFiltro()">Limpiar</button>
+        </div>
+
+        <div class="table-scroll">
+            <table id="tablaEventos">
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Evento</th>
+                        <th>Categoría</th>
+                        <th>Elemento</th>
+                        <th>Valor numérico</th>
+                        <th>Valor texto</th>
+                        <th>Sesión</th>
+                        <th>Visitante</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- Cargar Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+    const eventos = {{ eventos_json|safe }};
+    console.log("Eventos Librero:", eventos);
+
+    eventos.forEach(e => {
+        if (e.value_number !== null && e.value_number !== undefined) {
+            e.value_number = Number(e.value_number);
+        }
+    });
+
+    // ============================
+    // INDICADORES
+    // ============================
+
+    const visitas = eventos.filter(e => e.event === "producto_view").length;
+    document.getElementById("visitasProducto").innerText = visitas;
+
+    const clicksTotales = eventos.filter(e => e.event === "click_producto").length;
+    document.getElementById("clicksTotales").innerText = clicksTotales;
+
+    const scrollEvents = eventos.filter(e => e.event === "scroll_producto");
+    const scrollPromedio = scrollEvents.length
+        ? Math.round(scrollEvents.reduce((acc, e) => acc + (e.value_number || 0), 0) / scrollEvents.length)
+        : 0;
+    document.getElementById("scrollPromedio").innerText = scrollPromedio + " px";
+
+    const tiempos = eventos.filter(e => e.event === "producto_exit");
+    const tiempoPromedio = tiempos.length
+        ? Math.round(tiempos.reduce((acc, e) => acc + (e.value_number || 0), 0) / tiempos.length / 1000)
+        : 0;
+    document.getElementById("tiempoPromedio").innerText = tiempoPromedio + " seg";
+
+    // ============================
+    // GRÁFICO: Categorías (sin scroll)
+    // ============================
+
+    const categorias = {};
+    eventos.forEach(e => {
+        if (e.event !== "scroll_producto") {
+            const cat = e.category || "sin_categoria";
+            if (!categorias[cat]) categorias[cat] = 0;
+            categorias[cat]++;
+        }
+    });
+
+    new Chart(document.getElementById("chartCategorias"), {
+        type: "bar",
+        data: {
+            labels: Object.keys(categorias),
+            datasets: [{
+                label: "Eventos",
+                data: Object.values(categorias),
+                backgroundColor: "rgba(30, 136, 229, 0.7)"
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    // ============================
+    // GRÁFICO: Clics por botón
+    // ============================
+
+    const clicksBotones = eventos.filter(e => e.event === "click_producto");
+
+    const conteoBotones = {};
+    clicksBotones.forEach(e => {
+        const boton = e.element || "boton_desconocido";
+        if (!conteoBotones[boton]) conteoBotones[boton] = 0;
+        conteoBotones[boton]++;
+    });
+
+    new Chart(document.getElementById("chartClicksBotones"), {
+        type: "bar",
+        data: {
+            labels: Object.keys(conteoBotones),
+            datasets: [{
+                label: "Clics",
+                data: Object.values(conteoBotones),
+                backgroundColor: "rgba(239, 83, 80, 0.7)"
+            }]
+        },
+        options: {
+            indexAxis: "y",
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    // ============================
+    // GRÁFICO: Scroll máximo
+    // ============================
+
+    new Chart(document.getElementById("chartScroll"), {
+        type: "line",
+        data: {
+            labels: scrollEvents.map(e => new Date(e.timestamp).toLocaleString("es-CL")),
+            datasets: [{
+                label: "Scroll máximo (px)",
+                data: scrollEvents.map(e => e.value_number),
+                borderColor: "rgba(46, 125, 50, 1)",
+                fill: false
+            }]
+        }
+    });
+
+    // ============================
+    // GRÁFICO: Tiempo por sesión
+    // ============================
+
+    new Chart(document.getElementById("chartTiempoSesion"), {
+        type: "line",
+        data: {
+            labels: tiempos.map(e => new Date(e.timestamp).toLocaleString("es-CL")),
+            datasets: [{
+                label: "Tiempo total (segundos)",
+                data: tiempos.map(e => Math.round((e.value_number || 0) / 1000)),
+                borderColor: "rgba(239, 83, 80, 1)",
+                fill: false
+            }]
+        }
+    });
+
+    // ============================
+    // TABLA COMPLETA CON SCROLL
+    // ============================
+
+    const tablaBody = document.querySelector("#tablaEventos tbody");
+
+    function renderTabla(data) {
+        tablaBody.innerHTML = "";
+
+        data.forEach(e => {
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
+                <td>${new Date(e.timestamp).toLocaleString("es-CL")}</td>
+                <td>${e.event}</td>
+                <td>${e.category || ""}</td>
+                <td>${e.element || ""}</td>
+                <td>${e.value_number || ""}</td>
+                <td>${e.value_text || ""}</td>
+                <td>${e.session_id}</td>
+                <td>${e.visitor_id}</td>
+            `;
+
+            tablaBody.appendChild(tr);
+        });
+    }
+
+    // Render inicial
+    renderTabla(eventos.filter(e => e.event !== "scroll_producto"));
+
+    // ============================
+    // FILTRO POR FECHA
+    // ============================
+
+    function filtrarTabla() {
+        const desde = document.getElementById("fechaDesde").value;
+        const hasta = document.getElementById("fechaHasta").value;
+
+        let filtrados = eventos.filter(e => e.event !== "scroll_producto");
+
+        if (desde) {
+            const fechaDesde = new Date(desde);
+            filtrados = filtrados.filter(e => new Date(e.timestamp) >= fechaDesde);
+        }
+
+        if (hasta) {
+            const fechaHasta = new Date(hasta);
+            fechaHasta.setHours(23, 59, 59);
+            filtrados = filtrados.filter(e => new Date(e.timestamp) <= fechaHasta);
+        }
+
+        renderTabla(filtrados);
+    }
+
+    function limpiarFiltro() {
+        document.getElementById("fechaDesde").value = "";
+        document.getElementById("fechaHasta").value = "";
+        renderTabla(eventos.filter(e => e.event !== "scroll_producto"));
+    }
+
+</script>
+
+{% endblock %}

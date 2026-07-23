@@ -485,3 +485,30 @@ class RegistroEntrega(models.Model):
 
     def __str__(self):
         return f"Entrega Orden {self.orden.id}"
+
+
+# pixel home
+
+class PixelEvent(models.Model):
+    # Identidad del evento
+    event = models.CharField(max_length=200)              # Ej: click_btn_agregar, scroll_depth, hover_testimonio
+    category = models.CharField(max_length=200, null=True, blank=True)  # Ej: navbar, hero, catalogo, ofertas
+    element = models.CharField(max_length=200, null=True, blank=True)   # Ej: btn-agregar, card-producto, oferta-card
+
+    # Identidad del usuario
+    visitor_id = models.CharField(max_length=200)         # ID persistente
+    session_id = models.CharField(max_length=200)         # ID por sesión
+
+    # Contexto
+    page = models.CharField(max_length=100)               # HOME, CARRITO, DETALLE, etc.
+    timestamp = models.DateTimeField(auto_now_add=True)   # Fecha exacta del evento
+
+    # Datos estructurados
+    value_number = models.FloatField(null=True, blank=True)   # scroll depth, tiempo, precio, etc.
+    value_text = models.CharField(max_length=500, null=True, blank=True)  # nombre del producto, botón, sección
+
+    # Datos complejos
+    data = models.JSONField(null=True, blank=True)        # cualquier estructura adicional
+
+    def __str__(self):
+        return f"{self.timestamp} - {self.event}"

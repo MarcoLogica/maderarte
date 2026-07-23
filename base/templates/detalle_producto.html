@@ -945,5 +945,78 @@
             document.getElementById('imagen-actual').src = elemento.src;
         }
     </script>
+
+
+<script>
+(function() {
+
+    console.log("Pixel Librero funcionando");
+
+    const sessionId = sessionStorage.getItem("vipalu_session_id") || crypto.randomUUID();
+    sessionStorage.setItem("vipalu_session_id", sessionId);
+
+    const visitorId = localStorage.getItem("vipalu_visitor_id") || crypto.randomUUID();
+    localStorage.setItem("vipalu_visitor_id", visitorId);
+
+    const productoNombre = "{{ producto.nombre }}";
+    const productoId = {{ producto.id }};
+    const pageName = "PRODUCTO_" + productoId;
+
+    function enviar(event, category, element, value_number = null, value_text = null) {
+        fetch("/pixel/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                event,
+                category,
+                element,
+                value_number,
+                value_text,
+                session_id: sessionId,
+                visitor_id: visitorId,
+                page: pageName,
+                timestamp: new Date().toISOString()
+            })
+        });
+    }
+
+    // ============================
+    // Evento: vista del producto
+    // ============================
+    enviar("producto_view", "producto", "detalle_producto", null, productoNombre);
+
+    // ============================
+    // Evento: scroll
+    // ============================
+    let maxScroll = 0;
+    window.addEventListener("scroll", () => {
+        maxScroll = Math.max(maxScroll, window.scrollY);
+        enviar("scroll_producto", "scroll", "scroll_event", maxScroll, null);
+    });
+
+    // ============================
+    // Evento: clic en CTA
+    // ============================
+    document.querySelectorAll("button, a").forEach(el => {
+        el.addEventListener("click", () => {
+            enviar("click_producto", "cta", el.id || el.className || "boton", null, el.innerText);
+        });
+    });
+
+    // ============================
+    // Evento: salida del producto
+    // ============================
+    let startTime = Date.now();
+    window.addEventListener("beforeunload", () => {
+        const tiempoTotal = Date.now() - startTime;
+        enviar("producto_exit", "producto", "salida", tiempoTotal, productoNombre);
+    });
+
+})();
+</script>
+
+
+
+
 </body>
 </html>
