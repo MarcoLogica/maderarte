@@ -172,6 +172,38 @@
     </select>
 </form>
 
+<form method="get" style="margin-bottom: 20px; display:flex; gap:20px; align-items:center;">
+
+    <!-- FILTRO POR ESTADO -->
+    <div>
+        <label for="estado">Estado:</label>
+        <select name="estado" id="estado" onchange="this.form.submit()">
+            <option value="">Todas</option>
+            <option value="pendiente" {% if estado_filtro == "pendiente" %}selected{% endif %}>Pendiente</option>
+            <option value="produccion" {% if estado_filtro == "produccion" %}selected{% endif %}>En producción</option>
+            <option value="listo" {% if estado_filtro == "listo" %}selected{% endif %}>Listo para envío</option>
+            <option value="enviado" {% if estado_filtro == "enviado" %}selected{% endif %}>Enviado</option>
+            <option value="entregado" {% if estado_filtro == "entregado" %}selected{% endif %}>Entregado</option>
+        </select>
+    </div>
+
+    <!-- FILTRO POR FECHA DESDE -->
+    <div>
+        <label for="desde">Desde:</label>
+        <input type="date" name="desde" id="desde" value="{{ desde }}">
+    </div>
+
+    <!-- FILTRO POR FECHA HASTA -->
+    <div>
+        <label for="hasta">Hasta:</label>
+        <input type="date" name="hasta" id="hasta" value="{{ hasta }}">
+    </div>
+
+    <button type="submit" style="padding:6px 12px;">Filtrar</button>
+
+</form>
+
+
 <!-- TABLA DE ÓRDENES -->
 <table style="width:100%; border-collapse: collapse;">
     <tr style="background:#f0f0f0;">

@@ -981,60 +981,93 @@ from django.db.models import Sum
 from django.utils import timezone
 from datetime import timedelta
 
-
 def panel_ordenes(request):
+    # -----------------------------
+    # PARÁMETROS DE FILTRO
+    # -----------------------------
     estado_filtro = request.GET.get("estado", "")
+    desde = request.GET.get("desde", "")
+    hasta = request.GET.get("hasta", "")
 
+    # Filtro dinámico para fechas
+    filtro_fechas = {}
+    if desde:
+        filtro_fechas["fecha__date__gte"] = desde
+    if hasta:
+        filtro_fechas["fecha__date__lte"] = hasta
+
+    # -----------------------------
+    # ORDENES BASE (estado + fecha)
+    # -----------------------------
     if estado_filtro:
         ordenes = Orden.objects.filter(estado=estado_filtro).order_by("-fecha")
     else:
         ordenes = Orden.objects.all().order_by("-fecha")
 
+    # Aplicar filtro por fecha a las órdenes
+    if desde:
+        ordenes = ordenes.filter(fecha__date__gte=desde)
+    if hasta:
+        ordenes = ordenes.filter(fecha__date__lte=hasta)
+
     # -----------------------------
-    # MÉTRICAS OPERATIVAS
+    # MÉTRICAS OPERATIVAS (filtradas por estado + fecha)
     # -----------------------------
+    # Si hay filtro por estado, las tarjetas también deben respetarlo
+    filtro_estado = {}
+    if estado_filtro:
+        filtro_estado["estado"] = estado_filtro
 
-    # 0) Órdenes pendientes
-    pendientes_count = Orden.objects.filter(estado="pendiente").count()
+    # Métricas combinadas (estado + fecha)
+    pendientes_count = Orden.objects.filter(estado="pendiente", **filtro_fechas).count()
+    produccion_count = Orden.objects.filter(estado="produccion", **filtro_fechas).count()
+    listas_envio_count = Orden.objects.filter(estado="listo", **filtro_fechas).count()
+    entregados_count = Orden.objects.filter(estado="entregado", **filtro_fechas).count()
 
-    # 1) Órdenes en producción
-    produccion_count = Orden.objects.filter(estado="produccion").count()
-
-    # 2) Órdenes listas para envío
-    listas_envio_count = Orden.objects.filter(estado="listo").count()
-
-    # 3) Órdenes con quiebre
     ordenes_con_quiebre_count = Orden.objects.filter(
-        quiebrestock__isnull=False
+        quiebrestock__isnull=False,
+        **filtro_fechas
     ).distinct().count()
 
-    # 4) Ventas mes actual vs mes anterior
-    hoy = timezone.now().date()
-    primer_dia_mes_actual = hoy.replace(day=1)
-
-    mes_anterior_fin = primer_dia_mes_actual - timedelta(days=1)
-    mes_anterior_inicio = mes_anterior_fin.replace(day=1)
-
-    ventas_mes_actual = Orden.objects.filter(
-        fecha__date__gte=primer_dia_mes_actual
-    ).aggregate(total=Sum("total"))["total"] or 0
-
-    ventas_mes_anterior = Orden.objects.filter(
-        fecha__date__gte=mes_anterior_inicio,
-        fecha__date__lte=mes_anterior_fin
-    ).aggregate(total=Sum("total"))["total"] or 0
-
-    if ventas_mes_anterior > 0:
-        variacion_porcentaje = ((ventas_mes_actual - ventas_mes_anterior) / ventas_mes_anterior) * 100
-    else:
+    # -----------------------------
+    # VENTAS MES ACTUAL VS ANTERIOR
+    # -----------------------------
+    # Si hay filtro por fecha → ventas según rango
+    if desde or hasta:
+        ventas_mes_actual = Orden.objects.filter(**filtro_fechas).aggregate(total=Sum("total"))["total"] or 0
+        ventas_mes_anterior = 0
         variacion_porcentaje = 0
 
-        # 5) Órdenes entregadas
-        entregados_count = Orden.objects.filter(estado="entregado").count()
+    else:
+        # Lógica original (mes actual vs mes anterior)
+        hoy = timezone.now().date()
+        primer_dia_mes_actual = hoy.replace(day=1)
 
+        mes_anterior_fin = primer_dia_mes_actual - timedelta(days=1)
+        mes_anterior_inicio = mes_anterior_fin.replace(day=1)
+
+        ventas_mes_actual = Orden.objects.filter(
+            fecha__date__gte=primer_dia_mes_actual
+        ).aggregate(total=Sum("total"))["total"] or 0
+
+        ventas_mes_anterior = Orden.objects.filter(
+            fecha__date__gte=mes_anterior_inicio,
+            fecha__date__lte=mes_anterior_fin
+        ).aggregate(total=Sum("total"))["total"] or 0
+
+        if ventas_mes_anterior > 0:
+            variacion_porcentaje = ((ventas_mes_actual - ventas_mes_anterior) / ventas_mes_anterior) * 100
+        else:
+            variacion_porcentaje = 0
+
+    # -----------------------------
+    # RENDER
+    # -----------------------------
     return render(request, "panel_ordenes.html", {
         "ordenes": ordenes,
         "estado_filtro": estado_filtro,
+        "desde": desde,
+        "hasta": hasta,
 
         # métricas
         "pendientes_count": pendientes_count,
@@ -1045,8 +1078,8 @@ def panel_ordenes(request):
         "ventas_mes_anterior": ventas_mes_anterior,
         "variacion_porcentaje": variacion_porcentaje,
         "entregados_count": entregados_count,
-
     })
+
 
 
 def cambiar_estado_orden(request, orden_id, nuevo_estado):
