@@ -267,34 +267,40 @@
 
     <!-- FILA EXPANDIBLE -->
     <tr id="detalle-{{ orden.id }}" style="display:none; background:#f9fafb;">
-        <td colspan="7" style="padding:0;">
-            <div style="
-                padding:15px;
-                border-left:4px solid #3b82f6;
-                background:white;
-                border-radius:6px;
-                box-shadow:0 2px 4px rgba(0,0,0,0.05);
-            ">
+    <td colspan="7" style="padding:0;">
+        <div style="
+            padding:15px;
+            border-left:4px solid #3b82f6;
+            background:white;
+            border-radius:6px;
+            box-shadow:0 2px 4px rgba(0,0,0,0.05);
+        ">
 
-                <h4 style="margin:5px 0;">Detalles de la orden</h4>
+            <h4 style="margin:5px 0;">Detalles de la orden</h4>
 
-                <p><strong>Cliente:</strong> {{ orden.nombre }}</p>
-                <p><strong>Dirección:</strong> {{ orden.direccion }}</p>
-                <p><strong>Correo:</strong> {{ orden.correo_electronico }}</p>
-                <p><strong>Teléfono:</strong> {{ orden.telefono }}</p>
+            <p><strong>Cliente:</strong> {{ orden.nombre }}</p>
+            <p><strong>Dirección:</strong> {{ orden.direccion }}</p>
 
-                <h4 style="margin:10px 0 5px 0;">Productos incluidos</h4>
-                {% for item in orden.items.all %}
-                    <p>
-                        • {{ item.producto.nombre }}
-                        (x{{ item.cantidad }})
-                        — ${{ item.precio_unitario }} c/u
-                    </p>
-                {% endfor %}
+            <!-- ⭐ NUEVO: comuna y región -->
+            <p><strong>Comuna:</strong> {{ orden.comuna.nombre }}</p>
+            <p><strong>Región:</strong> {{ orden.region.nombre }}</p>
 
-            </div>
-        </td>
-    </tr>
+            <p><strong>Correo:</strong> {{ orden.correo_electronico }}</p>
+            <p><strong>Teléfono:</strong> {{ orden.telefono }}</p>
+
+            <h4 style="margin:10px 0 5px 0;">Productos incluidos</h4>
+            {% for item in orden.items.all %}
+                <p>
+                    • {{ item.producto.nombre }}
+                    (x{{ item.cantidad }})
+                    — ${{ item.precio_unitario }} c/u
+                </p>
+            {% endfor %}
+
+        </div>
+    </td>
+</tr>
+
 
     {% endfor %}
 </table>

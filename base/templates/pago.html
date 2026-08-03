@@ -501,6 +501,18 @@ function copiarTexto(texto) {
             <label for="direccion">Dirección de envío:</label>
             <textarea name="direccion" rows="2" required></textarea>
 
+           <div class="campo-formulario">
+    <label for="comuna">Comuna:</label>
+    <select name="comuna" required style="margin-bottom: 1rem;">
+        {% for c in comunas %}
+            <option value="{{ c.id }}">{{ c.region.nombre }} — {{ c.nombre }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+
+
+
             <label for="correo_electronico">Correo electrónico:</label>
             <input type="email" name="correo_electronico" required>
 

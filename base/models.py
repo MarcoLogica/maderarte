@@ -321,6 +321,7 @@ class Orden(models.Model):
     nombre = models.CharField(max_length=200)
     direccion = models.TextField()
     comuna = models.ForeignKey(Comuna, on_delete=models.SET_NULL, null=True, blank=True)
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True, blank=True)
     correo_electronico = models.EmailField()
     telefono = models.CharField(max_length=20, blank=True)
     comprobante = models.FileField(upload_to='comprobantes/')

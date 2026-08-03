@@ -190,7 +190,7 @@ from django.conf import settings
 from .models import Producto, Pieza, ConfiguracionProducto, Orden, OrdenItem
 from .forms import DatosContactoForm
 from .models import Producto, Pieza, ConfiguracionProducto, Orden, OrdenItem, QuiebreStock
-
+from base.models import Comuna, Region
 
 
 def pago(request):
@@ -198,9 +198,7 @@ def pago(request):
     productos = []
     total = 0
 
-    # ---------------------------------------------------------
     # 1) Reconstruir productos del carrito
-    # ---------------------------------------------------------
     for id, cantidad in carrito.items():
         producto = Producto.objects.get(id=id)
         producto.cantidad = cantidad
@@ -214,9 +212,7 @@ def pago(request):
         detalle_productos += f"- {p.nombre} (x{p.cantidad}): ${p.precio} → Subtotal: ${p.subtotal}\n"
     detalle_productos += f"\nTOTAL: ${total}\n"
 
-    # ---------------------------------------------------------
     # 2) Si el usuario envía el formulario
-    # ---------------------------------------------------------
     if request.method == 'POST':
         contacto_form = DatosContactoForm(request.POST)
         comprobante = request.FILES.get('comprobante')
@@ -224,30 +220,31 @@ def pago(request):
         if contacto_form.is_valid() and comprobante:
             datos = contacto_form.save()
 
-            # Datos del cliente
             nombre = datos.nombre
             direccion = datos.direccion
             correo = datos.correo_electronico
             telefono = datos.telefono
 
-            # ---------------------------------------------------------
+            # ⭐ NUEVO: comuna + región
+            comuna_id = request.POST.get('comuna')
+            comuna = Comuna.objects.get(id=comuna_id)
+            region = comuna.region
+
             # 3) Crear la ORDEN
-            # ---------------------------------------------------------
             orden = Orden(
                 nombre=nombre,
                 direccion=direccion,
                 correo_electronico=correo,
                 telefono=telefono,
                 comprobante=comprobante,
-                total=total
+                total=total,
+                comuna=comuna,   # ⭐ agregado
+                region=region     # ⭐ agregado
             )
-            orden.save()  # ⭐ AQUÍ SÍ SE EJECUTA TU MÉTODO save() Y SE GENERA EL CÓDIGO
+            orden.save()
 
-            # ---------------------------------------------------------
-            # 4) Crear los ORDENITEMS y rebajar stock de piezas
-            # ---------------------------------------------------------
+            # 4) Crear los ORDENITEMS y rebajar stock
             for p in productos:
-                # Crear item
                 OrdenItem.objects.create(
                     orden=orden,
                     producto=p,
@@ -255,13 +252,10 @@ def pago(request):
                     precio_unitario=p.precio
                 )
 
-                # Rebajar stock comercial (solo ecommerce)
                 p.stock_comercial -= p.cantidad
                 p.save()
 
-            # ---------------------------------------------------------
-            # 5) Enviar correo interno a Vipalú
-            # ---------------------------------------------------------
+            # 5) Correo interno
             cuerpo_admin = (
                 f"Se ha recibido un pago por ${total}.\n"
                 f"Cliente: {nombre}\n"
@@ -277,11 +271,10 @@ def pago(request):
             )
 
             email_admin.attach(comprobante.name, comprobante.read(), comprobante.content_type)
+
             email_admin.send()
 
-            # ---------------------------------------------------------
-            # 6) Enviar correo al cliente
-            # ---------------------------------------------------------
+            # 6) Correo cliente
             cuerpo_cliente = f"""
             Hola {nombre},
 
@@ -316,9 +309,7 @@ def pago(request):
             )
             email_cliente.send()
 
-            # ---------------------------------------------------------
             # 7) Vaciar carrito
-            # ---------------------------------------------------------
             request.session['carrito'] = {}
 
             return redirect('exito')
@@ -326,10 +317,39 @@ def pago(request):
     else:
         contacto_form = DatosContactoForm()
 
+        # ⭐⭐⭐ NUEVO: ORDENAR COMUNAS POR REGIÓN (RM primero)
+        regiones_orden = [
+            "Metropolitana de Santiago",
+            "Arica y Parinacota",
+            "Tarapacá",
+            "Antofagasta",
+            "Atacama",
+            "Coquimbo",
+            "Valparaíso",
+            "O'Higgins",
+            "Maule",
+            "Ñuble",
+            "Biobío",
+            "La Araucanía",
+            "Los Ríos",
+            "Los Lagos",
+            "Aysén",
+            "Magallanes"
+        ]
+
+        comunas_ordenadas = []
+
+        for region_nombre in regiones_orden:
+            region = Region.objects.get(nombre=region_nombre)
+            comunas_region = Comuna.objects.filter(region=region).order_by('nombre')
+            comunas_ordenadas.extend(comunas_region)
+
+    # Render final
     return render(request, 'pago.html', {
         'productos': productos,
         'total': total,
-        'form': contacto_form
+        'form': contacto_form,
+        'comunas': comunas_ordenadas   # ⭐ reemplazado
     })
 
 
