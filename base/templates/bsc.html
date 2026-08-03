@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Balanced Scorecard — Control Galáctico</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at 20% 20%, #0f172a, #020617);
+            font-family: 'Nunito', sans-serif;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* GRID EXACTAMENTE 2x2 */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 350px);
+            gap: 30px;
+        }
+
+        .card {
+            padding: 35px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 25px rgba(0,0,0,0.45),
+                        inset 0 0 20px rgba(255,255,255,0.05);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            text-decoration: none;
+            color: #e2e8f0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 0 35px rgba(59,130,246,0.6),
+                        inset 0 0 25px rgba(255,255,255,0.08);
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -40%;
+            left: -40%;
+            width: 180%;
+            height: 180%;
+            background: radial-gradient(circle, rgba(255,255,255,0.12), transparent 70%);
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card h2 {
+            margin: 0 0 12px 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .card p {
+            margin: 0;
+            font-size: 1rem;
+            opacity: 0.85;
+        }
+
+        /* Neon borders */
+        .finanzas { border-left: 6px solid #38bdf8; }
+        .clientes { border-left: 6px solid #10b981; }
+        .procesos { border-left: 6px solid #fbbf24; }
+        .aprendizaje { border-left: 6px solid #c084fc; }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📊 Balanced Scorecard — Panel de Control Galáctico</h1>
+
+    <div class="grid">
+
+        <a href="/finanzas/" class="card finanzas">
+            <h2>💰 Finanzas</h2>
+            <p>Indicadores económicos, ventas y métricas financieras.</p>
+        </a>
+
+        <a href="/clientes/" class="card clientes">
+            <h2>🧑‍🤝‍🧑 Clientes</h2>
+            <p>Comportamiento, satisfacción y distribución geográfica.</p>
+        </a>
+
+        <a href="/procesos/" class="card procesos">
+            <h2>🏭 Procesos Internos</h2>
+            <p>Producción, eficiencia y desempeño operacional.</p>
+        </a>
+
+        <a href="/aprendizaje/" class="card aprendizaje">
+            <h2>📚 Aprendizaje y Crecimiento</h2>
+            <p>Innovación, capacitación y evolución organizacional.</p>
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

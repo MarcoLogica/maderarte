@@ -1958,3 +1958,127 @@ def pixel(request):
 
 def analisis_pixel(request):
     return render(request, "analisis_pixel.html")
+
+
+#balanced scorecard
+
+def bsc(request):
+    return render(request, "bsc.html")
+
+from django.shortcuts import render
+from django.db.models import Sum
+from django.db.models.functions import TruncDate
+from django.utils import timezone
+from datetime import datetime, timedelta
+from decimal import Decimal
+import json
+from base.models import Orden, OrdenItem
+
+
+
+def finanzas(request):
+
+    # Filtro
+    desde = request.GET.get("desde")
+    hasta = request.GET.get("hasta")
+
+    hoy = timezone.now().date()
+    inicio_mes = hoy.replace(day=1)
+
+    if desde:
+        desde_date = datetime.strptime(desde, "%Y-%m-%d").date()
+    else:
+        desde_date = inicio_mes
+
+    if hasta:
+        hasta_date = datetime.strptime(hasta, "%Y-%m-%d").date()
+    else:
+        hasta_date = hoy
+
+    # Todas las órdenes
+    ordenes = Orden.objects.filter(
+        fecha__date__gte=desde_date,
+        fecha__date__lte=hasta_date
+    )
+
+    # KPIs
+    total_facturacion = ordenes.aggregate(total=Sum("total"))["total"] or Decimal("0")
+    total_productos_vendidos = (
+        OrdenItem.objects.filter(orden__in=ordenes)
+        .aggregate(total=Sum("cantidad"))["total"] or 0
+    )
+    total_productos_vendidos = Decimal(total_productos_vendidos)
+
+    dias_rango = (hasta_date - desde_date).days + 1
+    semanas_rango = Decimal(dias_rango) / Decimal(7)
+
+    promedio_unidades_semana = (
+        total_productos_vendidos / semanas_rango
+    ).quantize(Decimal("0.01"))
+
+    facturacion_promedio_semana = (
+        total_facturacion / semanas_rango
+    ).quantize(Decimal("0.01"))
+
+    # Formato financiero
+    total_facturacion_fmt = "{:,}".format(int(total_facturacion)).replace(",", ".")
+    facturacion_promedio_semana_fmt = "{:,}".format(int(facturacion_promedio_semana)).replace(",", ".")
+
+    # ============================
+    # GRÁFICOS
+    # ============================
+
+    # 1. Ventas diarias
+    ventas_diarias = (
+        ordenes.annotate(dia=TruncDate("fecha"))
+        .values("dia")
+        .annotate(total=Sum("total"))
+        .order_by("dia")
+    )
+
+    # 2. Unidades vendidas diarias
+    unidades_diarias = (
+        OrdenItem.objects.filter(orden__in=ordenes)
+        .annotate(dia=TruncDate("orden__fecha"))
+        .values("dia")
+        .annotate(total=Sum("cantidad"))
+        .order_by("dia")
+    )
+
+    # 3. Unidades por comuna
+    unidades_comuna = (
+        OrdenItem.objects.filter(orden__in=ordenes)
+        .values("orden__comuna__nombre")
+        .annotate(total=Sum("cantidad"))
+        .order_by("-total")
+    )
+
+    # 4. Unidades por región
+    unidades_region = (
+        OrdenItem.objects.filter(orden__in=ordenes)
+        .values("orden__region__nombre")
+        .annotate(total=Sum("cantidad"))
+        .order_by("-total")
+    )
+
+    contexto = {
+        "desde": desde_date,
+        "hasta": hasta_date,
+
+        "total_facturacion": total_facturacion_fmt,
+        "total_productos_vendidos": total_productos_vendidos,
+        "promedio_unidades_semana": promedio_unidades_semana,
+        "facturacion_promedio_semana": facturacion_promedio_semana_fmt,
+
+        # Datos para gráficos
+        "ventas_diarias_json": json.dumps(list(ventas_diarias), default=str),
+    "unidades_diarias_json": json.dumps(list(unidades_diarias), default=str),
+    "unidades_comuna_json": json.dumps(list(unidades_comuna), default=str),
+    "unidades_region_json": json.dumps(list(unidades_region), default=str),
+
+
+
+
+    }
+
+    return render(request, "finanzas.html", contexto)

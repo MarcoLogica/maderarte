@@ -131,7 +131,8 @@ path("pixel/home/", views.pixel_home, name="pixel_home"),
 path("pixel/librero/", views.pixel_librero, name="pixel_librero"),
 path("pixel/", views.pixel, name="pixel"),
 path("analisis-pixel/", analisis_pixel, name="analisis_pixel"),
-
+path("bsc/", views.bsc, name="bsc"),
+path("finanzas/", views.finanzas, name="finanzas"),
 
 
 

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Finanzas — Panel Ejecutivo</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f5f7fa;
+            font-family: 'Nunito', sans-serif;
+            color: #1e293b;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #1e293b;
+        }
+
+        .filter-box {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 45px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-row input {
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            width: 240px;
+        }
+
+        .filter-row button {
+            padding: 14px 26px;
+            border-radius: 12px;
+            border: none;
+            background: #3b82f6;
+            color: white;
+            font-weight: 700;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .kpi-card {
+            padding: 35px;
+            border-radius: 20px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .kpi-title {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: #475569;
+        }
+
+        .kpi-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #3b82f6;
+        }
+
+        .charts-grid {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .chart-card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .chart-card h3 {
+            margin-bottom: 15px;
+            color: #334155;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>💰 Finanzas — Panel Ejecutivo</h1>
+
+    <!-- FILTRO -->
+    <div class="filter-box">
+        <h2>Filtrar por rango de fechas</h2>
+
+        <form method="GET">
+            <div class="filter-row">
+                <input type="date" name="desde" value="{{ desde }}">
+                <input type="date" name="hasta" value="{{ hasta }}">
+                <button type="submit">Aplicar Filtro</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+
+        <div class="kpi-card">
+            <div class="kpi-title">Total Facturación</div>
+            <div class="kpi-value">{{ total_facturacion }}</div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-title">Total Productos Vendidos</div>
+            <div class="kpi-value">{{ total_productos_vendidos }}</div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-title">Promedio Unidades por Semana</div>
+            <div class="kpi-value">{{ promedio_unidades_semana }}</div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-title">Facturación Promedio por Semana</div>
+            <div class="kpi-value">{{ facturacion_promedio_semana }}</div>
+        </div>
+
+    </div>
+
+    <!-- GRÁFICOS -->
+    <h2 style="margin-top:50px; color:#1e293b; font-weight:700;">Análisis Gráfico</h2>
+
+    <div class="charts-grid">
+
+        <div class="chart-card">
+            <h3>Ventas Diarias</h3>
+            <canvas id="ventasDiarias"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h3>Unidades Vendidas Diarias</h3>
+            <canvas id="unidadesDiarias"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h3>Unidades por Comuna</h3>
+            <canvas id="unidadesComuna"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h3>Unidades por Región</h3>
+            <canvas id="unidadesRegion"></canvas>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // ============================
+    // CARGA DE DATOS JSON
+    // ============================
+    const ventasDiarias = JSON.parse(`{{ ventas_diarias_json|escapejs }}`);
+    const unidadesDiarias = JSON.parse(`{{ unidades_diarias_json|escapejs }}`);
+    const unidadesComuna = JSON.parse(`{{ unidades_comuna_json|escapejs }}`);
+    const unidadesRegion = JSON.parse(`{{ unidades_region_json|escapejs }}`);
+
+    // ============================
+    // 1. Ventas diarias (línea)
+    // ============================
+    new Chart(document.getElementById("ventasDiarias"), {
+        type: "line",
+        data: {
+            labels: ventasDiarias.map(x => x.dia),
+            datasets: [{
+                label: "Ventas ($)",
+                data: ventasDiarias.map(x => x.total),
+                borderColor: "#3b82f6",
+                backgroundColor: "rgba(59,130,246,0.2)",
+                borderWidth: 3,
+                tension: 0.3
+            }]
+        }
+    });
+
+    // ============================
+    // 2. Unidades vendidas diarias (barras)
+    // ============================
+    new Chart(document.getElementById("unidadesDiarias"), {
+        type: "bar",
+        data: {
+            labels: unidadesDiarias.map(x => x.dia),
+            datasets: [{
+                label: "Unidades",
+                data: unidadesDiarias.map(x => x.total),
+                backgroundColor: "#3b82f6"
+            }]
+        }
+    });
+
+    // ============================
+    // 3. Unidades por comuna (heatmap)
+    // ============================
+    new Chart(document.getElementById("unidadesComuna"), {
+        type: "bar",
+        data: {
+            labels: unidadesComuna.map(x => x["orden__comuna__nombre"]),
+            datasets: [{
+                label: "Unidades",
+                data: unidadesComuna.map(x => x.total),
+                backgroundColor: unidadesComuna.map(x => `rgba(59,130,246,${x.total / unidadesComuna[0].total})`)
+            }]
+        }
+    });
+
+    // ============================
+    // 4. Unidades por región (heatmap)
+    // ============================
+    new Chart(document.getElementById("unidadesRegion"), {
+        type: "bar",
+        data: {
+            labels: unidadesRegion.map(x => x["orden__region__nombre"]),
+            datasets: [{
+                label: "Unidades",
+                data: unidadesRegion.map(x => x.total),
+                backgroundColor: unidadesRegion.map(x => `rgba(56,189,248,${x.total / unidadesRegion[0].total})`)
+            }]
+        }
+    });
+</script>
+
+</body>
+</html>
