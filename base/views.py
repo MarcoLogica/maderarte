@@ -104,6 +104,8 @@ def crear_producto(request):
         form = ProductoForm()
     return render(request, 'crear_producto.html', {'form': form})
 
+
+@login_required(login_url='/login/')
 def panel(request):
     return render(request, 'panel.html')
 
@@ -841,6 +843,7 @@ from django.contrib import messages
 from django.utils import timezone
 
 
+
 def piezas_list(request):
     piezas = Pieza.objects.all()
     return render(request, "piezas_list.html", {"piezas": piezas})
@@ -937,7 +940,7 @@ def configuracion_delete(request, config_id):
     messages.success(request, "Configuración eliminada.")
     return redirect("configuracion_list")
 
-
+@login_required(login_url='/login/')
 def control_stock(request):
     productos = Producto.objects.all()
     producto_seleccionado = None
@@ -1000,7 +1003,7 @@ def exito(request):
 from django.db.models import Sum
 from django.utils import timezone
 from datetime import timedelta
-
+@login_required(login_url='/login/')
 def panel_ordenes(request):
     # -----------------------------
     # PARÁMETROS DE FILTRO
@@ -1798,6 +1801,7 @@ def marcar_entregada(request, orden_id):
         "orden": orden
     })
 
+@login_required(login_url='/login/')
 def panel_principal(request):
     return render(request, "panel_principal.html")
 

@@ -106,10 +106,28 @@
         <a href="{% url 'panel_quiebres' %}">Quiebres</a>
         <a href="{% url 'panel_produccion' %}">Producción</a>
         <a href="{% url 'dashboard_stock' %}">Stock</a>
-         <a href="{% url 'panel' %}">Volver al panel de gestión</a>
+        <a href="{% url 'panel' %}">Volver al panel de gestión</a>
     </div>
 
+    <div class="right-links" style="display:flex; gap:1.5rem; align-items:center;">
 
+        {% if request.user.is_authenticated %}
+            <span style="color:white; font-weight:bold;">
+                👤 {{ request.user.username }}
+            </span>
+
+            <a href="{% url 'logout' %}"
+               style="color:white; font-weight:bold; text-decoration:none;">
+                Cerrar sesión
+            </a>
+        {% else %}
+            <a href="{% url 'login' %}"
+               style="color:white; font-weight:bold; text-decoration:none;">
+                Iniciar sesión
+            </a>
+        {% endif %}
+
+    </div>
 </div>
 
 <div class="dashboard-resumen">

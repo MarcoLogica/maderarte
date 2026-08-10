@@ -6,46 +6,78 @@
     margin-bottom:25px;
     display:flex;
     gap:20px;
-    justify-content:center;
+    justify-content:space-between;
+    align-items:center;
 ">
-    <a href="{% url 'piezas_list' %}" style="
-        color:white;
-        font-weight:600;
-        text-decoration:none;
-        padding:8px 14px;
-        border-radius:8px;
-        background:#3b82f6;
-    ">Piezas</a>
 
-    <a href="{% url 'configuracion_list' %}" style="
-        color:white;
-        font-weight:600;
-        text-decoration:none;
-        padding:8px 14px;
-        border-radius:8px;
-        background:#3b82f6;
-    ">Recetas</a>
+    <!-- LINKS IZQUIERDA -->
+    <div style="display:flex; gap:20px;">
+        <a href="{% url 'piezas_list' %}" style="
+            color:white;
+            font-weight:600;
+            text-decoration:none;
+            padding:8px 14px;
+            border-radius:8px;
+            background:#3b82f6;
+        ">Piezas</a>
 
-    <a href="{% url 'control_stock' %}" style="
-        color:white;
-        font-weight:600;
-        text-decoration:none;
-        padding:8px 14px;
-        border-radius:8px;
-        background:#2563eb;
-    ">Control de Stock</a>
+        <a href="{% url 'configuracion_list' %}" style="
+            color:white;
+            font-weight:600;
+            text-decoration:none;
+            padding:8px 14px;
+            border-radius:8px;
+            background:#3b82f6;
+        ">Recetas</a>
 
-    <a href="{% url 'panel' %}" style="
-        color:white;
-        font-weight:600;
-        text-decoration:none;
-        padding:8px 14px;
-        border-radius:8px;
-        background:#2563eb;
-    ">Volver al panel de gestión</a>
+        <a href="{% url 'control_stock' %}" style="
+            color:white;
+            font-weight:600;
+            text-decoration:none;
+            padding:8px 14px;
+            border-radius:8px;
+            background:#2563eb;
+        ">Control de Stock</a>
 
+        <a href="{% url 'panel' %}" style="
+            color:white;
+            font-weight:600;
+            text-decoration:none;
+            padding:8px 14px;
+            border-radius:8px;
+            background:#2563eb;
+        ">Volver al panel de gestión</a>
+    </div>
 
+    <!-- LOGIN / LOGOUT DERECHA -->
+    <div style="display:flex; gap:20px; align-items:center;">
 
+        {% if request.user.is_authenticated %}
+            <span style="color:white; font-weight:600;">
+                👤 {{ request.user.username }}
+            </span>
+
+            <a href="{% url 'logout' %}" style="
+                color:white;
+                font-weight:600;
+                text-decoration:none;
+                padding:8px 14px;
+                border-radius:8px;
+                background:#ef4444;
+            ">Cerrar sesión</a>
+
+        {% else %}
+            <a href="{% url 'login' %}" style="
+                color:white;
+                font-weight:600;
+                text-decoration:none;
+                padding:8px 14px;
+                border-radius:8px;
+                background:#3b82f6;
+            ">Iniciar sesión</a>
+        {% endif %}
+
+    </div>
 
 </nav>
 

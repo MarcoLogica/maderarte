@@ -7,18 +7,6 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
-<nav class="navbar">
-    <div class="logo">
-        <a href="{% url 'home' %}">Vipalú</a>
-    </div>
-    <ul class="nav-links">
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'panel' %}">Panel</a></li>
-
-        <li><a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a></li>
-        <li><a href="{% url 'contactanos' %}">Contacto</a></li>
-    </ul>
-</nav>
 
 <style>
 
@@ -119,6 +107,41 @@
     }
 </style>
 <body>
+
+
+<nav class="navbar">
+    <div class="logo">
+        <a href="{% url 'home' %}">Vipalú</a>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'panel' %}">Panel</a></li>
+        <li><a href="{% url 'ver_carrito' %}">🛒 Ver carrito</a></li>
+        <li><a href="{% url 'contactanos' %}">Contacto</a></li>
+
+        {% if request.user.is_authenticated %}
+            <li style="color:white; font-weight:bold;">
+                👤 {{ request.user.username }}
+            </li>
+            <li>
+                <a href="{% url 'logout' %}"
+                   style="color:white; font-weight:bold;">
+                    Cerrar sesión
+                </a>
+            </li>
+        {% else %}
+            <li>
+                <a href="{% url 'login' %}"
+                   style="color:white; font-weight:bold;">
+                    Iniciar sesión
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+
     <header class="banner">
         <h1>Panel de edición del sitio</h1>
         <p>Administra tus productos, crea nuevos y escala tu tienda Montessori</p>

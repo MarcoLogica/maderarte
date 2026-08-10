@@ -39,7 +39,7 @@ path('carrito/restar/<int:item_id>/', views.restar_cantidad, name='restar_cantid
     path('perfiles/', views.panel_perfiles, name='panel_perfiles'),
     path('acceso-denegado/', views.acceso_denegado, name='acceso_denegado'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='/login/'), name='logout'),
     path('perfiles/editar/<int:id>/', views.editar_perfil, name='editar_perfil'),
     path('subir-media/<int:id>/', views.subir_media_fortaleza, name='subir_media_fortaleza'),
     path('fortalezas/', views.lista_fortalezas, name='lista_fortalezas'),
