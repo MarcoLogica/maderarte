@@ -391,7 +391,7 @@ tr:hover {
         </div>
 
         <div class="mensaje-seguridad-formal">
-            🔒 <strong>Vipalú nunca solicitará claves, códigos ni información bancaria adicional.</strong>
+            🔒 <strong>MaderArte nunca solicitará claves, códigos ni información bancaria adicional.</strong>
         </div>
     </div>
 
@@ -457,8 +457,22 @@ tr:hover {
     line-height: 1.6;
     margin-bottom: 1.5rem;
 ">
-    Una vez realizado tu pago, vuelve a esta sección para dejarnos tus datos de envío.
-    Con esta información podremos preparar y despachar tus productos favoritos directo a la puerta de tu casa.
+    <div style="
+background:#FFF3CD;
+border:2px solid #F0C36D;
+padding:18px;
+border-radius:12px;
+margin-bottom:20px;
+font-size:1.05rem;
+font-weight:600;
+color:#8A5A00;
+">
+⚠️ IMPORTANTE
+
+Tu pedido NO podrá ser despachado hasta que completes los datos de envío y adjuntes tu comprobante de pago.
+
+Este paso toma menos de 1 minuto.
+</div>
 </p>
 
 
@@ -520,17 +534,43 @@ function copiarTexto(texto) {
             <input type="text" name="telefono" placeholder="Teléfono de contacto (opcional)">
         </div>
 
-        <!-- FORMULARIO COMPROBANTE -->
+
+
+        <div style="margin-top:30px;">
+
+             <!-- FORMULARIO COMPROBANTE -->
         <div class="formulario-comprobante">
             <label for="comprobante">📎 Adjuntar comprobante de pago:</label>
             <input type="file" name="comprobante" required>
         </div>
 
+    <button type="submit" style="
+    width:100%;
+    margin-top:20px;
+    background:linear-gradient(
+    180deg,
+    #F7F0E5 0%,
+    #EEDFCA 100%
+    );
+    border:2px solid #A9784E;
+    color:#8B5E3C;
+    padding:18px 28px;
+    border-radius:16px;
+    font-size:1.15rem;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:
+    0 3px 6px rgba(0,0,0,0.08),
+    0 10px 18px rgba(139,94,60,0.15);
+    transition:all 0.25s ease;
+    ">
+        🚚 Confirmar datos para despacho
+    </button>
+</div>
+
     </div>
 
-    <div style="text-align:center; margin-top:2rem;">
-        <button type="submit">Enviar pago</button>
-    </div>
+
 </form>
 
             </div>
