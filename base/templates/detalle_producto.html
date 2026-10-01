@@ -663,10 +663,13 @@
             </div>
         </div>
 
-        <div class="detalle-info">
-            <h1>{{ producto.nombre }}</h1>
 
-            <p style="
+
+
+
+        <div class="detalle-info">
+
+                <p style="
     font-size: 1.1rem;
     color: #1e3a8a;
     background: #EAF4ED;
@@ -675,15 +678,133 @@
     display: inline-block;
     margin-bottom: 10px;
 ">
+
+
     🌟 Más de <strong>187 familias</strong> ya disfrutan este librero Montessori
 </p>
 
 
-          {% with precio_str=producto.precio|stringformat:"d" %}
-    <p class="precio">${{ precio_str|slice:":-3" }}.{{ precio_str|slice:"-3:" }}</p>
+            <h1>{{ producto.nombre }}</h1>
+
+          <div style="
+background:#EEF5EF;
+border:1px solid #D7E7D9;
+padding:14px;
+border-radius:12px;
+margin:15px 0 25px 0;
+color:#517257;
+font-weight:500;
+">
+✅ Estimula la autonomía infantil<br>
+✅ Libros siempre visibles y ordenados<br>
+✅ Fabricado artesanalmente en Chile<br>
+✅ Diseño Montessori recomendado por educadoras
+</div>
+
+
+
+      {% with precio_str=producto.precio|stringformat:"d" %}
+
+<div style="
+    margin: 18px 0;
+">
+
+    <div style="
+    font-size: 3.2rem;
+    font-weight: 900;
+    color: #8B5E3C;
+    line-height: 1;
+    margin-bottom: 25px;
+">
+    ${{ precio_str|slice:":-3" }}.{{ precio_str|slice:"-3:" }}
+</div>
+
+
+
+</div>
+
 {% endwith %}
 
+<div style="
+    background:#EEF5EF;
+    padding:12px 16px;
+    border-radius:10px;
+    color:#517257;
+    font-weight:500;
+    font-size:0.95rem;
+    margin-top:10px;
+">
+    🚚 Envíos a todo Chile<br>
+    🔒 Compra 100% segura<br>
+    💳 Transferencia y cuotas disponibles<br>
+    🏠 Fabricación artesanal chilena
+</div>
 
+
+            <a href="{% url 'agregar_al_carrito' producto.id %}"
+   style="
+display:block;
+width:100%;
+box-sizing:border-box;
+text-align:center;
+
+background:linear-gradient(
+180deg,
+#F7F0E5 0%,
+#EEDFCA 100%
+);
+
+border:2px solid #A9784E;
+
+color:#8B5E3C;
+
+padding:24px 20px;
+
+border-radius:18px;
+
+font-size:1.35rem;
+font-weight:700;
+
+text-decoration:none;
+
+margin-top:20px;
+
+box-shadow:
+0 3px 6px rgba(0,0,0,0.08),
+0 12px 24px rgba(139,94,60,0.15);
+
+transition:all 0.25s ease;
+">
+    Quiero mi Librero Montessori
+</a>
+
+
+<p style="
+text-align:center;
+margin-top:12px;
+margin-bottom:20px;
+color:#6B5A4A;
+font-size:0.95rem;
+">
+🔒 Compra segura • 🚚 Envíos a todo Chile • 💛 Garantía
+
+
+            <div style="
+font-size:1.1rem;
+font-weight:bold;
+color:#1e3a8a;
+margin:12px 0;
+">
+📚 Capacidad aproximada: 25 y 40 libros infantiles
+</div>
+             <div style="
+font-size:1.1rem;
+font-weight:bold;
+color:#1e3a8a;
+margin:12px 0;
+">
+📚 Dimensiones: Ancho 60 cm - Alto 40 cm - Fondo 35 cm
+</div>
 
             {% with msg=producto.mensaje_stock %}
     {% if msg.tipo == "ok" %}
@@ -779,10 +900,12 @@
 
 
 
-            <a href="{% url 'agregar_al_carrito' producto.id %}" class="btn-agregar">🛒 Agregar al carrito</a>
-            <a href="{% url 'home' %}">← Volver al catálogo</a>
+
+ <a href="{% url 'home' %}">← Volver al catálogo</a>
 
         </div>
+
+
     </section>
 
 

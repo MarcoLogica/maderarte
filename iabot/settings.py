@@ -142,7 +142,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'marco.sepulvedam85@gmail.com'  # tu cuenta Gmail
-EMAIL_HOST_PASSWORD = 'gbxiqilitnlgexxc'  # tu clave de aplicación
+EMAIL_HOST_PASSWORD = 'abufiorvkrwhohzk'  # tu clave de aplicación
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 MIDDLEWARE += [
