@@ -1,0 +1,56 @@
+<h2>Editar Orden #{{ orden.id }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <p>
+        Nombre:
+        <input type="text"
+               name="nombre"
+               value="{{ orden.nombre }}">
+    </p>
+
+    <p>
+        Dirección:
+        <textarea name="direccion">{{ orden.direccion }}</textarea>
+    </p>
+
+    <p>
+        Correo:
+        <input type="email"
+               name="correo"
+               value="{{ orden.correo_electronico }}">
+    </p>
+
+    <p>
+        Teléfono:
+        <input type="text"
+               name="telefono"
+               value="{{ orden.telefono }}">
+    </p>
+
+    <p>
+        Comuna:
+        <select name="comuna">
+
+            {% for c in comunas %}
+
+            <option value="{{ c.id }}"
+                {% if orden.comuna.id == c.id %}
+                    selected
+                {% endif %}
+            >
+                {{ c.region.nombre }} -
+                {{ c.nombre }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+    </p>
+
+    <button type="submit">
+        Guardar cambios
+    </button>
+
+</form>

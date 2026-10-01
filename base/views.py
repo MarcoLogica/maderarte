@@ -2086,3 +2086,75 @@ def finanzas(request):
     }
 
     return render(request, "finanzas.html", contexto)
+
+#editar ordenes
+
+from django.shortcuts import get_object_or_404
+def editar_orden(request, orden_id):
+
+    orden = get_object_or_404(Orden, id=orden_id)
+
+    if request.method == "POST":
+
+        orden.nombre = request.POST.get("nombre")
+        orden.direccion = request.POST.get("direccion")
+        orden.correo_electronico = request.POST.get("correo")
+        orden.telefono = request.POST.get("telefono")
+
+        comuna_id = request.POST.get("comuna")
+
+        if comuna_id:
+            comuna = Comuna.objects.get(id=comuna_id)
+            orden.comuna = comuna
+            orden.region = comuna.region
+
+        orden.save()
+
+        messages.success(
+            request,
+            f"Orden #{orden.id} actualizada correctamente."
+        )
+
+        return redirect("panel_ordenes")
+
+    comunas = Comuna.objects.select_related(
+        "region"
+    ).order_by(
+        "region__nombre",
+        "nombre"
+    )
+
+    return render(
+        request,
+        "editar_orden.html",
+        {
+            "orden": orden,
+            "comunas": comunas
+        }
+    )
+
+def eliminar_orden(request, orden_id):
+
+    orden = get_object_or_404(
+        Orden,
+        id=orden_id
+    )
+
+    if request.method == "POST":
+
+        orden.delete()
+
+        messages.success(
+            request,
+            f"Orden #{orden.id} eliminada correctamente."
+        )
+
+        return redirect("panel_ordenes")
+
+    return render(
+        request,
+        "eliminar_orden.html",
+        {
+            "orden": orden
+        }
+    )

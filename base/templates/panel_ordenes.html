@@ -232,6 +232,7 @@
         <th style="padding:10px; border:1px solid #ccc;">Estado</th>
         <th style="padding:10px; border:1px solid #ccc;">Piezas faltantes</th>
         <th style="padding:10px; border:1px solid #ccc;">Acciones</th>
+        <th style="padding:10px; border:1px solid #ccc;">Administración</th>
     </tr>
 
     {% for orden in ordenes %}
@@ -267,9 +268,14 @@
         </td>
 
         <!-- BOTONES DE ACCIÓN -->
+
         <td style="padding:10px; border:1px solid #ccc;">
             {% if orden.estado == "pendiente" %}
                 <a href="{% url 'cambiar_estado_orden' orden.id 'produccion' %}">Mover a producción</a>
+
+
+
+        </td>
 
             {% elif orden.estado == "produccion" %}
                 <!-- Sin acción -->
@@ -281,6 +287,19 @@
                 <a href="{% url 'cambiar_estado_orden' orden.id 'entregado' %}">Entregar</a>
             {% endif %}
         </td>
+
+
+       <td style="padding:10px; border:1px solid #ccc;">
+
+    <a href="{% url 'editar_orden' orden.id %}">editar</a>
+
+
+    <a href="{% url 'eliminar_orden' orden.id %}">eliminar</a>
+
+
+</td>
+
+
     </tr>
 
     <!-- FILA EXPANDIBLE -->

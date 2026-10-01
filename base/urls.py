@@ -134,7 +134,19 @@ path("analisis-pixel/", analisis_pixel, name="analisis_pixel"),
 path("bsc/", views.bsc, name="bsc"),
 path("finanzas/", views.finanzas, name="finanzas"),
 
+#editar ordenes
 
+path(
+    "orden/<int:orden_id>/editar/",
+    views.editar_orden,
+    name="editar_orden"
+),
+
+path(
+    "orden/<int:orden_id>/eliminar/",
+    views.eliminar_orden,
+    name="eliminar_orden"
+),
 
 
 
