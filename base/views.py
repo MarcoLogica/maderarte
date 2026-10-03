@@ -1922,7 +1922,7 @@ from django.shortcuts import render
 def pixel_librero(request):
 
     # Filtramos solo eventos del detalle del Librero
-    eventos = PixelEvent.objects.filter(page="PRODUCTO_9")
+    eventos = PixelEvent.objects.filter(page="PRODUCTO_1")
 
     # Convertimos a JSON para el front
     eventos_json = json.dumps(list(eventos.values()), default=str)
