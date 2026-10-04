@@ -10,8 +10,12 @@
 </head>
 
 <nav class="navbar">
-    <div class="logo">
-        <a href="{% url 'home' %}">Vipalíu</a>
+     <div class="navbar-top">
+        <a href="/" class="logo-vipalu">
+            <img src="/static/img/logo_maderarte.png" alt="Vipalú" class="logo-img">
+        </a>
+
+
     </div>
     <ul class="nav-links">
         <li><a href="{% url 'home' %}">Home</a></li>
@@ -29,6 +33,7 @@
 }
 
 .navbar {
+
     background-color: #a3c9a8;
     padding: 1rem 2rem;
     display: flex;
@@ -36,10 +41,13 @@
     align-items: center;
     font-family: 'Quicksand', sans-serif;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
 }
 
+
+
 .logo a {
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: bold;
     color: white;
     text-decoration: none;
@@ -49,6 +57,23 @@
     list-style: none;
     display: flex;
     gap: 1.5rem;
+}
+
+ .navbar-top {
+    display: flex;
+    justify-content: space-between; /* logo izquierda, ⋮ derecha */
+    align-items: center;
+    width: 100%;
+    padding: 12px;
+    position: relative;
+    z-index: 20;
+}
+
+.logo-img {
+    height: 80px;
+    width: auto;
+    display: block;
+    border-radius: 50%;
 }
 
 .nav-links li a {
@@ -804,23 +829,7 @@ margin:12px 0;
 📚 Dimensiones: Ancho 60 cm - Alto 40 cm - Fondo 35 cm
 </div>
 
-            {% with msg=producto.mensaje_stock %}
-    {% if msg.tipo == "ok" %}
-        <p style="background:#E3F7E0; color:#2E7D32; padding:10px; border-radius:8px;">
-            {{ msg.texto }}
-        </p>
 
-    {% elif msg.tipo == "bajo" %}
-        <p style="background:#FFF3E0; color:#EF6C00; padding:10px; border-radius:8px;">
-            {{ msg.texto }}
-        </p>
-
-    {% elif msg.tipo == "pedido" %}
-        <p style="background:#FFEBEE; color:#C62828; padding:10px; border-radius:8px;">
-            {{ msg.texto }}
-        </p>
-    {% endif %}
-{% endwith %}
 
            {% if producto.stock_comercial == 1 %}
     <p style="
@@ -833,7 +842,7 @@ margin:12px 0;
         margin-bottom:10px;
     ">
         ⚠️ ¡Última unidad disponible!
-        <br>🚚 Entrega estimada: <strong>1 a 2 días</strong>
+
     </p>
 
 {% elif producto.stock_comercial <= 10 %}
@@ -847,7 +856,7 @@ margin:12px 0;
         margin-bottom:10px;
     ">
         🔥 ¡Quedan pocas unidades!
-        <br>🚚 Entrega estimada: <strong>1 a 3 días</strong>
+
     </p>
 
 {% else %}
@@ -861,7 +870,7 @@ margin:12px 0;
         margin-bottom:10px;
     ">
         ✔ Stock disponible para entrega rápida
-        <br>🚚 Entrega estimada: <strong>3 a 5 días</strong>
+
     </p>
 {% endif %}
 
